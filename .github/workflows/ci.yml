@@ -53,26 +53,31 @@ jobs:
                   [ -s "${{ github.workspace }}/jenkins_backup.tar.gz" ] || { echo "Backup file is empty or missing!"; exit 1; }
                   md5sum ${{ github.workspace }}/jenkins_backup.tar.gz
 
-            - name: Extract Jenkins data
+            - name: Extract Jenkins data (Final Clean Version)
               run: |
-                  # 1. Extract everything to a temporary folder
+                  # 1. Start with a fresh, empty directory
+                  rm -rf ${{ github.workspace }}/jenkins_home
                   mkdir -p ${{ github.workspace }}/temp_extract
+                  
+                  # 2. Extract
                   tar -xvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/temp_extract
                   
-                  # 2. Find where the actual data lives (wherever config.xml is)
-                  DATA_PATH=$(find ${{ github.workspace }}/temp_extract -name "config.xml" -exec dirname {} \;)
-                  echo "Detected Jenkins data at: $DATA_PATH"
-                  
-                  # 3. Move it to the real jenkins_home
+                  # 3. Locate the core data and move it to the ROOT of jenkins_home
+                  REAL_DATA=$(find ${{ github.workspace }}/temp_extract -name "config.xml" -exec dirname {} \; | head -n 1)
                   mkdir -p ${{ github.workspace }}/jenkins_home
-                  cp -R $DATA_PATH/. ${{ github.workspace }}/jenkins_home/
+                  cp -R "$REAL_DATA"/. ${{ github.workspace }}/jenkins_home/
                   
-                  # 4. Clean up temp folder
+                  # 4. Critical Cleanup to prevent 500 errors
+                  # Remove old caches and force Jenkins to skip the setup wizard
+                  rm -rf ${{ github.workspace }}/jenkins_home/war
+                  rm -rf ${{ github.workspace }}/jenkins_home/updates
+                  echo "2.0" > ${{ github.workspace }}/jenkins_home/jenkins.install.UpgradeWizard.state
+                  echo "2.0" > ${{ github.workspace }}/jenkins_home/jenkins.install.InstallUtil.lastExecVersion
+                  
+                  # 5. Clean up temp files
                   rm -rf ${{ github.workspace }}/temp_extract
-                  
-                  # 5. Final verification
-                  ls ${{ github.workspace }}/jenkins_home/config.xml && echo "✅ Data successfully mapped"
 
+      
             # TO REMOVE
             - name: Directory Diagnostic
               run: |
@@ -86,30 +91,23 @@ jobs:
 
             - name: Inject Boot Script to Sync Password
               run: |
+                  # Ensure this goes into the freshly mapped directory
                   mkdir -p ${{ github.workspace }}/jenkins_home/init.groovy.d
-                  
                   cat << 'EOF' > ${{ github.workspace }}/jenkins_home/init.groovy.d/sync-pass.groovy
                   import jenkins.model.*
                   import hudson.security.*
-
-                  def instance = Jenkins.getInstance()
-                  def env = System.getenv()
-                  def username = env.LOCAL_USERNAME
-                  def password = env.LOCAL_PASSWORD
-
-                  println "--> Triggering Security Sync for ${username}..."
-
-                  // FORCE Private Security Realm (in case backup had LDAP/AD)
-                  if (!(instance.getSecurityRealm() instanceof HudsonPrivateSecurityRealm)) {
-                      instance.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
-                      println "✅ Forced Security Realm to Private"
-                  }
-
-                  def realm = instance.getSecurityRealm()
-                  realm.createAccount(username, password)
-                  instance.save()
                   
-                  println "✅ Successfully synced Jenkins password"
+                  def instance = Jenkins.getInstance()
+                  def user = instance.getSecurityRealm().getUser("${System.getenv('LOCAL_USERNAME')}")
+                  def password = System.getenv('LOCAL_PASSWORD')
+                  
+                  if (user != null && password != null) {
+                      user.addProperty(new hudson.security.HudsonPrivateSecurityRealm.Details(password))
+                      user.save()
+                      println "✅ Successfully synced Jenkins password for ${user.userId}"
+                  } else {
+                      println "❌ Failed to sync: User or Password env var missing"
+                  }
                   EOF
 
             - name: Download and Start Jenkins (No Docker)
