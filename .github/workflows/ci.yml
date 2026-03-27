@@ -55,15 +55,20 @@ jobs:
 
             - name: Extract Jenkins data
               run: |
-                # 1. Create the destination directory
+                # 1. Create the destination folder
                 mkdir -p ${{ github.workspace }}/jenkins_home
                 
-                # 2. Extract from the root path
-                tar -xzf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home
+                # 2. Extract from the ROOT path (as per your original code)
+                # Adding -v (verbose) so you can see every file being unpacked in the logs
+                tar -xzvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home
                 
-                # 3. VERIFICATION: This tells us if the 'jobs' folder actually moved
-                echo "Number of jobs found in filesystem:"
-                ls -1 ${{ github.workspace }}/jenkins_home/jobs 2>/dev/null | wc -l || echo "0 (Jobs folder missing)"
+                # 3. VERIFICATION: Look for the 'cleandata' job folder specifically
+                echo "--- Checking for 'cleandata' job in filesystem ---"
+                find ${{ github.workspace }}/jenkins_home -name "cleandata" -type d || echo "Job 'cleandata' not found after extraction"
+                
+                # 4. Count total jobs to verify import success
+                echo "Total jobs found:"
+                ls -1 ${{ github.workspace }}/jenkins_home/jobs 2>/dev/null | wc -l
 
             - name: Inject Boot Script to Sync Password
               run: |
