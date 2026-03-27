@@ -133,19 +133,33 @@ jobs:
             - name: Capture Jenkins State
               if: always()
               env:
-                  LOCAL_USERNAME: ${{ secrets.LOCAL_USERNAME }}
-                  LOCAL_PASSWORD: ${{ secrets.LOCAL_PASSWORD }}
+                 LOCAL_USERNAME: ${{ secrets.LOCAL_USERNAME }}
+                 LOCAL_PASSWORD: ${{ secrets.LOCAL_PASSWORD }}
               run: |
-                echo "--- Checking Public Home Page ---"
-                curl -I http://localhost:8080/
-                
-                echo "--- Testing Authentication ---"
-                curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" -I http://localhost:8080/whoAmI/
-                
-                echo "--- Listing All Jobs (Verification for cleandata) ---"
-                # The escaped brackets \[ \] are mandatory for curl in the runner
-                curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
-                     "http://localhost:8080/api/json?tree=jobs\[name\]" | jq '.'
+                 echo "--- 🔍 THE SMOKING GUN: JENKINS LOG OUTPUT ---"
+                 # This will show the actual Java Exception causing the 500 error
+                 if [ -f jenkins_stdout.log ]; then
+                     tail -n 100 jenkins_stdout.log
+                 else
+                     echo "❌ jenkins_stdout.log not found. Checking process..."
+                     ps aux | grep jenkins
+                 fi
+
+                 echo "--- 📁 DIRECTORY CHECK: WHERE IS CONFIG.XML? ---"
+                 find ${{ github.workspace }}/jenkins_home -name "config.xml" | head -n 5
+
+                 echo "--- 🌐 CHECKING PUBLIC HOME PAGE ---"
+                 curl -I http://localhost:8080/ || echo "Server unreachable"
+
+                 echo "--- 🔑 TESTING AUTHENTICATION ---"
+                 # We expect a 500 here if the UI is broken, but we need to see the headers
+                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" -I http://localhost:8080/whoAmI/ || echo "Auth check failed"
+
+                 echo "--- 📋 LISTING ALL JOBS ---"
+                 # This will likely fail with a 500 until we fix the underlying Java error
+                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
+                     "http://localhost:8080/api/json?tree=jobs\[name\]" | jq '.' || echo "⚠️ Could not retrieve JSON (Expected during 500 error)"
+
                      
             # TO REMOVE
             - name: Print Jenkins Logs on Failure
