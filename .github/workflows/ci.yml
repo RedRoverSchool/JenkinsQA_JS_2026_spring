@@ -87,7 +87,7 @@ jobs:
                   export JENKINS_HOME="${{ github.workspace }}/jenkins_home"
                   
                   # Java 25 execution
-                  nohup java -jar jenkins.war --httpPort=8080 > jenkins_stdout.log 2>&1 &
+                  nohup java -Djenkins.install.runSetupWizard=false -jar jenkins.war --httpPort=8080 > jenkins_stdout.log 2>&1 &
                   echo $! > jenkins.pid
                   sleep 20
 
