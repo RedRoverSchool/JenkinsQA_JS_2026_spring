@@ -98,9 +98,19 @@ jobs:
             # TO REMOVE
             - name: Capture Jenkins State
               run: |
-                  curl -I http://localhost:8080/
-                  # If you have playwright installed, we can try to grab the page content
-                  curl -L http://localhost:8080/ > jenkins-debug-page.html
+                echo "--- Checking Public Home Page ---"
+                curl -I http://localhost:8080/
+                curl -L http://localhost:8080/ > jenkins-debug-page.html
+                
+                echo "--- Looking for Error details ---"
+                grep -A 5 "Logging ID" jenkins-debug-page.html || echo "No Logging ID found in HTML"
+                
+                echo "--- Testing Authentication with Secrets ---"
+                # This will return a 200 if your credentials worked, or 401/403 if they failed
+                curl -u "${{ secrets.LOCAL_USERNAME }}:${{ secrets.LOCAL_PASSWORD }}" -I http://localhost:8080/whoAmI/
+                
+                echo "--- Checking Groovy Script Execution ---"
+                grep "Successfully synced Jenkins password" jenkins_stdout.log || echo "❌ Groovy sync script did not report success"
 
             # TO REMOVE
             - name: Print Jenkins Logs on Failure
