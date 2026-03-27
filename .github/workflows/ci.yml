@@ -63,6 +63,17 @@ jobs:
                   echo "--- Verifying Extraction Layout ---"
                   ls -d ${{ github.workspace }}/jenkins_home/jobs || echo "❌ Jobs folder not found in the root of jenkins_home"
 
+            # TO REMOVE
+            - name: Directory Diagnostic
+              run: |
+                echo "--- Current Working Directory ---"
+                pwd
+                echo "--- Looking for config.xml (The heart of Jenkins) ---"
+                find ${{ github.workspace }} -name "config.xml"
+                echo "--- Content of jenkins_home ---"
+                ls -R ${{ github.workspace }}/jenkins_home | head -n 20
+
+
             - name: Inject Boot Script to Sync Password
               run: |
                   mkdir -p ${{ github.workspace }}/jenkins_home/init.groovy.d
