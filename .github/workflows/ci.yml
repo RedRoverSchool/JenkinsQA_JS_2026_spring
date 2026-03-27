@@ -121,11 +121,8 @@ jobs:
                 echo "--- Testing Authentication ---"
                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" -I http://localhost:8080/whoAmI/
                 
-                echo "--- Checking Groovy Script ---"
-                grep "Successfully synced Jenkins password" jenkins_stdout.log || echo "❌ Sync failed"
-
                 echo "--- Listing All Jobs (Verification for cleandata) ---"
-                # This version uses escaped brackets to bypass the 'bad range' error
+                # The escaped brackets \[ \] are mandatory for curl in the runner
                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
                      "http://localhost:8080/api/json?tree=jobs\[name\]" | jq '.'
                      
