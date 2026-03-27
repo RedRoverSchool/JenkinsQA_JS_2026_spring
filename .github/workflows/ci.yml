@@ -72,15 +72,21 @@ jobs:
                   cat << 'EOF' > ${{ github.workspace }}/jenkins_home/init.groovy.d/sync-pass.groovy
                   import jenkins.model.*
                   import hudson.security.*
-                  
+
                   def instance = Jenkins.getInstance()
-                  def user = instance.getSecurityRealm().getUser("${System.getenv('LOCAL_USERNAME')}")
-                  def password = System.getenv('LOCAL_PASSWORD')
-                  
-                  if (user != null && password != null) {
-                      user.addProperty(new hudson.security.HudsonPrivateSecurityRealm.Details(password))
+                  def realm = instance.getSecurityRealm()
+                  println "ID: ${realm.getClass().getName()}" // Tell us if it's LDAP or Private
+
+                  def target = System.getenv('LOCAL_USERNAME')
+                  def user = realm.getUser(target)
+
+                  if (user != null) {
+                      println "👤 Found user: ${user.getId()}"
+                      user.addProperty(new HudsonPrivateSecurityRealm.Details(System.getenv('LOCAL_PASSWORD')))
                       user.save()
-                      println "✅ Password synced"
+                      println "✅ Password synced for ${target}"
+                  } else {
+                      println "❌ COULD NOT FIND USER: ${target}. Existing users: ${realm.getAllUsers().collect { it.getId() }}"
                   }
                   EOF
 
