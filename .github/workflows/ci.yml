@@ -49,7 +49,7 @@ jobs:
 
             - name: Prepare Jenkins data
               run: |
-                  cat ${{ github.workspace }}/_jenkins_data/jenkins_backup.tar.gz.part_* > ${{ github.workspace }}/jenkins_backup.tar.gz
+                  cat ${{ github.workspace }}/_jenkins_data/jenkins_backup* > ${{ github.workspace }}/jenkins_backup.tar.gz
                   [ -s "${{ github.workspace }}/jenkins_backup.tar.gz" ] || { echo "Backup file is empty or missing!"; exit 1; }
                   md5sum ${{ github.workspace }}/jenkins_backup.tar.gz
 
