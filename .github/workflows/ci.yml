@@ -105,21 +105,32 @@ jobs:
 
             # TO REMOVE
             - name: Capture Jenkins State
+              if: always()
+              env:
+                  LOCAL_USERNAME: ${{ secrets.LOCAL_USERNAME }}
+                  LOCAL_PASSWORD: ${{ secrets.LOCAL_PASSWORD }}
               run: |
                 echo "--- Checking Public Home Page ---"
                 curl -I http://localhost:8080/
-                curl -L http://localhost:8080/ > jenkins-debug-page.html
+                curl -sL http://localhost:8080/ > jenkins-debug-page.html
                 
                 echo "--- Looking for Error details ---"
+                # If an Oops page exists, this captures the specific Logging ID
                 grep -A 5 "Logging ID" jenkins-debug-page.html || echo "No Logging ID found in HTML"
                 
                 echo "--- Testing Authentication with Secrets ---"
-                # This will return a 200 if your credentials worked, or 401/403 if they failed
-                curl -u "${{ secrets.LOCAL_USERNAME }}:${{ secrets.LOCAL_PASSWORD }}" -I http://localhost:8080/whoAmI/
+                # Verifies if the synced user can access a secure endpoint
+                curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" -I http://localhost:8080/whoAmI/
                 
                 echo "--- Checking Groovy Script Execution ---"
+                # Confirms the init.groovy.d script ran successfully
                 grep "Successfully synced Jenkins password" jenkins_stdout.log || echo "❌ Groovy sync script did not report success"
 
+                echo "--- Listing All Jobs (Verification for cleandata) ---"
+                # Checks if the job 'cleandata' actually exists in the current Jenkins Home
+                curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
+                     "http://localhost:8080/api/json?tree=jobs[name]" | jq '.' || echo "Could not retrieve jobs list"
+                     
             # TO REMOVE
             - name: Print Jenkins Logs on Failure
               if: always()
