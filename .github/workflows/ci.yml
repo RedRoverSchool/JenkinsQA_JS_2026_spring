@@ -101,6 +101,17 @@ jobs:
                   # Give the Groovy script 15 seconds to finish updating the user database
                   sleep 15
 
+            - name: 🔎 Verify Password Sync
+              run: |
+                  echo "--- Checking Jenkins Logs for Sync Confirmation ---"
+                  grep "Password synced" jenkins_stdout.log || echo "❌ ERROR: The Groovy sync script never reported success!"
+
+                  echo "--- Checking Password Secret Length (Safety Check) ---"
+                  # This won't show the password, but tells us if it's empty or strangely short/long
+                  echo "Password length: ${#LOCAL_PASSWORD}"
+              env:
+                  LOCAL_PASSWORD: ${{ secrets.LOCAL_PASSWORD }}
+
             - name: Run Playwright tests
               run: npm test
               env:
@@ -124,3 +135,13 @@ jobs:
               with:
                   name: Artifacts
                   path: test-results/
+
+            - name: Upload Debug Artifacts
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: login-debug
+                  path: |
+                      login-error-debug.html
+                      login-error-screenshot.png
+                      jenkins_stdout.log

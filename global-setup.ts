@@ -46,7 +46,15 @@ export default async function globalSetup() {
         console.log("Current URL after login attempt:", finalUrl);
 
         if (finalUrl.includes("loginError")) {
-            throw new Error("🛑 Jenkins Login Failed: Invalid credentials or Crumb mismatch. Check LOCAL_PASSWORD sync.");
+            const fs = await import('fs');
+            // Save the HTML so we can see the exact error message (e.g., "Invalid Credentials" vs "Expired")
+            const html = await page.content();
+            fs.writeFileSync('login-error-debug.html', html);
+            
+            // Take a screenshot in the CI runner
+            await page.screenshot({ path: 'login-error-screenshot.png' });
+            
+            throw new Error("🛑 Jenkins Login Failed. Download 'login-debug' artifact to see the error page.");
         }
 
         // 5. Final Confirmation: Wait for a dashboard-specific element.
