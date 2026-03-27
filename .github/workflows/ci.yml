@@ -66,16 +66,24 @@ jobs:
                   import jenkins.model.*
                   import hudson.security.*
 
+                  def instance = Jenkins.getInstance()
                   def env = System.getenv()
                   def username = env.LOCAL_USERNAME
                   def password = env.LOCAL_PASSWORD
 
-                  def realm = Jenkins.getInstance().getSecurityRealm()
-                  if (realm instanceof HudsonPrivateSecurityRealm) {
-                      realm.createAccount(username, password)
-                      Jenkins.getInstance().save()
-                      println "✅ Successfully synced Jenkins password"
+                  println "--> Triggering Security Sync for ${username}..."
+
+                  // FORCE Private Security Realm (in case backup had LDAP/AD)
+                  if (!(instance.getSecurityRealm() instanceof HudsonPrivateSecurityRealm)) {
+                      instance.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
+                      println "✅ Forced Security Realm to Private"
                   }
+
+                  def realm = instance.getSecurityRealm()
+                  realm.createAccount(username, password)
+                  instance.save()
+                  
+                  println "✅ Successfully synced Jenkins password"
                   EOF
 
             - name: Download and Start Jenkins (No Docker)
