@@ -55,8 +55,16 @@ jobs:
 
             - name: Extract Jenkins data
               run: |
-                  mkdir -p ${{ github.workspace }}/jenkins_home
-                  tar -xvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home
+                # Ensure the directory exists
+                mkdir -p ${{ github.workspace }}/jenkins_home
+                
+                # Extract the backup. 
+                # IMPORTANT: Check if your tarball has a subfolder or starts with 'jobs/'
+                tar -xzf ./.github/jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home
+                
+                # VERIFICATION: If this returns 0, the extraction failed
+                echo "Number of jobs found in filesystem:"
+                ls -1 ${{ github.workspace }}/jenkins_home/jobs 2>/dev/null | wc -l
 
             - name: Inject Boot Script to Sync Password
               run: |
@@ -123,7 +131,7 @@ jobs:
                 # This version uses escaped brackets to bypass the 'bad range' error
                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
                      "http://localhost:8080/api/json?tree=jobs\[name\]" | jq '.'
-                     
+
             # TO REMOVE
             - name: Print Jenkins Logs on Failure
               if: always()
