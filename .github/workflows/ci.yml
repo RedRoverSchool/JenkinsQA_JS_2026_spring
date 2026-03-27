@@ -96,7 +96,10 @@ jobs:
                   sleep 20
 
             - name: Wait for Jenkins
-              run: bash ./.github/wait-for-jenkins.sh
+              run: |
+                  bash ./.github/wait-for-jenkins.sh
+                  # Give the Groovy script 15 seconds to finish updating the user database
+                  sleep 15
 
             - name: Run Playwright tests
               run: npm test
