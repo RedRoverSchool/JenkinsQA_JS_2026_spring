@@ -95,6 +95,10 @@ jobs:
               # Explicitly using 'bash' fixes the "Permission Denied" error
               run: bash ./.github/wait-for-jenkins.sh
 
+            - name: Print Jenkins Logs on Failure
+              if: always()
+              run: cat jenkins_stdout.log
+
             - name: Run Playwright tests
               run: npm test
               env:
