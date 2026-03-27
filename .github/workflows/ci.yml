@@ -55,14 +55,24 @@ jobs:
 
             - name: Extract Jenkins data
               run: |
+                  # 1. Extract everything to a temporary folder
+                  mkdir -p ${{ github.workspace }}/temp_extract
+                  tar -xvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/temp_extract
+                  
+                  # 2. Find where the actual data lives (wherever config.xml is)
+                  DATA_PATH=$(find ${{ github.workspace }}/temp_extract -name "config.xml" -exec dirname {} \;)
+                  echo "Detected Jenkins data at: $DATA_PATH"
+                  
+                  # 3. Move it to the real jenkins_home
                   mkdir -p ${{ github.workspace }}/jenkins_home
-                  # --strip-components=3 removes 'jenkins_backup/var/jenkins_home/' from the path
-                  tar -xvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home --strip-components=3
+                  cp -R $DATA_PATH/. ${{ github.workspace }}/jenkins_home/
                   
-                  # VERIFICATION: This should now show config.xml in the root of jenkins_home
-                  echo "--- Verifying Final Layout ---"
-                  ls ${{ github.workspace }}/jenkins_home/config.xml && echo "✅ Success: Data is in the right place"
+                  # 4. Clean up temp folder
+                  rm -rf ${{ github.workspace }}/temp_extract
                   
+                  # 5. Final verification
+                  ls ${{ github.workspace }}/jenkins_home/config.xml && echo "✅ Data successfully mapped"
+
             # TO REMOVE
             - name: Directory Diagnostic
               run: |
