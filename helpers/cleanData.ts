@@ -42,8 +42,12 @@ export async function cleanData(request: APIRequestContext) {
 		});
 
 		if (res.status() !== 200) {
-            throw new Error(`GET ${uri} failed with status ${res.status()}`);
-		}
+            if (res.status() === 404) {
+                console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
+            } else {
+                throw new Error(`🛑 Cleanup failed! POST ${uri} returned ${res.status()}`);
+            }
+        }
 		return await res.text();
 	}
 
