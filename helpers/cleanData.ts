@@ -42,13 +42,7 @@ export async function cleanData(request: APIRequestContext) {
 		});
 
 		if (res.status() !== 200) {
-            // 1. Capture the error body
-        const errorBody = await res.text(); 
-        
-        // 2. Log it to the CI console so you can read the stack trace
-        console.error(`Full Error for ${uri}:`, errorBody);
-        
-			throw new Error(`GET ${uri} failed with status ${res.status()}`);
+            throw new Error(`GET ${uri} failed with status ${res.status()}`);
 		}
 		return await res.text();
 	}
