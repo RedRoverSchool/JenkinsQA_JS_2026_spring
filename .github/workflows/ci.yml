@@ -73,26 +73,24 @@ jobs:
                   import jenkins.model.*
                   import hudson.security.*
 
-                  def instance = Jenkins.getInstance()
+                  def instance = Jenkins.get()
                   def realm = instance.getSecurityRealm()
-                  println "--- DIAGNOSTIC: Security Realm is ${realm.getClass().getName()} ---"
-    
                   def target = System.getenv('LOCAL_USERNAME') 
                   def pass = System.getenv('LOCAL_PASSWORD')
-                  
-                  println "--- DIAGNOSTIC: Attempting sync for user: '${target}' ---"
-                  println "--- DIAGNOSTIC: Password received length: ${pass?.length() ?: 0} ---"
 
-                  def user = realm.getUser(target)
-
-                  if (user != null) {
-                      user.addProperty(new HudsonPrivateSecurityRealm.Details(pass))
-                      user.save()
-                      println "✅ SUCCESS: Password synced for user: ${target}"
+                  if (realm instanceof HudsonPrivateSecurityRealm) {
+                      // This forces Jenkins to re-hash the password and 
+                      // overwrite any stale data from the '2.0' upgrade state.
+                      realm.createAccount(target, pass)
+                      instance.save()
+                      
+                      // Final verification check for the logs
+                      def user = realm.getUser(target)
+                      if (user != null) {
+                          println "✅ SUCCESS: Account forced/synced for: ${target} (ID: ${user.getId()})"
+                      }
                   } else {
-                      def allUsers = realm.getAllUsers().collect { it.getId() }
-                      println "❌ ERROR: Could not find user '${target}'."
-                      println "--- DIAGNOSTIC: Users actually in backup: ${allUsers} ---"
+                      println "❌ ERROR: Realm is ${realm.getClass().getName()}, not PrivateSecurityRealm"
                   }
                   EOF
               env:
