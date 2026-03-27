@@ -20,34 +20,31 @@ export default async function globalSetup() {
 
 	await page.goto(`http://${LOCAL_HOST}:${LOCAL_PORT}/`);
 
+    const loginNeeded = await page.locator("#j_username").isVisible({ timeout: 15000 }).catch(() => false);
 
+    if (loginNeeded) {
+        console.log("👉 Login required. Filling credentials...");
+        await page.waitForSelector("#j_username", { timeout: 120000 });
 
-    console.log("DEBUG: Current URL is:", page.url());
-    console.log("DEBUG: Page Title is:", await page.title());
-    const content = await page.content(); 
-    console.log("DEBUG: Page HTML Snippet:", content.substring(0, 1000));
-    await page.screenshot({ path: 'jenkins-debug-state.png', fullPage: true });
+        await page.locator("#j_username").fill(LOCAL_USERNAME ?? "");
+        await page.locator('input[name="j_password"]').fill(LOCAL_PASSWORD ?? "");
+        await page.locator('button[name="Submit"]').click();
 
+        await page.waitForLoadState("networkidle");
 
+        await Promise.race([
+            page.waitForURL((url) => !url.pathname.includes("/login"), { timeout: 30000 }).catch(() => null),
+            page.waitForSelector("#jenkins-head-icon", { timeout: 30000 }).catch(() => null)
+        ]);
+    }
+    else {
+        console.log("✅ Already on Dashboard. No login required.");
+    }
 
+    console.log("Current URL after login:", page.url());
 
-	await page.waitForSelector("#j_username", { timeout: 120000 });
+    await page.context().storageState({ path: STORAGE_PATH });
+    console.log(`✅ storageState created at: ${STORAGE_PATH}`);
 
-	await page.locator("#j_username").fill(LOCAL_USERNAME ?? "");
-	await page.locator('input[name="j_password"]').fill(LOCAL_PASSWORD ?? "");
-	await page.locator('button[name="Submit"]').click();
-
-	await page.waitForLoadState("networkidle");
-
-	await Promise.race([
-		page.waitForURL((url) => !url.pathname.includes("/login"), { timeout: 30000 }).catch(() => null),
-		page.waitForSelector("#jenkins-head-icon", { timeout: 30000 }).catch(() => null)
-	]);
-
-	console.log("Current URL after login:", page.url());
-
-	await page.context().storageState({ path: STORAGE_PATH });
-	console.log(`✅ storageState created at: ${STORAGE_PATH}`);
-
-	await browser.close();
+    await browser.close();
 }
