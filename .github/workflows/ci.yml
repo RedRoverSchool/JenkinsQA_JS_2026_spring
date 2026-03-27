@@ -115,11 +115,11 @@ jobs:
                 curl -sL http://localhost:8080/ > jenkins-debug-page.html
                 
                 echo "--- Looking for Error details ---"
-                # If an Oops page exists, this captures the specific Logging ID
+                # Captures the Logging ID if an Oops page is still being rendered
                 grep -A 5 "Logging ID" jenkins-debug-page.html || echo "No Logging ID found in HTML"
                 
                 echo "--- Testing Authentication with Secrets ---"
-                # Verifies if the synced user can access a secure endpoint
+                # Confirms the synced user can access a secure endpoint
                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" -I http://localhost:8080/whoAmI/
                 
                 echo "--- Checking Groovy Script Execution ---"
@@ -127,10 +127,10 @@ jobs:
                 grep "Successfully synced Jenkins password" jenkins_stdout.log || echo "❌ Groovy sync script did not report success"
 
                 echo "--- Listing All Jobs (Verification for cleandata) ---"
-                # Checks if the job 'cleandata' actually exists in the current Jenkins Home
+                # Using single quotes to prevent curl from misinterpreting [] as a range
                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
-                     "http://localhost:8080/api/json?tree=jobs[name]" | jq '.' || echo "Could not retrieve jobs list"
-                     
+                     'http://localhost:8080/api/json?tree=jobs[name]' | jq '.' || echo "Could not retrieve jobs list"
+
             # TO REMOVE
             - name: Print Jenkins Logs on Failure
               if: always()
