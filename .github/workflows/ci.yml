@@ -55,16 +55,15 @@ jobs:
 
             - name: Extract Jenkins data
               run: |
-                # Ensure the directory exists
+                # 1. Create the destination directory
                 mkdir -p ${{ github.workspace }}/jenkins_home
                 
-                # Extract the backup. 
-                # IMPORTANT: Check if your tarball has a subfolder or starts with 'jobs/'
-                tar -xzf ./.github/jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home
+                # 2. Extract from the root path
+                tar -xzf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home
                 
-                # VERIFICATION: If this returns 0, the extraction failed
+                # 3. VERIFICATION: This tells us if the 'jobs' folder actually moved
                 echo "Number of jobs found in filesystem:"
-                ls -1 ${{ github.workspace }}/jenkins_home/jobs 2>/dev/null | wc -l
+                ls -1 ${{ github.workspace }}/jenkins_home/jobs 2>/dev/null | wc -l || echo "0 (Jobs folder missing)"
 
             - name: Inject Boot Script to Sync Password
               run: |
@@ -131,7 +130,7 @@ jobs:
                 # This version uses escaped brackets to bypass the 'bad range' error
                 curl -u "${LOCAL_USERNAME}:${LOCAL_PASSWORD}" \
                      "http://localhost:8080/api/json?tree=jobs\[name\]" | jq '.'
-
+                     
             # TO REMOVE
             - name: Print Jenkins Logs on Failure
               if: always()
