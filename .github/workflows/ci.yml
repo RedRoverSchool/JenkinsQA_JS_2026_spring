@@ -75,19 +75,24 @@ jobs:
 
                   def instance = Jenkins.getInstance()
                   def realm = instance.getSecurityRealm()
+                  println "--- DIAGNOSTIC: Security Realm is ${realm.getClass().getName()} ---"
     
-                  // We use the environment variables passed to the shell/process
                   def target = System.getenv('LOCAL_USERNAME') 
                   def pass = System.getenv('LOCAL_PASSWORD')
+                  
+                  println "--- DIAGNOSTIC: Attempting sync for user: '${target}' ---"
+                  println "--- DIAGNOSTIC: Password received length: ${pass?.length() ?: 0} ---"
 
                   def user = realm.getUser(target)
 
                   if (user != null) {
                       user.addProperty(new HudsonPrivateSecurityRealm.Details(pass))
                       user.save()
-                      println "✅ Password synced for user: ${target}"
+                      println "✅ SUCCESS: Password synced for user: ${target}"
                   } else {
-                      println "❌ COULD NOT FIND USER: ${target}. Existing: ${realm.getAllUsers().collect { it.getId() }}"
+                      def allUsers = realm.getAllUsers().collect { it.getId() }
+                      println "❌ ERROR: Could not find user '${target}'."
+                      println "--- DIAGNOSTIC: Users actually in backup: ${allUsers} ---"
                   }
                   EOF
               env:

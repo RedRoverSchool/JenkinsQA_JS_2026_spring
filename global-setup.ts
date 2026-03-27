@@ -23,6 +23,9 @@ export default async function globalSetup() {
     const loginNeeded = await page.locator("#j_username").isVisible({ timeout: 15000 }).catch(() => false);
 
     if (loginNeeded) {
+        // Add these diagnostic logs:
+        console.log(`🔎 Playwright attempting login for user: "${LOCAL_USERNAME}"`);
+        console.log(`🔎 Password environment variable is ${LOCAL_PASSWORD ? 'DEFINED (Length: ' + LOCAL_PASSWORD.length + ')' : 'UNDEFINED'}`);
         console.log("👉 Login required. Filling credentials...");
         
         // 1. Wait for the form to be interactive
