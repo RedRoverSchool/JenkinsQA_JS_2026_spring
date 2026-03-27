@@ -72,7 +72,12 @@ jobs:
 
                   def realm = Jenkins.getInstance().getSecurityRealm()
                   if (realm instanceof HudsonPrivateSecurityRealm) {
-                      realm.createAccount(username, password)
+                      def user = Jenkins.instance.getUser(username)
+                      if (user != null) {
+                          user.addProperty(new HudsonPrivateSecurityRealm.Details(password))
+                      } else {
+                          realm.createAccount(username, password)
+                      }
                       Jenkins.getInstance().save()
                       println "✅ Successfully synced Jenkins password"
                   }
