@@ -96,6 +96,13 @@ jobs:
               run: bash ./.github/wait-for-jenkins.sh
 
             # TO REMOVE
+            - name: Capture Jenkins State
+              run: |
+                  curl -I http://localhost:8080/
+                  # If you have playwright installed, we can try to grab the page content
+                  curl -L http://localhost:8080/ > jenkins-debug-page.html
+
+            # TO REMOVE
             - name: Print Jenkins Logs on Failure
               if: always()
               run: cat jenkins_stdout.log
