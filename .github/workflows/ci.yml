@@ -86,15 +86,21 @@ jobs:
                   curl -L https://get.jenkins.io/war-stable/2.541.3/jenkins.war -o jenkins.war
                   export JENKINS_HOME="${{ github.workspace }}/jenkins_home"
                   
-                  # Java 25 execution
-                  nohup java -Djenkins.install.runSetupWizard=false -jar jenkins.war --httpPort=8080 > jenkins_stdout.log 2>&1 &
+                  # Java 25 execution.
+                  nohup java \
+                    --add-opens java.base/java.lang=ALL-UNNAMED \
+                    --add-opens java.base/java.util=ALL-UNNAMED \
+                    -Djenkins.install.runSetupWizard=false \
+                    -jar jenkins.war --httpPort=8080 > jenkins_stdout.log 2>&1 &
+                  
                   echo $! > jenkins.pid
-                  sleep 20
+                  sleep 45
 
             - name: Wait for the Jenkins
               # Explicitly using 'bash' fixes the "Permission Denied" error
               run: bash ./.github/wait-for-jenkins.sh
 
+            # TO REMOVE
             - name: Print Jenkins Logs on Failure
               if: always()
               run: cat jenkins_stdout.log
