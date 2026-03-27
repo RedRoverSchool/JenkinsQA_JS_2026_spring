@@ -58,11 +58,14 @@ jobs:
                   mkdir -p ${{ github.workspace }}/jenkins_home
                   cp -R "$REAL_DATA"/. ${{ github.workspace }}/jenkins_home/
                   
-                  # Cleanup old environment artifacts and force-skip Setup Wizard
+                  # Cleanup old environment artifacts
                   rm -rf ${{ github.workspace }}/jenkins_home/war
                   rm -rf ${{ github.workspace }}/jenkins_home/updates
-                  echo "2.0" > ${{ github.workspace }}/jenkins_home/jenkins.install.UpgradeWizard.state
-                  echo "2.0" > ${{ github.workspace }}/jenkins_home/jenkins.install.InstallUtil.lastExecVersion
+
+                  # THE FIX: Tell Jenkins we are ALREADY on version 2.541.3
+                  # This prevents the "Upgraded from 2.0" migration and keeps the login stable.
+                  echo "2.541.3" > ${{ github.workspace }}/jenkins_home/jenkins.install.UpgradeWizard.state
+                  echo "2.541.3" > ${{ github.workspace }}/jenkins_home/jenkins.install.InstallUtil.lastExecVersion
                   
                   rm -rf temp_extract jenkins_backup.tar.gz
 
@@ -79,18 +82,15 @@ jobs:
                   def pass = System.getenv('LOCAL_PASSWORD')
 
                   if (realm instanceof HudsonPrivateSecurityRealm) {
-                      // This forces Jenkins to re-hash the password and 
-                      // overwrite any stale data from the '2.0' upgrade state.
+                      // This forcefully overwrites any existing hash in the backup 
+                      // with a fresh one based on your GitHub Secret.
                       realm.createAccount(target, pass)
                       instance.save()
                       
-                      // Final verification check for the logs
                       def user = realm.getUser(target)
-                      if (user != null) {
-                          println "✅ SUCCESS: Account forced/synced for: ${target} (ID: ${user.getId()})"
-                      }
+                      println "✅ SUCCESS: Account forced/synced for: ${target} (ID: ${user.getId()})"
                   } else {
-                      println "❌ ERROR: Realm is ${realm.getClass().getName()}, not PrivateSecurityRealm"
+                      println "❌ ERROR: Realm is ${realm.getClass().getName()}, expected PrivateSecurityRealm"
                   }
                   EOF
               env:
