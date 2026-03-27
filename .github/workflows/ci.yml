@@ -56,13 +56,13 @@ jobs:
             - name: Extract Jenkins data
               run: |
                   mkdir -p ${{ github.workspace }}/jenkins_home
-                  # --strip-components=1 ensures jobs/ and config.xml land directly in jenkins_home
-                  tar -xvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home --strip-components=1
+                  # --strip-components=3 removes 'jenkins_backup/var/jenkins_home/' from the path
+                  tar -xvf ./jenkins_backup.tar.gz -C ${{ github.workspace }}/jenkins_home --strip-components=3
                   
-                  # Safety Check: This will confirm if the 'jobs' folder is in the right place
-                  echo "--- Verifying Extraction Layout ---"
-                  ls -d ${{ github.workspace }}/jenkins_home/jobs || echo "❌ Jobs folder not found in the root of jenkins_home"
-
+                  # VERIFICATION: This should now show config.xml in the root of jenkins_home
+                  echo "--- Verifying Final Layout ---"
+                  ls ${{ github.workspace }}/jenkins_home/config.xml && echo "✅ Success: Data is in the right place"
+                  
             # TO REMOVE
             - name: Directory Diagnostic
               run: |
