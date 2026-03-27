@@ -20,6 +20,17 @@ export default async function globalSetup() {
 
 	await page.goto(`http://${LOCAL_HOST}:${LOCAL_PORT}/`);
 
+
+
+    console.log("DEBUG: Current URL is:", page.url());
+    console.log("DEBUG: Page Title is:", await page.title());
+    const content = await page.content(); 
+    console.log("DEBUG: Page HTML Snippet:", content.substring(0, 1000));
+    await page.screenshot({ path: 'jenkins-debug-state.png', fullPage: true });
+
+
+
+
 	await page.waitForSelector("#j_username", { timeout: 120000 });
 
 	await page.locator("#j_username").fill(LOCAL_USERNAME ?? "");

@@ -118,3 +118,10 @@ jobs:
               with:
                   name: Artifacts
                   path: test-results/
+
+            - name: Upload Debug Screenshot
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: jenkins-debug-screenshot
+                  path: jenkins-debug-state.png
