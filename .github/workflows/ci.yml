@@ -66,23 +66,23 @@ jobs:
                   import jenkins.model.*
                   import hudson.security.*
 
-                  def env = System.getenv()
-                  def username = env.LOCAL_USERNAME
-                  def password = env.LOCAL_PASSWORD
+                  def username = System.getenv("LOCAL_USERNAME")
+                  def password = System.getenv("LOCAL_PASSWORD")
+                  def instance = Jenkins.getInstance()
+                  def realm = instance.getSecurityRealm()
 
-                  def realm = Jenkins.getInstance().getSecurityRealm()
                   if (realm instanceof HudsonPrivateSecurityRealm) {
-                      def user = Jenkins.instance.getUser(username)
+                      def user = instance.getUser(username)
                       if (user != null) {
+                          // This fixes the 500 error by using the existing data
                           user.addProperty(new HudsonPrivateSecurityRealm.Details(password))
                       } else {
                           realm.createAccount(username, password)
                       }
-                      Jenkins.getInstance().save()
-                      println "✅ Successfully synced Jenkins password"
+                      instance.save()
                   }
                   EOF
-
+                  
             - name: Download and Start Jenkins (No Docker)
               env:
                   LOCAL_USERNAME: ${{ secrets.LOCAL_USERNAME }}
