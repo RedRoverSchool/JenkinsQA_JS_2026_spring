@@ -7,72 +7,40 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const STORAGE_PATH = path.join(__dirname, ".auth", "storageState.json");
 
 export default async function globalSetup() {
-    const { LOCAL_HOST, LOCAL_PORT, LOCAL_USERNAME, LOCAL_PASSWORD } = process.env;
+	const { LOCAL_HOST, LOCAL_PORT, LOCAL_USERNAME, LOCAL_PASSWORD } = process.env;
 
-	console.log("🔐 Generating fresh storageState...");
+    console.log("🔐 Generating fresh storageState...");
 
 	const browser = await chromium.launch();
 	const page = await browser.newPage();
 
 	await page.goto(`http://${LOCAL_HOST}:${LOCAL_PORT}/`);
 
-    const loginNeeded = await page.locator("#j_username").isVisible({ timeout: 15000 }).catch(() => false);
+	const loginNeeded = await page.locator("#j_username").isVisible({ timeout: 15000 }).catch(() => false);
 
-    if (loginNeeded) {
-        // Add these diagnostic logs:
-        console.log(`🔎 Playwright attempting login for user: "${LOCAL_USERNAME}"`);
-        console.log(`🔎 Password environment variable is ${LOCAL_PASSWORD ? 'DEFINED (Length: ' + LOCAL_PASSWORD.length + ')' : 'UNDEFINED'}`);
-        console.log("👉 Login required. Filling credentials...");
-        
-        // 1. Wait for the form to be interactive
-        await page.waitForSelector("#j_username", { timeout: 120000 });
+	if (loginNeeded) {
+		await page.waitForSelector("#j_username", { timeout: 120000 });
+		await page.locator("#j_username").fill(LOCAL_USERNAME ?? "");
+		await page.locator('input[name="j_password"]').fill(LOCAL_PASSWORD ?? "");
 
-        // 2. Fill credentials from environment variables
-        await page.locator("#j_username").fill(LOCAL_USERNAME ?? "");
-        await page.locator('input[name="j_password"]').fill(LOCAL_PASSWORD ?? "");
+		await Promise.all([
+			page.waitForNavigation({ waitUntil: "load", timeout: 30000 }),
+			page.locator('button[name="Submit"]').click(),
+		]);
 
-        // 3. Fix the Race Condition: Wrap the click and the load state together.
-        // This ensures Playwright is already watching for the navigation 
-        // at the exact moment the button is pressed.
-        await Promise.all([
-            page.waitForNavigation({ waitUntil: "load", timeout: 30000 }),
-            page.locator('button[name="Submit"]').click(),
-        ]);
+		if (page.url().includes("loginError")) {
+			await page.screenshot({ path: 'login-error-screenshot.png' });
+			throw new Error("🛑 Jenkins Login Failed.");
+		}
 
-        // 4. Critical validation: Check if Jenkins rejected the login.
-        // Your previous code missed this because /loginError didn't match /login.
-        const finalUrl = page.url();
-        console.log("Current URL after login attempt:", finalUrl);
+		await page.waitForSelector("#side-panel", { timeout: 30000 });
+	}
 
-        if (finalUrl.includes("loginError")) {
-            const fs = await import('fs');
-            // Save the HTML so we can see the exact error message (e.g., "Invalid Credentials" vs "Expired")
-            const html = await page.content();
-            fs.writeFileSync('login-error-debug.html', html);
-            
-            // Take a screenshot in the CI runner
-            await page.screenshot({ path: 'login-error-screenshot.png' });
-            
-            throw new Error("🛑 Jenkins Login Failed. Download 'login-debug' artifact to see the error page.");
-        }
-
-        // 5. Final Confirmation: Wait for a dashboard-specific element.
-        // This guarantees the session is fully established before saving storageState.
-        await page.waitForSelector("#side-panel", { timeout: 30000 });
-        console.log("✅ Successfully reached the Dashboard.");
-    }
-    else {
-        console.log("✅ Already on Dashboard. No login required.");
-    }
-
-    console.log("Current URL after login:", page.url());
-
-    await page.context().storageState({ path: STORAGE_PATH });
+	await page.context().storageState({ path: STORAGE_PATH });
     console.log(`✅ storageState created at: ${STORAGE_PATH}`);
-
-    await browser.close();
+    
+	await browser.close();
 }

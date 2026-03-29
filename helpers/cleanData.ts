@@ -7,8 +7,6 @@ const API_TOKEN = process.env.API_TOKEN ?? "";
 
 export async function cleanData(request: APIRequestContext) {
 	const baseUrl = `http://${HOST}:${PORT}/`;
-
-	// 1. Create the auth header once
 	const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
 
 	function getCrumbFromPage(html: string) {
@@ -35,7 +33,6 @@ export async function cleanData(request: APIRequestContext) {
 		return result;
 	}
 
-	// 2. Use the native 'request' from base.ts, just inject the auth header
 	async function getPage(uri = "") {
 		const res = await request.get(`${baseUrl}${uri}`, {
 			headers: { Authorization: authHeader }
@@ -51,7 +48,6 @@ export async function cleanData(request: APIRequestContext) {
 		return await res.text();
 	}
 
-	// 3. Inject auth header AND crumb into the POST request
 	async function postPage(uri: string, body: string, crumb: string) {
 		const res = await request.post(`${baseUrl}${uri}`, {
 			headers: {
@@ -62,8 +58,7 @@ export async function cleanData(request: APIRequestContext) {
 			data: body
 		});
 
-		// 4. Treat 404 (already deleted) and 302/303 (Jenkins successful redirects) as success
-		if (res.status() !== 200 && res.status() !== 404 && res.status() !== 302 && res.status() !== 303) {
+		if (![200, 302, 303, 404].includes(res.status())) {
 			throw new Error(`POST ${uri} failed with status ${res.status()}`);
 		}
 		return res;
@@ -123,12 +118,10 @@ export async function cleanData(request: APIRequestContext) {
 	async function deleteDescription() {
 		const mainPage = await getPage("");
 		const crumb = getCrumbFromPage(mainPage);
-
 		const body = `description=&Submit=&Jenkins-Crumb=${crumb}&json=%7B%22description%22%3A+%22%22%7D`;
 		await postPage("submitDescription", body, crumb);
 	}
 
-	// 5. Run sequentially, exactly like your original script
 	await deleteViews();
 	await deleteJobs();
 	await deleteUsers();

@@ -4,9 +4,7 @@ import { cleanData } from "./helpers/cleanData";
 export const test = base.extend({
 	page: async ({ page, request }, use) => {
 		await page.goto("/");
-
 		await cleanData(request);
-
 		await use(page);
 	}
 });
