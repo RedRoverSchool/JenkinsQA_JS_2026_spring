@@ -1,19 +1,13 @@
-import { request as playwrightRequest } from "@playwright/test";
+import { APIRequestContext } from "@playwright/test";
 
 const HOST = process.env.LOCAL_HOST;
 const PORT = process.env.LOCAL_PORT;
 const USERNAME = process.env.LOCAL_USERNAME ?? "";
 const API_TOKEN = process.env.API_TOKEN ?? "";
 
-export async function cleanData() {
+export async function cleanData(request: APIRequestContext) {
 	const baseUrl = `http://${HOST}:${PORT}/`;
-
-	const apiContext = await playwrightRequest.newContext({
-		baseURL: baseUrl,
-		extraHTTPHeaders: {
-			Authorization: `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`
-		}
-	});
+    const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
 
 	function getCrumbFromPage(html: string) {
 		const CRUMB_TAG = 'data-crumb-value="';
@@ -40,7 +34,9 @@ export async function cleanData() {
 	}
 
 	async function getPage(uri = "") {
-		const res = await apiContext.get(uri);
+		const res = await request.get(`${baseUrl}${uri}`, {
+			headers: { Authorization: authHeader }
+		});
 
 		if (res.status() !== 200) {
 			if (res.status() === 404) {
@@ -53,9 +49,10 @@ export async function cleanData() {
 	}
 
 	async function postPage(uri: string, body: string, crumb: string) {
-		const res = await apiContext.post(uri, {
+		const res = await request.post(`${baseUrl}${uri}`, {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
+                Authorization: authHeader,
 				"Jenkins-Crumb": crumb
 			},
 			data: body
@@ -130,7 +127,4 @@ export async function cleanData() {
 	await deleteUsers();
 	await deleteNodes();
 	await deleteDescription();
-
-	// Destroy the context so it doesn't leak memory between tests
-	await apiContext.dispose();
 }

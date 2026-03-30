@@ -2,8 +2,8 @@ import { test as base } from "@playwright/test";
 import { cleanData } from "./helpers/cleanData";
 
 export const test = base.extend({
-	page: async ({ page }, use) => {
-		await cleanData();
+	page: async ({ page, request }, use) => {
+		await cleanData(request);
 		
 		await page.goto("/");
 		
