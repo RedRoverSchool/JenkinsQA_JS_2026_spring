@@ -1,13 +1,19 @@
-import { APIRequestContext } from "@playwright/test";
+import { request as playwrightRequest } from "@playwright/test";
 
 const HOST = process.env.LOCAL_HOST;
 const PORT = process.env.LOCAL_PORT;
 const USERNAME = process.env.LOCAL_USERNAME ?? "";
 const API_TOKEN = process.env.API_TOKEN ?? "";
 
-export async function cleanData(request: APIRequestContext) {
+export async function cleanData() {
 	const baseUrl = `http://${HOST}:${PORT}/`;
-	const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
+
+	const apiContext = await playwrightRequest.newContext({
+		baseURL: baseUrl,
+		extraHTTPHeaders: {
+			Authorization: `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`
+		}
+	});
 
 	function getCrumbFromPage(html: string) {
 		const CRUMB_TAG = 'data-crumb-value="';
@@ -34,25 +40,22 @@ export async function cleanData(request: APIRequestContext) {
 	}
 
 	async function getPage(uri = "") {
-		const res = await request.get(`${baseUrl}${uri}`, {
-			headers: { Authorization: authHeader }
-		});
+		const res = await apiContext.get(uri);
 
 		if (res.status() !== 200) {
-            if (res.status() === 404) {
-                console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
-            } else {
-                throw new Error(`🛑 Cleanup failed! POST ${uri} returned ${res.status()}`);
-            }
-        }
+			if (res.status() === 404) {
+				console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
+			} else {
+				throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${res.status()}`);
+			}
+		}
 		return await res.text();
 	}
 
 	async function postPage(uri: string, body: string, crumb: string) {
-		const res = await request.post(`${baseUrl}${uri}`, {
+		const res = await apiContext.post(uri, {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
-				Authorization: authHeader,
 				"Jenkins-Crumb": crumb
 			},
 			data: body
@@ -127,4 +130,7 @@ export async function cleanData(request: APIRequestContext) {
 	await deleteUsers();
 	await deleteNodes();
 	await deleteDescription();
+
+	// Destroy the context so it doesn't leak memory between tests
+	await apiContext.dispose();
 }
