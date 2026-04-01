@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "@/base";
 import { jenkinsData } from "@/tests/testData/bs-jenkinsData";
 
-test.describe("US_01.004 | New Item > Select an Item type", () => {
+test.describe.only("US_01.004 | New Item > Select an Item type", () => {
 	test("TC_01.004.04 | Verify item type selection section is visible", async ({ page }) => {
 		const nameItems = [
 			"Freestyle project",
@@ -26,6 +26,7 @@ test.describe("US_01.004 | New Item > Select an Item type", () => {
 		await page.waitForSelector("#items li span.label");
 
 		const textNameItemsOnPage = await page.locator("#items li span.label").allInnerTexts();
+        console.log("items: ", textNameItemsOnPage)
 		const elNameItemsOnPage = await page.locator("#items li span.label").all();
 
 		expect(textNameItemsOnPage).toEqual(nameItems);
