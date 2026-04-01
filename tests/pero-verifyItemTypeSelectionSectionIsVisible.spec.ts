@@ -34,7 +34,6 @@ test.describe.only("US_01.004 | New Item > Select an Item type", () => {
 		}
 
 		const textDescriptionItemsOnPage = await page.locator("#items li div.desc").allInnerTexts();
-		console.log("desc: ", textDescriptionItemsOnPage)
         const elDescriptionItemsOnPage = await page.locator("#items li div.desc").all();
 
 		expect(textDescriptionItemsOnPage).toEqual(descriptionItems);
