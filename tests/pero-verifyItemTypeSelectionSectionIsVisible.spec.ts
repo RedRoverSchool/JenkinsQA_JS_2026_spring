@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "@/base";
 import { jenkinsData } from "@/tests/testData/bs-jenkinsData";
 
-test.describe.only("US_01.004 | New Item > Select an Item type", () => {
+test.describe("US_01.004 | New Item > Select an Item type", () => {
 	test("TC_01.004.04 | Verify item type selection section is visible", async ({ page }) => {
 		const nameItems = [
 			"Pipeline",
