@@ -26,7 +26,6 @@ test.describe.only("US_01.004 | New Item > Select an Item type", () => {
 		await page.waitForSelector("#items li span.label");
 
 		const textNameItemsOnPage = await page.locator("#items li span.label").allInnerTexts();
-        console.log("items: ", textNameItemsOnPage)
 		const elNameItemsOnPage = await page.locator("#items li span.label").all();
 
 		expect(textNameItemsOnPage.toSorted()).toEqual(nameItems.toSorted());
@@ -35,7 +34,8 @@ test.describe.only("US_01.004 | New Item > Select an Item type", () => {
 		}
 
 		const textDescriptionItemsOnPage = await page.locator("#items li div.desc").allInnerTexts();
-		const elDescriptionItemsOnPage = await page.locator("#items li div.desc").all();
+		console.log("desc: ", textDescriptionItemsOnPage)
+        const elDescriptionItemsOnPage = await page.locator("#items li div.desc").all();
 
 		expect(textDescriptionItemsOnPage.toSorted()).toEqual(descriptionItems.toSorted());
 		for (const descriptionItemOnPage of elDescriptionItemsOnPage) {
