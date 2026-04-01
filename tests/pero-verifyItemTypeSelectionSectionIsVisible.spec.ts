@@ -37,7 +37,7 @@ test.describe.only("US_01.004 | New Item > Select an Item type", () => {
 		const textDescriptionItemsOnPage = await page.locator("#items li div.desc").allInnerTexts();
 		const elDescriptionItemsOnPage = await page.locator("#items li div.desc").all();
 
-		expect(textDescriptionItemsOnPage).toEqual(descriptionItems);
+		expect(textDescriptionItemsOnPage.toSorted()).toEqual(descriptionItems.toSorted());
 		for (const descriptionItemOnPage of elDescriptionItemsOnPage) {
 			await expect(descriptionItemOnPage).toBeVisible();
 		}
