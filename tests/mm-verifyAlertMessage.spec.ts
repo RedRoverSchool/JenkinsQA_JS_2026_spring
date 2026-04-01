@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "@/base";
 import { jenkinsData } from "@/tests/testData/mm-jenkinsData";
 
-test.describe.only("US_03.006 | Pipeline Configuration > Save or Apply>", () => {
+test.describe("US_03.006 | Pipeline Configuration > Save or Apply>", () => {
 	test("TC_03.006.02 |  Verify Alert Message for Unsaved Changes on Navigation", async ({ page }) => {
 		await page.locator("#side-panel a[href$='newJob']").click();
 		await page.locator("#name").fill(jenkinsData.projectCategory.pipeline);
