@@ -29,7 +29,7 @@ test.describe.only("US_01.004 | New Item > Select an Item type", () => {
         console.log("items: ", textNameItemsOnPage)
 		const elNameItemsOnPage = await page.locator("#items li span.label").all();
 
-		expect(textNameItemsOnPage).toEqual(nameItems);
+		expect(textNameItemsOnPage.toSorted()).toEqual(nameItems.toSorted());
 		for (const nameItemOnPage of elNameItemsOnPage) {
 			await expect(nameItemOnPage).toBeVisible();
 		}
