@@ -9,7 +9,7 @@ test.describe("US_03.006 | Pipeline Configuration > Save or Apply", () => {
 
 	test("TC_03.006.01 | Alert for Unsaved Changes on Navigation", async ({ page }) => {
 		await page.locator("#name").fill(jenkinsData.jobPipelineName);
-		await page.getByRole("radio", { name: "Pipeline" }).click();
+        await page.locator("li.org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
 		await page.locator("#ok-button").click();
 		await page.locator('[name="description"].jenkins-input').fill(jenkinsData.jobPipelineName);
 

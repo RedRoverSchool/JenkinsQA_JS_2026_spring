@@ -9,7 +9,7 @@ test.describe("US_03.001.01 | Pipeline Configuration > Enable or Disable the Pro
 
 	test('AT_03.001.01 |  "Enabled"  project', async ({ page }) => {
 		await page.locator("#name").fill(jenkinsData.jobPipelineName);
-		await page.getByRole("radio", { name: "Pipeline" }).click();
+        await page.locator("li.org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
 		await page.locator("#ok-button").click();
 		const toggleSwitch = page.locator("#enable-disable-project");
 		const isChecked = await toggleSwitch.isChecked();
@@ -17,7 +17,7 @@ test.describe("US_03.001.01 | Pipeline Configuration > Enable or Disable the Pro
 	});
 	test("AT_03.001.02 | Disable project ", async ({ page }) => {
 		await page.locator("#name").fill(jenkinsData.jobPipelineName);
-		await page.getByRole("radio", { name: "Pipeline" }).click();
+        await page.locator("li.org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
 		await page.locator("#ok-button").click();
 
 		const toggleInput = page.locator("#enable-disable-project");
@@ -32,7 +32,7 @@ test.describe("US_03.001.01 | Pipeline Configuration > Enable or Disable the Pro
 	});
 	test("AT_03.001.03 | Disable project on Homepage", async ({ page }) => {
 		await page.locator("#name").fill(jenkinsData.jobPipelineName);
-		await page.getByRole("radio", { name: "Pipeline" }).click();
+        await page.locator("li.org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
 		await page.locator("#ok-button").click();
 		await page.locator("#toggle-switch-enable-disable-project").click();
 		await page.getByRole("button", { name: "Save" }).click();
@@ -48,7 +48,7 @@ test.describe("US_03.001.01 | Pipeline Configuration > Enable or Disable the Pro
 	});
 	test("AT_03.001.04 | Enable project on Homepage", async ({ page }) => {
 		await page.locator("#name").fill(jenkinsData.jobPipelineName);
-		await page.getByRole("radio", { name: "Pipeline" }).click();
+        await page.locator("li.org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
 		await page.locator("#ok-button").click();
 		await page.getByRole("button", { name: "Save" }).click();
 		await page.locator("#jenkins-head-icon").click();
