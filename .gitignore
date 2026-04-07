@@ -1,0 +1,28 @@
+.prettierrc
+
+### IntelliJ IDEA ###
+.idea/*
+
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Project ###
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+.env
+vscode/
+.auth/
+logs/

@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		/* Basic Options */
+		"target": "ESNext",
+		"lib": ["ESNext", "DOM"],
+		"strict": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+
+		/* Module Settings (Required for ESM) */
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+
+		/* Directory Settings */
+		"rootDir": ".",
+		"outDir": "dist",
+		"sourceMap": true,
+
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./*"]
+		}
+	},
+	"include": ["**/*.ts", "playwright.config.ts"],
+	"exclude": ["node_modules", "dist"]
+}
