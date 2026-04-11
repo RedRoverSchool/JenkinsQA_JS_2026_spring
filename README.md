@@ -1,4 +1,4 @@
-<h1 align="center">ProjectJS 2025 Fall</h1>
+<h1 align="center">ProjectJS 2026 Spring</h1>
 
 <p align="center">
   <img src="media/jenkins.svg" alt="Jenkins logo" width="100"/>
@@ -8,35 +8,36 @@
 
 **Предварительные условия (Prerequisites)**
 
--   Chrome browser
--   Node.js version 20 (https://nodejs.org/en/download)
+-   Chrome
+-   Node.js версия 20 (https://nodejs.org/en/download)
 -   NPM (устанавливается вместе с Node)
 -   VSCode
--   Jenkins version 2.541.3
+-   Java версия 25
+-   Jenkins версия 2.541.3
 
 **Как запустить проект (How to run the project)**
 
-1. Clone repository to your local folder "c:\Js_2026_Spring\Js_Practice"
-2. Open VSCode and navigate to project folder "c:\Js_2026_Spring\Js_Practice\JenkinsQA_JS_2026_spring"
-3. Create `.env` file and modify it
-4. In VSCode terminal, run command `npm ci` then `npx playwright install`
-5. Run command `npx playwright test --ui` in VSCode terminal to run tests
+1. Клонируем репо на локальный компьютер в папку "c:\Js_2026_Spring\Js_Practice" (создаем если еще нет)
+2. Открываем склонированную папку в VSCode ("c:\Js_2026_Spring\Js_Practice\JenkinsQA_JS_2026_spring")
+3. Создаем `.env` файл и модифицируем его
+4. В VSCode, открываем терминал и пишем две комманды: `npm ci`, затем `npx playwright install`
+5. В терминале, запускаем тесты через комманду `npx playwright test --ui`
 
-Note: Global cleanup is executed before each test
+Пометка: Глобальная очистка данных запускается перед каждым тестом. 
 
 **Соглашение о кодировании проекта (Project Coding Convention)**
 
-Naming files:
+Как называем файлы:
 
--   Use camelCase for naming files: `myFirstTest`
--   Name should be relevant to the user story name
+-   Используем camelCase: `myFirstTest.spec.ts`
+-   Имя файла должно соответствовать User Story
 
 **Структура спецификации (Spec structure)**
 
--   Each block `describe` should be named as a user story
--   Each test (`test`) should be named as a test case
+-   Каждый блок `describe` должен быть назван в соотвестсвии с User Story
+-   Каждый блок `test` должен быть назван в соответсвии с Test Case
 
-example:
+Пример:
 
 ```
 describe('US_01.001 | New Item > Create a new item', () => {
