@@ -1,0 +1,1 @@
+export const jobName = "Freestyle Project";
