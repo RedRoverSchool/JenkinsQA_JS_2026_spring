@@ -6,7 +6,7 @@ export const jenkinsData = {
 }
 
 export const jenkinsLocators = {
-    newItemButton: "[it='hudson.model.Hudson@1f527118']",
+    newItemButton: "a[href='/view/all/newJob']",
     inputField: "#name",
     folderType: ".com_cloudbees_hudson_plugins_folder_Folder",
     okButton: "#ok-button",
