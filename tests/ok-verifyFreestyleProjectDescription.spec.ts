@@ -7,7 +7,7 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await page.getByRole('link', { name: "Create a job" }).click();
         await page.getByRole('textbox', { name: "name" }).fill(jobName);
         await page.getByRole('radio', { name: "Freestyle project" }).click();
-        await page.getByRole('button', { name: "OK1" }).click();
+        await page.getByRole('button', { name: "OK" }).click();
     });
 
     test("TC_02.002.01 | Verify Description field is displayed", async ({ page }: { page: Page }) => {
