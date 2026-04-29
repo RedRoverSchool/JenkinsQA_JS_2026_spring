@@ -6,21 +6,6 @@ test.beforeEach( async ({ page }: { page: Page }) => {
 	await page.locator("#side-panel a[href$='newJob']").click();
 	});
 
-// test.describe("US_01.001 | New Item > Create a new item", () => {
-	
-// 	test("TC_01.001.07 | Verify new item creation", async ({ page }: { page: Page }) => {
-// 		await page.locator("#name").fill(jenkinsData.jobName);
-// 		await page.locator("#j-add-item-type-standalone-projects ul li[class*='FreeStyleProject']").click();
-// 		await page.locator("#ok-button").click();
-
-// 		await page.locator(".app-jenkins-logo").click();
-
-// 		const job = await page.locator("#projectstatus .jenkins-table__link").getAttribute("href");
-// 		expect(job).toContain(jenkinsData.jobName);
-// 	});
-	
-// });
-
 test.describe("US_01.002 | New Item > Folder", () => {
 
     test("TC_01.002.01 | Verify new folder", async ({ page }: { page: Page }) => {
