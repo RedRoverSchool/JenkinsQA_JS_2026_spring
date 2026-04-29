@@ -17,4 +17,13 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         const descriptionTextarea = page.locator("textarea[name='description']");
         await expect(descriptionTextarea).toBeVisible();
     });
+
+    test("TC_02.002.02 | Verify Preview option is displayed", async ({ page }: { page: Page }) => {
+        const sectionTitle = page.locator("#general");
+        await expect(sectionTitle).toBeVisible();
+
+        const previewLink = page.locator("a.textarea-show-preview");
+        await expect(previewLink).toBeVisible();      
+    });
 });
+
