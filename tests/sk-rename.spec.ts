@@ -27,7 +27,7 @@ test.describe("US_06.002 | Multibranch pipeline Configuration > Rename", () => {
         await expect(updatedProjectName).toHaveText(`New ${jenkinsData.projectName}`);  
     });
 
-     test("TC_06.002.02 | Renaming project from the main menu", async ({ page}: { page: Page }) => {
+     test("TC_06.002.02 | Renaming project from the main page", async ({ page}: { page: Page }) => {
         await page.locator(".app-jenkins-logo").click();
         await page.getByRole("link", {name: `${jenkinsData.projectName}`}).hover();
 
