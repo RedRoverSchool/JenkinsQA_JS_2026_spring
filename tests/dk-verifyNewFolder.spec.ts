@@ -4,7 +4,7 @@ import { jenkinsData } from "./testData/dk-data";
 test.describe('US_01.002 | New Item > Folder', () => {
 
   test.beforeEach(async ({ page }: { page: Page }) => {
-     await page.locator('a[it="hudson.model.Hudson@232d376e"]').click();
+     await page.locator("#side-panel a[href$='newJob']").click();
      // await page.getByRole('link', { name: 'New Item' }).click();  
 
       await page.locator('.add-item-name > .jenkins-input').fill(jenkinsData.folderName)
