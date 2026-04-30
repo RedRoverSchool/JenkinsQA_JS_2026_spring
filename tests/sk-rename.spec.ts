@@ -51,4 +51,16 @@ test.describe("US_06.002 | Multibranch pipeline Configuration > Rename", () => {
 
         await expect(updatedProjectName).toHaveText(`New ${jenkinsData.projectName}`);
     });
+
+    test("TC_06.002.03 | Error when renaming a project with an empty name", async ({ page }: { page: Page }) => {
+        await page.getByRole("button", {name: "Save"}).click();
+        await page.getByRole("link", {name: "Rename"}).click();
+
+        await page.locator("[name='newName']").clear();
+        await page.getByRole("button", {name: "Rename"}).click();
+        await page.waitForURL("**/confirmRename");
+
+        await expect(page.getByRole("heading")).toHaveText(jenkinsData.errorHeading);
+        await expect(page.locator("h1+p")).toHaveText(jenkinsData.errorMessages.emptyProjectName);
+    });
 });
