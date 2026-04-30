@@ -1,5 +1,4 @@
-import { test, expect } from "@/base";
-import {Page} from "@playwright/test";
+import { test, expect, Page } from "@/base";
 import {createNewItem, jenkinsData, jenkinsLocators} from './testData/vida-data';
 
 test.describe("US_05.003 | Folder Configuration > Pipeline Libraries", (): void => {
