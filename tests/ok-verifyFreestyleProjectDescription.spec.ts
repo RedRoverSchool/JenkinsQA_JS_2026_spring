@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { jobName } from "./testData/ok-data";
+import { jobName, description } from "./testData/ok-data";
 
 test.describe("US_02.002 | Freestyle Project Configuration > Project Description", () => {
 
@@ -25,5 +25,14 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         const previewLink = page.locator("a.textarea-show-preview");
         await expect(previewLink).toBeVisible();      
     });
-});
 
+    test("TC_02.002.03 | Add description via Configuration page", async ({ page }: { page: Page }) => {
+        await page.locator("textarea[name='description']").fill(description);
+        await page.locator("button[value='Save']").click();
+
+        const descriptionField = page.locator("#description-content");
+                
+        await expect(page.getByRole('link', { name: 'Status' })).toHaveClass(/task-link--active/);
+        await expect(descriptionField).toHaveText(description);
+    });
+});
