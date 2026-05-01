@@ -23,7 +23,7 @@ test.describe('US_05.001 | Folder Configuration > Display Name and Description',
         await page.locator(".app-jenkins-logo").click();
         
         // Step 1 - Click on the arrow ^ next to the folder name
-        await page.locator("#job_TestFolder .jenkins-menu-dropdown-chevron").click();
+        await page.locator(`#job_${folderData.displayName} .jenkins-menu-dropdown-chevron`).click();
         
         // Step 2 - Click on "Configure" option
         await page.getByRole("link", { name: "Configure" }).click();
