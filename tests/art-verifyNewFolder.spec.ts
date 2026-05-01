@@ -1,6 +1,6 @@
 import { test, expect } from "@/base";
 import { Page } from "@playwright/test";
-import { jenkinsData } from "./testData/az-data";
+import { jenkinsData } from "./testData/atr-data";
 
 test.beforeEach( async ({ page }: { page: Page }) => {
 	await page.locator("#side-panel a[href$='newJob']").click();
