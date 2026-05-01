@@ -63,4 +63,26 @@ test.describe("US_06.002 | Multibranch pipeline Configuration > Rename", () => {
         await expect(page.getByRole("heading")).toHaveText(jenkinsData.errorHeading);
         await expect(page.locator("h1+p")).toHaveText(jenkinsData.errorMessages.emptyProjectName);
     });
+
+     for (const unsafeCharacter of jenkinsData.unsafeCharacters) {
+        test(`TC_06.002.04 | Error when renaming a project using a ${unsafeCharacter} character`, async ({ page }: { page: Page }) => {
+            await page.getByRole("button", {name: "Save"}).click();
+            await page.getByRole("link", {name: "Rename"}).click();
+
+            const newNameField = page.locator("[name='newName']");
+            await newNameField.clear();
+            await newNameField.fill(`${jenkinsData.projectName}${unsafeCharacter}`);
+            
+            await page.getByRole("button", {name: "Rename"}).click();
+            await page.waitForURL("**/confirmRename");
+
+            const invalidChar = unsafeCharacter === "&" ? "&amp;" : 
+                unsafeCharacter === "<" ? "&lt;" : 
+                unsafeCharacter === ">" ? "&gt;" : 
+                unsafeCharacter;
+
+            await expect(page.getByRole("heading")).toHaveText(jenkinsData.errorHeading);
+            await expect(page.locator("h1+p")).toHaveText(`‘${invalidChar}’ ${jenkinsData.errorMessages.unsafeCharacterMessage}`);
+        });
+    }   
 });
