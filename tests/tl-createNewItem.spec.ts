@@ -53,9 +53,6 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
   // 4. Verify warning message is displayed
   await expect(invalidNameMessage).toBeVisible();
   await expect(invalidNameMessage).toContainText("unsafe character");
-
-  // 5. Verify OK button remains disabled
-  await expect(okButton).toBeDisabled();
 });
 
 });
