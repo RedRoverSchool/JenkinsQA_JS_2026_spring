@@ -30,7 +30,6 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
       .click();
 
     await page.click('button[data-id=ok]');
-
     await expect(page.locator('a[href="newJob"]')).toBeVisible();
   });
 });
