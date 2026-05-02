@@ -4,6 +4,7 @@ export const jenkinsData = {
 	errorHeading: "Error",
 	errorMessages: {
 		emptyProjectName: "No name is specified",
-		unsafeCharacterMessage: "is an unsafe character"
+		unsafeCharacterMessage: "is an unsafe character",
+		existingNameErrorMessage: "The new name is the same as the current name.",
 	}
 };
