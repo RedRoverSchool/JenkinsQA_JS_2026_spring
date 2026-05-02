@@ -1,5 +1,4 @@
-import { test, expect } from "@/base";
-import { Page } from "@/base";
+import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/am-data";
 
 
@@ -18,5 +17,19 @@ test.describe("US_01.005 | New Item > Create Multibranch Pipeline" , () => {
     });
 
 
-    
+
+    for(const invalidChar of jenkinsData.invalidCharacters){
+    test(`TC_01.005.02 | Create Multibranch Pipeline with invalid credentials ${invalidChar}`,
+        async ({page} : {page : Page}) => {
+
+        await page.locator(".task-link-text", {hasText : "New Item"}).click();
+        await page.locator("#name").fill(invalidChar);
+        await page.locator("[class*='WorkflowMultiBranchProject']").check();
+            
+        const error = page.locator("#itemname-invalid");
+
+        await expect(error).toBeVisible();
+        await expect(error).toContainText(`» ‘${invalidChar}’ is an unsafe character`);
+        });
+    }
 });
