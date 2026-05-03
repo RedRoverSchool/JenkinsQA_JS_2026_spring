@@ -21,6 +21,7 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
       await dialog.accept();
     });
 
+    await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(1);
     const item = page.locator(`[href*=${ozData.jobName}].jenkins-table__link`);
     await item.hover();
     await item.locator('button.jenkins-menu-dropdown-chevron').click();
@@ -30,6 +31,6 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
       .click();
 
     await page.click('button[data-id=ok]');
-    await expect(page.locator('a[href="newJob"]')).toBeVisible();
+    await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(0);
   });
 });
