@@ -1,7 +1,6 @@
 import { Page } from '../../base';
 export const ozData = {
   jobName: 'TestJob',
-  jobNameRenamed: 'TestJob2',
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
 };
