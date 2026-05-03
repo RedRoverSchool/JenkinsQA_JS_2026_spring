@@ -1,12 +1,12 @@
-import { test, expect, Page } from "@/ov-folder";
+import { test, expect, Page } from "@/tests/testData/ov-organizationFolder.fixtures";
 
 test.describe("US_07.001 | Organization folder Configuration > Change General Settings", () => {
-    test("TC_07.001.01 | Access the General Settings from Job Dropdown on the main Jenkins page", async ({page, existingFolderName }: {page: Page; existingFolderName: string}) => {
-        await expect(page.getByRole("heading", { name: existingFolderName})).toBeVisible();
+    test("TC_07.001.01 | Access the General Settings from Job Dropdown on the main Jenkins page", async ({page, organizationFolderName }: {page: Page; organizationFolderName: string}) => {
+        await expect(page.getByRole("heading", { name: organizationFolderName})).toBeVisible();
 
         await page.locator("span.jenkins-mobile-hide").click();
         
-        const folderName = page.getByRole('link', { name: existingFolderName });
+        const folderName = page.getByRole('link', { name: organizationFolderName });
         await folderName.hover();
         await folderName.getByRole("button").click();
 
