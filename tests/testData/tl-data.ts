@@ -12,6 +12,23 @@ export const newItemLocators = {
   invalidNameMessage: "#itemname-invalid",
 };
 
+export const folderConfigData = {
+  folderName: "test-folder-config",
+};
+
+export const folderConfigLocators = {
+  folderType: ".com_cloudbees_hudson_plugins_folder_Folder",
+  configureLink: "a[href$='/configure']",
+};
+
 export async function openNewItemPage(page: Page): Promise<void> {
   await page.locator(newItemLocators.newItemLink).click();
+}
+
+export async function createFolder(page: Page, folderName: string): Promise<void> {
+  await openNewItemPage(page);
+  await page.locator(newItemLocators.itemNameInput).fill(folderName);
+  await page.locator(folderConfigLocators.folderType).click();
+  await page.locator(newItemLocators.okButton).click();
+  await page.locator("button[name='Submit']").click();
 }
