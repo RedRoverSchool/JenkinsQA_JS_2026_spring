@@ -2,6 +2,7 @@ import { Page } from "@/base";
 
 export const newItemData = {
   invalidItemName: "test?item",
+  freestyleProjectName: "test-freestyle-project",
 };
 
 export const newItemLocators = {
