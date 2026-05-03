@@ -22,10 +22,6 @@ test.describe("US_12.002 | Dashboard with the items > Sort and Filter Items", ()
                             .allTextContents()).map(n => n.trim()).filter(n => n.length > 0)
         const sortedDashboardItems = [...dashboardItems].sort((a, b) => a.localeCompare(b))
 
-        // console.log("createdDashboardItems: "+ createdDashboardItems)
-        // console.log("dashboardItems: "+ dashboardItems)
-        // console.log("sortedDashboardItems: "+sortedDashboardItems)
-
         expect(dashboardItems).toEqual(sortedDashboardItems)
         
     });
