@@ -1,6 +1,11 @@
+function getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+}
+const number = getRandomInt(100);
+
 export const jenkinsData = {
-	jobName: "item1",
-	folder: "folderNew",
+	jobName: `Project-${number}`,
+	folder: `folderNew-${number}`,
 	displayName: "Example",
 	description: "Something text"
 };
