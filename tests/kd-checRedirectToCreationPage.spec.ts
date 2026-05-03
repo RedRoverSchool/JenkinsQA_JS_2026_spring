@@ -8,4 +8,4 @@ test.describe('US_01.001 | New Item > Creatе a new item #6', () => {
 
         await expect(page.url()).toContain(URLs.createNewItem);
     });
-});
+}); 
