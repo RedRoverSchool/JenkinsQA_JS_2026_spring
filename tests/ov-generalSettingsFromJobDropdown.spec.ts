@@ -15,5 +15,5 @@ test.describe("US_07.001 | Organization folder Configuration > Change General Se
 
         await expect(page.locator("h2#general")).toBeVisible();
         await expect(page.locator("h2#general")).toHaveText("General");
-    })
+    });
 });
