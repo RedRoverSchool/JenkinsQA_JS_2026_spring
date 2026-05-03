@@ -1,3 +1,3 @@
 export const URLs = {
-    createNewItem: "http://localhost:8080/",
+    createNewItem: "/view/all/newJob",
 }
