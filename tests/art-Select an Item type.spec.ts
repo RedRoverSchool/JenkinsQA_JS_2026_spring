@@ -1,5 +1,4 @@
-import { test, expect } from "@/base";
-import { Page } from "@playwright/test";
+import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/art-data";
 
 test.describe("US_01.004 | New Item > Select an Item type", () => {
