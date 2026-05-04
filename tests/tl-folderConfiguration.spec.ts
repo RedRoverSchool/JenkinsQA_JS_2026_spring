@@ -47,7 +47,7 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
 
   await page.locator(commonLocators.submitButton).click();
 
-  await expect(page.getByText(folderConfigData.updatedDescription, { exact: true })).toBeVisible();
+  await expect(page.locator("#main-panel").getByText(folderConfigData.updatedDescription, { exact: true })).toBeVisible();
 });
 
 });
