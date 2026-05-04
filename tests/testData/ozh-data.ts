@@ -11,10 +11,15 @@ export const ozhJenkinsLocators = {
   newFreestyleProject: '.hudson_model_FreeStyleProject',
   itemNameInput: 'input.jenkins-input#name',
   okBtn: 'button#ok-button',
-  itemSidePanel: '#side-panel',
+  itemPageLink: `a.jenkins-table__link[href="job/${ozData.jobName}/"]`,
   SCMButton: 'button[data-section-id=source-code-management]',
   repoUrlInput: 'input[name="_.url"]',
   repoUrlError: 'div[name="userRemoteConfigs"] .error',
+};
+
+export const projectSidePanelLocators = {
+  projectSidePanel: '#side-panel',
+  deleteProjectBtn: 'a[data-title="Delete Project"]',
 };
 
 export async function createNewItem(page: Page): Promise<void> {
