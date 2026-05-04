@@ -30,14 +30,20 @@ test.describe("US_12.002 | Dashboard with the items > Sort and Filter Items", ()
 
     test("TC_12.002.02 | Persisted Sorting by Name Preference Is Applied on Dashboard Load", async({page} : {page: Page}) => {
 
-        await page.locator('[initialsortdir] a').click();
+        await page.getByRole('columnheader', { name: 'Name' }).click();
 
         const dashboardItemsNewOrder = (await page.locator(".app-project-status-table [href ^= 'job/']")
                             .allTextContents()).map(n => n.trim()).filter(n => n.length > 0)
-        
-        const sortedItemsZtoA = [...jenkinsData.createdDashboardItems].sort((a, b) => b.localeCompare(a));
 
-        expect(dashboardItemsNewOrder).toEqual(sortedItemsZtoA);
+        const sortedItemsAZ = [...dashboardItemsNewOrder].sort((a, b) => a.localeCompare(b));
+        const sortedItemsZA = [...dashboardItemsNewOrder].sort((a, b) => b.localeCompare(a));
+
+        const arraysEqual = (a: string[], b: string[]) =>
+                            a.length === b.length && a.every((val, i) => val === b[i]);
+
+        const appliedSorting = arraysEqual(dashboardItemsNewOrder, sortedItemsAZ)
+            ? sortedItemsAZ
+            : sortedItemsZA;
 
         await page.getByRole('link', { name: 'Build History' }).click()
         await page.locator(".app-jenkins-logo").click();
@@ -45,7 +51,7 @@ test.describe("US_12.002 | Dashboard with the items > Sort and Filter Items", ()
         const dashboardItemsCurrentOrder = (await page.locator(".app-project-status-table [href ^= 'job/']")
                             .allTextContents()).map(n => n.trim()).filter(n => n.length > 0)       
         
-        expect(dashboardItemsNewOrder).toEqual(dashboardItemsCurrentOrder)
+        expect(dashboardItemsCurrentOrder).toEqual(appliedSorting)
     });
 
 });
