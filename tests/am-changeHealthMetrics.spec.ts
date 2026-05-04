@@ -40,12 +40,13 @@ test.describe("US_06.009| Multibranch pipeline Configuration > Change Health met
         await chooseTheMetric(page, "Health of the primary branch of a repository");
 
         const metrics = page.locator("[descriptorid]");
-        const textResultMetrics = (await metrics.allTextContents()).map(cleanUpRedundantSpace);
-    
-        expect(textResultMetrics).toEqual([
+        await expect.poll(async () => {
+            return (await metrics.allTextContents()).map(cleanUpRedundantSpace);
+        }).toEqual([
             "Child item with the given name Child Name",
             "Child item with worst health Recursive",
-            "Health of the primary branch of a repository"])
+            "Health of the primary branch of a repository"
+        ]);
         });
 
 });
