@@ -11,10 +11,15 @@ export const ozhJenkinsLocators = {
   newFreestyleProject: '.hudson_model_FreeStyleProject',
   itemNameInput: 'input.jenkins-input#name',
   okBtn: 'button#ok-button',
-  itemSidePanel: '#side-panel',
+  itemPageLink: `a.jenkins-table__link[href*="job/${ozData.jobName}/"]`,
   SCMButton: 'button[data-section-id=source-code-management]',
   repoUrlInput: 'input[name="_.url"]',
   repoUrlError: 'div[name="userRemoteConfigs"] .error',
+  itemSidePanel: '#side-panel',
+};
+
+export const projectSidePanelLocators = {
+  deleteProjectBtn: 'a[data-title="Delete Project"]',
 };
 
 export async function createNewItem(page: Page): Promise<void> {
@@ -22,4 +27,5 @@ export async function createNewItem(page: Page): Promise<void> {
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(ozData.jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
+  await page.waitForLoadState('networkidle');
 }
