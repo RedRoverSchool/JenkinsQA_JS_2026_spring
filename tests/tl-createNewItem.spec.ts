@@ -23,5 +23,20 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
     await page.locator(newItemLocators.freestyleProject).click();
 
     await expect(page.locator(newItemLocators.invalidNameMessage)).toBeVisible();
-    await expect(page.locator(newItemLocators.invalidNameMessage)).toContainText("unsafe character");  });
+    await expect(page.locator(newItemLocators.invalidNameMessage)).toContainText("unsafe character");  
+  });
+
+  test("TC_01.001.24 | Verify successful item creation", async ({ page }: { page: Page }) => {
+  await openNewItemPage(page);
+
+  await page.locator(newItemLocators.itemNameInput).fill(newItemData.freestyleProjectName);
+  await page.locator(newItemLocators.freestyleProject).click();
+  await page.locator(newItemLocators.okButton).click();
+
+  await expect(page.getByText(newItemData.freestyleProjectName)).toBeVisible();
 });
+
+});
+
+  
+
