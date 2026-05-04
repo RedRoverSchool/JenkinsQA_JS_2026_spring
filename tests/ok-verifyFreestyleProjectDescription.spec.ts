@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { jobName, description } from "./testData/ok-data";
+import { jobName, description, descriptionUpdated } from "./testData/ok-data";
 
 test.describe("US_02.002 | Freestyle Project Configuration > Project Description", () => {
 
@@ -49,4 +49,19 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await expect(descriptionField).toHaveText(description);
         await expect(page.getByRole('link', { name: 'Status' })).toHaveClass(/task-link--active/);
     });    
+
+    test("TC_02.002.05 | Edit description via Status page", async ({ page }: { page: Page }) => {
+        const descriptionInputField = page.locator("textarea[name='description']");
+
+        await descriptionInputField.fill(description);
+        await page.getByRole('button', { name: 'Save' }).click();
+        await page.getByRole('link', { name: 'Edit description' }).click();
+        await descriptionInputField.fill(descriptionUpdated);
+        await page.getByRole('button', { name: 'Save' }).click();
+        
+        const descriptionField = page.locator("#description-content");
+
+        await expect(descriptionField).toHaveText(descriptionUpdated);
+        await expect(page.getByRole('link', { name: 'Status' })).toHaveClass(/task-link--active/);
+    });
 });
