@@ -22,7 +22,7 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
     await item.locator('button.jenkins-menu-dropdown-chevron').click();
     const itemDropDown = page.locator(`div.jenkins-dropdown`);
     await itemDropDown
-      .locator(`button[href="/job/${ozData.jobName}/doDelete"].jenkins-dropdown__item`)
+      .locator(`button[href*="job/${ozData.jobName}/doDelete"].jenkins-dropdown__item`)
       .click();
     await page.click('button[data-id=ok]');
     await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(0);
@@ -30,7 +30,7 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
 
   test(`TC_16.008.02 | Verify deleting project on project's page`, async ({ page }) => {
     await page.locator('.app-jenkins-logo').click();
-    await page.locator(ozhJenkinsLocators.itemPageLink).click();
+    await page.goto(`/job/${ozData.jobName}/`);
     await page.locator(projectSidePanelLocators.deleteProjectBtn).click();
     await page.click('button[data-id=ok]');
     await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(0);
