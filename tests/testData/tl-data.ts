@@ -14,6 +14,7 @@ export const newItemLocators = {
 
 export const folderConfigData = {
   folderName: "test-folder-config",
+  displayName: "Updated Folder Display Name",
 };
 
 export const folderConfigLocators = {
