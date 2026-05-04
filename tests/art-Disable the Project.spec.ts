@@ -1,7 +1,6 @@
 import { test, expect } from "@/base";
 import { Page } from "@playwright/test";
 import { jenkinsData } from "./testData/art-data";
-import { versions } from "node:process";
 
 test.beforeEach( async ({ page }: { page: Page }) => {
     await page.locator("#side-panel a[href$='newJob']").click();
@@ -11,9 +10,9 @@ test.beforeEach( async ({ page }: { page: Page }) => {
     await page.locator(".app-jenkins-logo").click();
     });
 
-test.describe("US_02.001 | New Item > Folder", () => {
+test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable the Project", () => {
 
-    test("TC_02.001.02 | Verify new folder", async ({ page }: { page: Page }) => {
+    test("TC_02.001.02 | Disable the Project", async ({ page }: { page: Page }) => {
         
         await page.locator(".jenkins-table__link").hover();
         await page.locator(".jenkins-menu-dropdown-chevron").click();
