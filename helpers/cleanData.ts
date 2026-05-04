@@ -7,7 +7,7 @@ const API_TOKEN = process.env.API_TOKEN ?? "";
 
 export async function cleanData(request: APIRequestContext) {
 	const baseUrl = `http://${HOST}:${PORT}/`;
-    const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
+	const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
 
 	function getCrumbFromPage(html: string) {
 		const CRUMB_TAG = 'data-crumb-value="';
@@ -52,7 +52,7 @@ export async function cleanData(request: APIRequestContext) {
 		const res = await request.post(`${baseUrl}${uri}`, {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
-                Authorization: authHeader,
+				Authorization: authHeader,
 				"Jenkins-Crumb": crumb
 			},
 			data: body
@@ -98,11 +98,11 @@ export async function cleanData(request: APIRequestContext) {
 
 	async function deleteNodes() {
 		const mainPage = await getPage("");
-		await deleteByLink(
-			"computer/{name}/doDelete",
-			getSubstringsFromPage(mainPage, 'href="/computer/', '/"'),
-			getCrumbFromPage(mainPage)
-		);
+		const nodes = getSubstringsFromPage(mainPage, 'href="/computer/', '/"');
+
+		nodes.delete("(built-in)");
+
+		await deleteByLink("computer/{name}/doDelete", nodes, getCrumbFromPage(mainPage));
 	}
 
 	async function deleteUsers() {
