@@ -15,10 +15,10 @@ export const ozhJenkinsLocators = {
   SCMButton: 'button[data-section-id=source-code-management]',
   repoUrlInput: 'input[name="_.url"]',
   repoUrlError: 'div[name="userRemoteConfigs"] .error',
+  itemSidePanel: '#side-panel',
 };
 
 export const projectSidePanelLocators = {
-  projectSidePanel: '#side-panel',
   deleteProjectBtn: 'a[data-title="Delete Project"]',
 };
 
