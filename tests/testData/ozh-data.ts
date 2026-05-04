@@ -22,6 +22,15 @@ export const projectSidePanelLocators = {
   deleteProjectBtn: 'a[data-title="Delete Project"]',
 };
 
+export const manageJenkinsLocators = {
+  manageJenkinsBtn: '.jenkins-header__actions a[href*="manage"]',
+};
+
+export const manageCredentialsLocators = {
+  goToCredentialsBtn: 'a[href="credentials"]',
+  addCredentialsBtn: 'button[data-type="credentials-add-store-item"]',
+};
+
 export async function createNewItem(page: Page): Promise<void> {
   await page.locator(ozhJenkinsLocators.newJobBtn).click();
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(ozData.jobName);
