@@ -19,4 +19,19 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
   await expect(page.getByRole("link", { name: "Preview" })).toBeVisible();
 });
 
+  test("TC_02.002.08 | Verify description is displayed after Save", async ({ page }: { page: Page }) => {
+
+  const description = "This project is used for automated CI/CD workflow testing.";
+  await createFreestyleProject(page, newItemData.freestyleProjectName);
+  await page.goto(`/job/${newItemData.freestyleProjectName}/configure`);
+
+  const descriptionTextarea = page.locator('textarea[name="description"]');  await descriptionTextarea.clear();
+  await descriptionTextarea.fill(description);
+  await descriptionTextarea.press("Tab");
+  await page.locator("button[name='Submit']").click();
+
+  await expect(page.locator("#main-panel").getByText(description, { exact: true })).toBeVisible();
+
+});
+
 });
