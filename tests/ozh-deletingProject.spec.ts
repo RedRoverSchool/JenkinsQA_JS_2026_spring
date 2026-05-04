@@ -9,13 +9,13 @@ import {
 test.describe('US_16.008 | Freestyle Project Management > Delete Project', () => {
   test.beforeEach(async ({ page }) => {
     await createNewItem(page);
+    await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
   });
   test('TC_16.008.01 | Verify deleting project via dropdown menu', async ({
     page,
   }: {
     page: Page;
   }) => {
-    await page.locator('.app-jenkins-logo').click();
     await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(1);
     const item = page.locator(`[href*=${ozData.jobName}].jenkins-table__link`);
     await item.hover();
@@ -29,7 +29,6 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
   });
 
   test(`TC_16.008.02 | Verify deleting project on project's page`, async ({ page }) => {
-    await page.locator('.app-jenkins-logo').click();
     await page.goto(`/job/${ozData.jobName}/`);
     await page.locator(projectSidePanelLocators.deleteProjectBtn).click();
     await page.click('button[data-id=ok]');
