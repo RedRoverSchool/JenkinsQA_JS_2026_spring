@@ -8,5 +8,6 @@ export const jenkinsData = {
 	folder: `Folder-${number}`,
 	displayName: "Example",
 	description: "Something text",
-	pipelineName: `Pipeline-${number}`
+	pipelineName: `Pipeline-${number}`,
+	multiConfigProject: `MC-Project-${number}`
 };

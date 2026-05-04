@@ -11,4 +11,12 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
     await expect(page.getByText("Description")).toBeVisible();
   });
 
+  test("TC_02.002.07 | Verify Preview option is available", async ({ page }: { page: Page }) => {
+  await createFreestyleProject(page, newItemData.freestyleProjectName);
+
+  await page.locator("a[href$='/configure']").click();
+
+  await expect(page.getByRole("link", { name: "Preview" })).toBeVisible();
+});
+
 });
