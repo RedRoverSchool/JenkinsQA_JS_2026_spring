@@ -33,7 +33,7 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
   await page.locator(newItemLocators.freestyleProject).click();
   await page.locator(newItemLocators.okButton).click();
 
-  await expect(page).toHaveURL(/configure/);
+  await expect(page.getByText(newItemData.freestyleProjectName)).toBeVisible();
 });
 
 });
