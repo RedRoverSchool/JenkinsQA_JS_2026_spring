@@ -11,10 +11,6 @@ test.describe("US_10.009 | Manage Jenkins > Nodes", () => {
 		await page.locator("#ok").click();
         await page.locator("#bottom-sticker > div > button").click();
 
-		await page.locator(".app-jenkins-logo").click();
-        await page.locator("#root-action-ManageJenkinsAction").click();
-        await page.locator(".jenkins-section__item a[href='computer']").click();
-
         const nodeLinks = await page.locator("a[href^='../computer']").allInnerTexts();
 		expect(nodeLinks).toContain(jenkinsData.nodeName);
 	});
