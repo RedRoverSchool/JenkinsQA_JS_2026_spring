@@ -3,6 +3,7 @@ import { Page } from "@/base";
 export const newItemData = {
   invalidItemName: "test?item",
   freestyleProjectName: "test-freestyle-project",
+  existingItemName: "existing-item",
 };
 
 export const newItemLocators = {
@@ -24,6 +25,7 @@ export const folderConfigLocators = {
 };
 
 export async function openNewItemPage(page: Page): Promise<void> {
+  await page.goto("/");
   await page.locator(newItemLocators.newItemLink).click();
 }
 
