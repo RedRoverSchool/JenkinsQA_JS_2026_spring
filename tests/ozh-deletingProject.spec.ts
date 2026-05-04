@@ -24,13 +24,14 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
     await itemDropDown
       .locator(`button[href*="job/${ozData.jobName}/doDelete"].jenkins-dropdown__item`)
       .click();
-    await page.click('button[data-id=ok]');
-    await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(0);
   });
 
   test(`TC_16.008.02 | Verify deleting project on project's page`, async ({ page }) => {
     await page.goto(`/job/${ozData.jobName}/`);
     await page.locator(projectSidePanelLocators.deleteProjectBtn).click();
+  });
+
+  test.afterEach(async ({ page }) => {
     await page.click('button[data-id=ok]');
     await expect(page.locator(`tr#job_${ozData.jobName}`)).toHaveCount(0);
   });
