@@ -12,42 +12,40 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
   });
 
   test("TC_05.001.04 | Verify Display Name and Description fields are available", async ({ page }: { page: Page }) => {
-  await createFolder(page, folderConfigData.folderName);
+    await createFolder(page, folderConfigData.folderName);
 
-  await page.locator(folderConfigLocators.configureLink).click();
+    await page.locator(folderConfigLocators.configureLink).click();
 
-  await expect(page.getByLabel("Display Name")).toBeVisible();
-  await expect(page.getByText("Description")).toBeVisible();
+    await expect(page.getByLabel("Display Name")).toBeVisible();
+    await expect(page.getByText("Description")).toBeVisible();
 });
 
   test("TC_05.001.05 | Verify user can update Display Name", async ({ page }: { page: Page }) => {
-  await createFolder(page, folderConfigData.folderName);
+    await createFolder(page, folderConfigData.folderName);
 
-  await page.locator(folderConfigLocators.configureLink).click();
+    await page.locator(folderConfigLocators.configureLink).click();
 
-  await page.getByText("Display Name").locator("..").locator("input").fill(folderConfigData.displayName);
+    await page.getByText("Display Name").locator("..").locator("input").fill(folderConfigData.displayName);
 
-  await page.locator(commonLocators.submitButton).click();
+    await page.locator(commonLocators.submitButton).click();
 
-  await expect(
-  page.getByRole("heading", { name: folderConfigData.displayName })
-).toBeVisible();
-});
+    await expect(page.getByRole("heading", { name: folderConfigData.displayName })).toBeVisible();
+  });
 
   test("TC_05.001.06 | Verify user can update Description", async ({ page }: { page: Page }) => {
-  await createFolder(page, folderConfigData.folderName);
+    await createFolder(page, folderConfigData.folderName);
 
-  await page.goto(`/job/${folderConfigData.folderName}/configure`);
+    await page.goto(`/job/${folderConfigData.folderName}/configure`);
 
-  const descriptionTextarea = page.locator(folderConfigLocators.descriptionTextarea);
+    const descriptionTextarea = page.locator(folderConfigLocators.descriptionTextarea);
 
-  await descriptionTextarea.clear();
-  await descriptionTextarea.fill(folderConfigData.updatedDescription);
-  await descriptionTextarea.press("Tab");
+    await descriptionTextarea.clear();
+    await descriptionTextarea.fill(folderConfigData.updatedDescription);
+    await descriptionTextarea.press("Tab");
 
-  await page.locator(commonLocators.submitButton).click();
+    await page.locator(commonLocators.submitButton).click();
 
-  await expect(page.locator("#main-panel").getByText(folderConfigData.updatedDescription, { exact: true })).toBeVisible();
-});
+    await expect(page.locator("#main-panel").getByText(folderConfigData.updatedDescription, { exact: true })).toBeVisible();
+  });
 
 });
