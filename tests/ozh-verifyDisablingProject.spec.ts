@@ -1,10 +1,11 @@
-import { test, expect } from '../base';
-import { Page } from '@playwright/test';
+import { test, expect, Page } from '../base';
 import { ozData } from './testData/ozh-data';
 
 test.describe('US_02.001 | Freestyle Project Configuration > Enable or Disable the Project', () => {
   test('TC_02.001.01 | Verify that warning message appears after disabling the project', async ({
     page,
+  }: {
+    page: Page;
   }) => {
     await page.locator('#side-panel a[href$="newJob"]').click();
     await page.locator('#name').fill(ozData.jobName);
