@@ -9,6 +9,10 @@ test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
     await page.goto('/');
   });
 
+  test.afterAll(async () => {
+    await page.close();
+  });
+
   test('TC_22.001.01 | Verify that the Credentials page is accessible', async () => {
     await page.locator(manageJenkinsLocators.manageJenkinsBtn).click();
     await page.locator(manageCredentialsLocators.goToCredentialsBtn).click();
