@@ -24,6 +24,10 @@ export const folderConfigLocators = {
   configureLink: "a[href$='/configure']",
 };
 
+export const freestyleConfigData = {
+  description: "This project is used for automated CI/CD workflow testing.",
+};
+
 export async function openNewItemPage(page: Page): Promise<void> {
   await page.goto("/");
   await page.locator(newItemLocators.newItemLink).click();
