@@ -1,5 +1,9 @@
 import { Page } from "@/base";
 
+export const commonLocators = {
+  submitButton: "button[name='Submit']",
+};
+
 export const newItemData = {
   invalidItemName: "test?item",
   freestyleProjectName: "test-freestyle-project",
@@ -17,11 +21,13 @@ export const newItemLocators = {
 export const folderConfigData = {
   folderName: "test-folder-config",
   displayName: "Updated Folder Display Name",
+  updatedDescription: "Updated folder description.",
 };
 
 export const folderConfigLocators = {
   folderType: "li.com_cloudbees_hudson_plugins_folder_Folder",
   configureLink: "a[href$='/configure']",
+  descriptionTextarea: "textarea",
 };
 
 export async function openNewItemPage(page: Page): Promise<void> {
