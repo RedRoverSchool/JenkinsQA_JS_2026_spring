@@ -45,7 +45,15 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
     await page.locator(newItemLocators.freestyleProject).click();
 
     await expect(page.getByText(`A job already exists with the name ‘${newItemData.existingItemName}’`)).toBeVisible();
-  });
+});
+
+  test("TC_01.001.26 | Verify created item is displayed on dashboard", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page, newItemData.freestyleProjectName);
+
+    await page.locator(".app-jenkins-logo").click();
+
+    await expect(page.locator(".jenkins-table__link.model-link.inside", {hasText: newItemData.freestyleProjectName,})).toBeVisible();
+});
 
 });
 
