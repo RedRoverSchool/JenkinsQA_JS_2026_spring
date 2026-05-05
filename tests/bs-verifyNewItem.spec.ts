@@ -13,4 +13,8 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
 		const job = await page.locator("#projectstatus .jenkins-table__link").getAttribute("href");
 		expect(job).toContain(jenkinsData.jobName);
 	});
+
+	test("Test_WelcomMessage", async ({ page }) => {
+		expect(page.locator("h1")).toHaveText("Welcome to Jenkins!");
+	});
 });
