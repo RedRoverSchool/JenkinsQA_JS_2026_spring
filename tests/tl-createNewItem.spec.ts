@@ -27,31 +27,32 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
   });
 
   test("TC_01.001.24 | Verify successful item creation", async ({ page }: { page: Page }) => {
-  await openNewItemPage(page);
+    await openNewItemPage(page);
 
-  await page.locator(newItemLocators.itemNameInput).fill(newItemData.freestyleProjectName);
-  await page.locator(newItemLocators.freestyleProject).click();
-  await page.locator(newItemLocators.okButton).click();
+    await page.locator(newItemLocators.itemNameInput).fill(newItemData.freestyleProjectName);
+    await page.locator(newItemLocators.freestyleProject).click();
+    await page.locator(newItemLocators.okButton).click();
 
-  await expect(page.getByRole("link", { name: newItemData.freestyleProjectName })).toBeVisible();});
+    await expect(page.getByRole("link", { name: newItemData.freestyleProjectName })).toBeVisible();
+  });
 
   test("TC_01.001.25 | Verify warning for duplicate item name", async ({ page }: { page: Page }) => {
-  await createFreestyleProject(page, newItemData.existingItemName);
+    await createFreestyleProject(page, newItemData.existingItemName);
 
-  await openNewItemPage(page);
+    await openNewItemPage(page);
 
-  await page.locator(newItemLocators.itemNameInput).fill(newItemData.existingItemName);
-  await page.locator(newItemLocators.freestyleProject).click();
+    await page.locator(newItemLocators.itemNameInput).fill(newItemData.existingItemName);
+    await page.locator(newItemLocators.freestyleProject).click();
 
-  await expect(page.getByText(`A job already exists with the name ‘${newItemData.existingItemName}’`)).toBeVisible();
+    await expect(page.getByText(`A job already exists with the name ‘${newItemData.existingItemName}’`)).toBeVisible();
 });
 
   test("TC_01.001.26 | Verify created item is displayed on dashboard", async ({ page }: { page: Page }) => {
-  await createFreestyleProject(page, newItemData.freestyleProjectName);
+    await createFreestyleProject(page, newItemData.freestyleProjectName);
 
-  await page.locator(".app-jenkins-logo").click();
+    await page.locator(".app-jenkins-logo").click();
 
-  await expect(page.locator(".jenkins-table__link.model-link.inside", {hasText: newItemData.freestyleProjectName,})).toBeVisible();
+    await expect(page.locator(".jenkins-table__link.model-link.inside", {hasText: newItemData.freestyleProjectName,})).toBeVisible();
 });
 
 });
