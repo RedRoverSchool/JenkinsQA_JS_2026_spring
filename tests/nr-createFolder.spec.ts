@@ -22,7 +22,7 @@ test.describe("US_01.002 | New Item > Folder", () => {
     expect(currentUrl).toContain(createFolderData.folderName);
   });
 
-  test.describe("TC_01.002.19 | Apply folder configuration", () => {
+  test.describe("US_01.002 | New Item > Folder", () => {
     test.beforeEach(async ({ page }) => {
       // Create folder
       await page.locator("#side-panel a[href$='newJob']").click();
