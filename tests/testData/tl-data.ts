@@ -1,7 +1,12 @@
 import { Page } from "@/base";
+import { faker } from "@faker-js/faker";
 
 export const commonLocators = {
   submitButton: "button[name='Submit']",
+};
+
+export const generateProjectName = (): string => {
+  return `test-${faker.string.alphanumeric(5)}`;
 };
 
 export const newItemData = {

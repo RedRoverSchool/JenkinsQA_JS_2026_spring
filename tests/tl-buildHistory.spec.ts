@@ -1,6 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { faker } from "@faker-js/faker";
-import { createFreestyleProject, newItemData } from "./testData/tl-data";
+import { generateProjectName, createFreestyleProject, newItemData } from "./testData/tl-data";
 
 test.describe("US_09.001 | Build History > Core Build History Display", () => {
   test("TC_09.001.02 | Verify Build History option is accessible from Dashboard", async ({ page }: { page: Page }) => {
@@ -19,7 +18,7 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
   });
 
   test("TC_09.001.04 | Verify builds are ordered by most recent first", async ({ page }) => {
-    const projectName = `test-${faker.string.alphanumeric(5)}`;
+    const projectName = generateProjectName();
 
     await createFreestyleProject(page, projectName);
     await page.goto(`/job/${projectName}/`);
