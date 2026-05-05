@@ -13,7 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@types/node": "^25.3.3",
     "dotenv": "^16.4.5",
     "tsc-alias": "^1.8.16",
