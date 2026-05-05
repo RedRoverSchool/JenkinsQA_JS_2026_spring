@@ -15,6 +15,11 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
 	});
 
 	test("Test_WelcomMessage", async ({ page }) => {
-		expect(page.locator("h1")).toHaveText("Welcome to Jenkins!");
+		await expect(page.locator("h1")).toHaveText("Welcome to Jenkins!");
+	});
+
+	test("Test_FooterVersion", async ({ page }) => {
+		const footer = page.locator("footer .jenkins_ver");
+		await expect(footer).toHaveText(jenkinsData.jenkinsVersion);
 	});
 });
