@@ -1,3 +1,4 @@
 export const jenkinsData = {
-	jobName: "myJob"
+	jobName: "myJob",
+	jobName2: "myAnotherJob"
 };
