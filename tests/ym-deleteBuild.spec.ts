@@ -32,8 +32,8 @@ test.describe("US_09.007 | Build history > Delete Build", ()=>{
   });
 
   test("TC_09.007.02 | Delete Build from Buildgs block", async({ page }: {page: Page}) => {
-    const buildLoc = page.locator("#jenkins-build-history div");
-    await page.locator(".app-builds-container__item .jenkins-card__reveal").click();
+    const buildLoc = page.locator(".app-builds-container__item .jenkins-card__reveal");
+    await buildLoc.click();
 
     await page.locator(".jenkins-dropdown a[href$='confirmDelete']").click();
     await page.locator("button[name='Submit']").click();
