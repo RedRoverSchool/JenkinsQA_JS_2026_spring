@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@/base';
-import { manageCredentialsLocators, manageJenkinsLocators } from './testData/ozh-data';
+import { manageCredentialsLocators, manageJenkinsLocators, credentials } from './testData/ozh-data';
 
 test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
   let page: Page;
@@ -22,5 +22,10 @@ test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
   test('TC_22.001.02 | Verify opening modal window by clicking "Add Credentials"', async () => {
     await page.locator(manageCredentialsLocators.addCredentialsBtn).click();
     await expect(page.locator('.jenkins-dialog')).toBeVisible();
+  });
+
+  test('TC_22.001.03 | Verify credential types list', async () => {
+    const credentialsList = page.locator('.jenkins-choice-list__item__label');
+    await expect(credentialsList).toHaveText(credentials);
   });
 });
