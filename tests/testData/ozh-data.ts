@@ -1,14 +1,13 @@
 import { Page } from '../../base';
 import { faker } from '@faker-js/faker';
+import { jobName } from './ok-data';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
 export const ozData = {
-  get jobName() {
-    return faker.word.noun() + getRandomInt(100).toString();
-  },
+  jobName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
 };

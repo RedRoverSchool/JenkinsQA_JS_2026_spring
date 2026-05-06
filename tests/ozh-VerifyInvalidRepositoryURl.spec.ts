@@ -1,9 +1,12 @@
 import { test, expect, Page } from '../base';
+import { jobName } from './testData/ok-data';
 import { createNewItem, ozData, ozhJenkinsLocators } from './testData/ozh-data';
 
 test.describe('US_02.003 | Freestyle Project Configuration > Configure SCM', () => {
   test('TC_02.003.01 | Verify error message when repository URL is invalid', async ({ page }) => {
     await createNewItem(page);
+    await page.goto(`/job/${ozData.jobName}/configure`);
+
     await page
       .locator(ozhJenkinsLocators.itemSidePanel)
       .locator(ozhJenkinsLocators.SCMButton)
