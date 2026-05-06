@@ -1,4 +1,5 @@
 import { APIRequestContext } from "@playwright/test";
+import { HttpStatus } from "./httpStatus";
 
 const HOST = process.env.LOCAL_HOST;
 const PORT = process.env.LOCAL_PORT;
@@ -38,8 +39,8 @@ export async function cleanData(request: APIRequestContext) {
 			headers: { Authorization: authHeader }
 		});
 
-		if (res.status() !== 200) {
-			if (res.status() === 404) {
+		if (res.status() !== HttpStatus.OK) {
+			if (res.status() === HttpStatus.NotFound) {
 				console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
 			} else {
 				throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${res.status()}`);
@@ -58,7 +59,7 @@ export async function cleanData(request: APIRequestContext) {
 			data: body
 		});
 
-		if (![200, 302, 303, 404].includes(res.status())) {
+		if (!(res.status() in HttpStatus)) {
 			throw new Error(`POST ${uri} failed with status ${res.status()}`);
 		}
 		return res;
