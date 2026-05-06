@@ -2,7 +2,7 @@ import { Page } from '../../base';
 import { faker } from '@faker-js/faker';
 
 export const ozData = {
-  itemName: faker.word.noun(),
+  jobName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
 };
@@ -13,7 +13,7 @@ export const ozhJenkinsLocators = {
   newFreestyleProject: '.hudson_model_FreeStyleProject',
   itemNameInput: 'input.jenkins-input#name',
   okBtn: 'button#ok-button',
-  itemPageLink: `a.jenkins-table__link[href*="job/${ozData.itemName}/"]`,
+  itemPageLink: `a.jenkins-table__link[href*="job/${ozData.jobName}/"]`,
   SCMButton: 'button[data-section-id=source-code-management]',
   repoUrlInput: 'input[name="_.url"]',
   repoUrlError: 'div[name="userRemoteConfigs"] .error',
@@ -42,7 +42,7 @@ export const credentials = [
   'Certificate',
 ];
 
-export async function createNewItem(page: Page, jobName: string = ozData.itemName): Promise<void> {
+export async function createNewItem(page: Page, jobName: string = ozData.jobName): Promise<void> {
   await page.locator(ozhJenkinsLocators.newJobBtn).click();
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
