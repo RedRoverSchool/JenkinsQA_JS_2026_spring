@@ -41,4 +41,12 @@ test.describe("US_09.007 | Build history > Delete Build", ()=>{
     expect(buildLoc).toHaveCount(0);
   });
 
+  test("TC_09.007.03 | Color of the 'delete' button", async({ page }: {page: Page}) =>{
+    await page.locator(".app-builds-container__item .jenkins-card__reveal").click();
+    await page.locator(".jenkins-dropdown a[href$='confirmDelete']").click();
+
+    expect(page.locator("button[name='Submit']")).toHaveClass(/jenkins-!-destructive-color/);
+
+  })
+
 });
