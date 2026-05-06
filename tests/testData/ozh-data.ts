@@ -31,6 +31,15 @@ export const manageCredentialsLocators = {
   addCredentialsBtn: 'button[data-type="credentials-add-store-item"]',
 };
 
+export const credentials = [
+  'Username with password',
+  'GitHub App',
+  'SSH Username with private key',
+  'Secret file',
+  'Secret text',
+  'Certificate',
+];
+
 export async function createNewItem(page: Page): Promise<void> {
   await page.locator(ozhJenkinsLocators.newJobBtn).click();
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(ozData.jobName);
