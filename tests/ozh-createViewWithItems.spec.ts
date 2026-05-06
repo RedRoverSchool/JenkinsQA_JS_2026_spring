@@ -2,6 +2,7 @@ import { test, expect, Page } from '@/base';
 import { createNewItem, ozhJenkinsLocators } from './testData/ozh-data';
 import { cleanData } from '../helpers/cleanData';
 import { Locator } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
 test.describe.serial('US_23.001 | Global View > Create View with items with access', () => {
   let page: Page;
@@ -20,7 +21,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     const itemsCount = await page.locator('tr.job').count();
     if (itemsCount === 0) {
       for (let i = 0; i < 4; i++) {
-        await createNewItem(page);
+        await createNewItem(page, faker.word.noun() + i);
         await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
       }
       await page.goto('/');
