@@ -26,7 +26,7 @@ test.describe("US_01.002 | New Item > Folder", () =>{
     test("TC_01.002.22 | Verify that error message is displayed", async({ page }: { page : Page }) =>{
         await page.getByRole('link', {name: 'New Item'}).click();
         await page.getByRole('radio', {name: 'Folder Creates a container'}).click();
-        expect(page.locator('#itemname-required')).toBeVisible();
+        await expect(page.locator('#itemname-required')).toBeVisible();
         
     });
 
