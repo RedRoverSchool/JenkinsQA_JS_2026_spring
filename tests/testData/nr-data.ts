@@ -8,3 +8,8 @@ export const createFolderData = {
   folderName: "TestFolder",
   itemType: "Folder",
 };
+
+export const applyFolderConfigurationData = {
+  folderName: "ApplyFolder",
+  description: "Updated folder description",
+};
