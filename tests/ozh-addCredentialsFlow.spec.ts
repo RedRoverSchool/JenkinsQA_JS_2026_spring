@@ -7,13 +7,16 @@ test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
   let nextBtn: Locator;
 
   test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage();
+    const context = await browser.newContext({
+      storageState: '.auth/storageState.json',
+    });
+    page = await context.newPage();
     await page.goto('/');
     nextBtn = page.locator('button#cr-dialog-next');
   });
 
   test.afterAll(async () => {
-    await page.close();
+    await page.context().close();
   });
 
   test('TC_22.001.01 | Verify that the Credentials page is accessible', async () => {
