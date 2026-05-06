@@ -1,5 +1,6 @@
 
 
 export const dataYV ={
-    jobName: "Job"
+    jobName: "Job",
+    folderName: "Folder1"
 };
