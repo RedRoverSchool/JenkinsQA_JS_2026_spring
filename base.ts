@@ -3,7 +3,6 @@ import { cleanData } from "./helpers/cleanData";
 
 export const test = base.extend({
 	page: async ({ page, request }, use) => {
-		await cleanData(request);
 
 		await page.goto("/");
 
