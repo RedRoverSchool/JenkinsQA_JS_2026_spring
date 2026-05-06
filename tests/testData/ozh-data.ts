@@ -53,6 +53,4 @@ export async function createNewItem(page: Page): Promise<void> {
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(ozData.jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
-  await page.locator(ozhJenkinsLocators.submitBtn).click();
-  await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
 }
