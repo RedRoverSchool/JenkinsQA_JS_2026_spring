@@ -13,7 +13,11 @@ test.describe("US_01.001.10 | New Item > Create New Item", () => {
 
 
         await page.locator(".app-jenkins-logo").click();
+        const job = await page.locator("#projectstatus .jenkins-table__link").getAttribute("href");
 
-        
+        expect(job).toContain(jenkinsData.jobName);
+
+
+
     });
 });
