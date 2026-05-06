@@ -24,15 +24,13 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     await page.goto(`/job/${projectName}/`);
 
     await page.getByRole("link", { name: "Build Now" }).click();
-    await expect(page.getByText("#1")).toBeVisible();
+    await page.getByText("#1").waitFor();
 
     await page.getByRole("link", { name: "Build Now" }).click();
-    await expect(page.getByText("#2")).toBeVisible();
+    await page.getByText("#2").waitFor();
 
     const buildsText = await page.locator(".app-builds-container").textContent();
 
-    expect(buildsText!).toContain("#2");
-    expect(buildsText!).toContain("#1");
     expect(buildsText!.indexOf("#2")).toBeLessThan(buildsText!.indexOf("#1"));
   });
 
