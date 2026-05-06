@@ -9,7 +9,10 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
 
   test.beforeAll(async ({ browser, request }) => {
     await cleanData(request);
-    page = await browser.newPage();
+    const context = await browser.newContext({
+      storageState: '.auth/storageState.json',
+    });
+    page = await context.newPage();
     await page.goto('/');
 
     newViewBtn = page.locator('.tab a.addTab');
@@ -25,7 +28,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
   });
 
   test.afterAll(async () => {
-    await page.close();
+    await page.context().close();
   });
 
   test('TC_23.001.01 | A button for creating a new View is available on the Dashboard and has correct URL', async () => {
