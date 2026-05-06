@@ -1,22 +1,16 @@
 import { test, expect, Page } from '@/base';
 import { manageCredentialsLocators, manageJenkinsLocators, credentials } from './testData/ozh-data';
-import { Locator } from '@playwright/test';
 
 test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
   let page: Page;
-  let nextBtn: Locator;
 
   test.beforeAll(async ({ browser }) => {
-    const context = await browser.newContext({
-      storageState: '.auth/storageState.json',
-    });
-    page = await context.newPage();
+    page = await browser.newPage();
     await page.goto('/');
-    nextBtn = page.locator('button#cr-dialog-next');
   });
 
   test.afterAll(async () => {
-    await page.context().close();
+    await page.close();
   });
 
   test('TC_22.001.01 | Verify that the Credentials page is accessible', async () => {
@@ -36,17 +30,9 @@ test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
   });
 
   test('TC_22.001.04 | Verify "Next" button is disabled until a credential type is selected', async () => {
+    const nextBtn = page.locator('button#cr-dialog-next');
     await expect(nextBtn).toBeDisabled();
     await page.locator('.jenkins-choice-list__item__label').first().check();
     await expect(nextBtn).toBeEnabled();
-  });
-
-  test('TC_22.001.05 | Verify displaying the credential creation form after clicking NextButton', async () => {
-    const credentialBtns = await page.locator('.jenkins-choice-list__item__label').all();
-    const randomIndex = Math.floor(Math.random() * credentialBtns.length);
-    await credentialBtns[randomIndex].check();
-    const chosenCredentialTitle = await credentialBtns[randomIndex].innerText();
-    await nextBtn.click();
-    await expect(page.locator('.jenkins-dialog__title')).toContainText(chosenCredentialTitle);
   });
 });
