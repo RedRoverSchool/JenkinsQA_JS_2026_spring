@@ -28,4 +28,11 @@ test.describe.serial('US_22.001 | Add Credentials > General Flow', () => {
     const credentialsList = page.locator('.jenkins-choice-list__item__label');
     await expect(credentialsList).toHaveText(credentials);
   });
+
+  test('TC_22.001.04 | Verify "Next" button is disabled until a credential type is selected', async () => {
+    const nextBtn = page.locator('button#cr-dialog-next');
+    await expect(nextBtn).toBeDisabled();
+    await page.locator('.jenkins-choice-list__item__label').first().check();
+    await expect(nextBtn).toBeEnabled();
+  });
 });
