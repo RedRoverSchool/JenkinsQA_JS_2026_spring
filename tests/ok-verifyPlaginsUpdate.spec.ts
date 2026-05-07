@@ -12,4 +12,11 @@ test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
         await expect(pluginsPageTitle).toBeVisible();
         await expect(pluginsPageTitle).toHaveText('Plugins');
     });
+
+    test("TC_10.005.02 | Verify user can open Updates tab", async ({ page }: { page: Page }) => {
+        const updatesTab = page.getByRole('link', { name: 'Updates' });
+
+        await expect(updatesTab).toBeVisible();
+        await expect(updatesTab).toHaveClass(/task-link--active/);
+    });
 });
