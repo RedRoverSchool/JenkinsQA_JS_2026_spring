@@ -5,6 +5,8 @@ export const ozData = {
   jobName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
+  unsupportedCharacters: ['?', '*', '/', '|', '!', '%', '&', ';', ':'],
+  unsupportedCharTooltip: 'is an unsafe character',
 };
 
 export const ozhJenkinsLocators = {
@@ -48,4 +50,9 @@ export async function createNewItem(page: Page, jobName: string = ozData.jobName
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
+}
+
+export function getRandomElementFromArray(items: any[]) {
+  const randomItem = items[Math.floor(Math.random() * items.length)];
+  return randomItem;
 }
