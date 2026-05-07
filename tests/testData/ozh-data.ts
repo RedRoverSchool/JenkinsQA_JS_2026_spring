@@ -1,10 +1,5 @@
 import { Page } from '../../base';
 import { faker } from '@faker-js/faker';
-import { jobName } from './ok-data';
-
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
 
 export const ozData = {
   jobName: faker.word.noun(),
@@ -48,9 +43,9 @@ export const credentials = [
   'Certificate',
 ];
 
-export async function createNewItem(page: Page): Promise<void> {
+export async function createNewItem(page: Page, jobName: string = ozData.jobName): Promise<void> {
   await page.locator(ozhJenkinsLocators.newJobBtn).click();
-  await page.locator(ozhJenkinsLocators.itemNameInput).fill(ozData.jobName);
+  await page.locator(ozhJenkinsLocators.itemNameInput).fill(jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
 }
