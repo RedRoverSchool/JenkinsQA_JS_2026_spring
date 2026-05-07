@@ -22,13 +22,9 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     nameField = page.locator('input#name');
     myView = page.locator('label[for="hudson.model.MyView"]');
 
-    const itemsCount = await page.locator('tr.job').count();
-    if (itemsCount === 0) {
-      for (let i = 0; i < 4; i++) {
-        await createNewItem(page, faker.word.noun());
-        await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
-      }
-
+    if ((await page.locator('tr.job').count()) === 0) {
+      await createNewItem(page, faker.word.noun());
+      await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
       await page.goto('/');
     }
   });
