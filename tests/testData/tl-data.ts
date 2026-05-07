@@ -1,7 +1,20 @@
 import { Page } from "@/base";
+import { faker } from "@faker-js/faker";
 
 export const commonLocators = {
   submitButton: "button[name='Submit']",
+};
+
+export const generateProjectName = (): string => {
+  return `test-${faker.string.alphanumeric(5)}`;
+};
+
+export const generateDisplayName = (): string => {
+  return faker.company.name();
+};
+
+export const generateDescription = (): string => {
+  return faker.lorem.sentence();
 };
 
 export const newItemData = {
@@ -28,6 +41,10 @@ export const folderConfigLocators = {
   folderType: "li.com_cloudbees_hudson_plugins_folder_Folder",
   configureLink: "a[href$='/configure']",
   descriptionTextarea: "textarea",
+};
+
+export const freestyleConfigData = {
+  description: "This project is used for automated CI/CD workflow testing.",
 };
 
 export async function openNewItemPage(page: Page): Promise<void> {

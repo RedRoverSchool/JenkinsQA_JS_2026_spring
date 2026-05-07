@@ -1,16 +1,19 @@
 import { Page } from '../../base';
+import { faker } from '@faker-js/faker';
+
 export const ozData = {
-  jobName: 'TestJob',
+  jobName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
 };
 
 export const ozhJenkinsLocators = {
   jenkinsLogo: 'a.app-jenkins-logo',
-  newJobBtn: 'a[href="newJob"]',
+  newJobBtn: 'a[href="/view/all/newJob"]',
   newFreestyleProject: '.hudson_model_FreeStyleProject',
   itemNameInput: 'input.jenkins-input#name',
   okBtn: 'button#ok-button',
+  submitBtn: 'button.jenkins-submit-button',
   itemPageLink: `a.jenkins-table__link[href*="job/${ozData.jobName}/"]`,
   SCMButton: 'button[data-section-id=source-code-management]',
   repoUrlInput: 'input[name="_.url"]',
@@ -31,10 +34,18 @@ export const manageCredentialsLocators = {
   addCredentialsBtn: 'button[data-type="credentials-add-store-item"]',
 };
 
-export async function createNewItem(page: Page): Promise<void> {
+export const credentials = [
+  'Username with password',
+  'GitHub App',
+  'SSH Username with private key',
+  'Secret file',
+  'Secret text',
+  'Certificate',
+];
+
+export async function createNewItem(page: Page, jobName: string = ozData.jobName): Promise<void> {
   await page.locator(ozhJenkinsLocators.newJobBtn).click();
-  await page.locator(ozhJenkinsLocators.itemNameInput).fill(ozData.jobName);
+  await page.locator(ozhJenkinsLocators.itemNameInput).fill(jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
-  await page.waitForLoadState('networkidle');
 }

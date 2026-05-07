@@ -48,5 +48,15 @@ test.describe("US_06.009| Multibranch pipeline Configuration > Change Health met
             "Health of the primary branch of a repository"
         ]);
         });
-
+    
+    test("TC_06.009.04 | 'Add Metrics' button shows only remaining options after metric is selected.", 
+    async ({page} : {page : Page}) =>{
+        await page.locator(".task a[href*='configure']").click();
+        await navigateToHealthMetrics(page);
+        await chooseTheMetric(page, "Child item with the given name");
+        await page.getByRole("button", {name : "Add metric"}).click();
+        
+        const dropdownButtons = page.locator(".jenkins-dropdown__item ");
+        await expect(dropdownButtons).toHaveCount(2);
+    });
 });
