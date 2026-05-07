@@ -54,6 +54,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     const randomChar = getRandomElementFromArray(ozData.unsupportedCharacters);
     await nameField.fill(randomChar);
     await listView.click();
+    await expect(page.locator('.error')).toBeVisible();
     await expect(page.locator('.error')).toContainText(ozData.unsupportedCharTooltip);
   });
 });
