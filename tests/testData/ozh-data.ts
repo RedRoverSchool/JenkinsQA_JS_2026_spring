@@ -6,7 +6,7 @@ export const ozData = {
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
   unsupportedCharacters: ['?', '*', '/', '|', '!', '%', '&', ';', ':'],
-  unsupportedCharTooltip: 'is an unsafe character',
+  unsupportedCharTooltip: ' is an unsafe character',
 };
 
 export const ozhJenkinsLocators = {

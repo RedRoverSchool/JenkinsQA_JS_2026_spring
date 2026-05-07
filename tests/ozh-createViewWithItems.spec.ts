@@ -1,10 +1,5 @@
 import { test, expect, Page } from '@/base';
-import {
-  createNewItem,
-  getRandomElementFromArray,
-  ozData,
-  ozhJenkinsLocators,
-} from './testData/ozh-data';
+import { createNewItem, ozData, ozhJenkinsLocators } from './testData/ozh-data';
 import { cleanData } from '../helpers/cleanData';
 import { Locator } from '@playwright/test';
 import { faker } from '@faker-js/faker';
@@ -12,8 +7,6 @@ import { faker } from '@faker-js/faker';
 test.describe.serial('US_23.001 | Global View > Create View with items with access', () => {
   let page: Page;
   let newViewBtn: Locator;
-  let listView: Locator;
-  let myView: Locator;
   let nameField: Locator;
 
   test.beforeAll(async ({ browser, request }) => {
@@ -25,8 +18,6 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     await page.goto('/');
 
     newViewBtn = page.locator('.tab a.addTab');
-    listView = page.locator('label[for="hudson.model.ListView"]');
-    myView = page.locator('label[for="hudson.model.MyView"]');
     nameField = page.locator('input#name');
 
     const itemsCount = await page.locator('tr.job').count();
@@ -49,12 +40,16 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     await expect(newViewBtn).toHaveAttribute('href', '/newView');
   });
 
-  test('TC_23.001.02 | Verify validation tooltip if naming rules are violated', async () => {
-    await newViewBtn.click();
-    const randomChar = getRandomElementFromArray(ozData.unsupportedCharacters);
-    await nameField.fill(randomChar);
-    await listView.click();
-    await expect(page.locator('.error')).toBeVisible();
-    await expect(page.locator('.error')).toContainText(ozData.unsupportedCharTooltip);
-  });
+  for (let unsupportedChar of ozData.unsupportedCharacters) {
+    test(`TC_23.001.02 | Verify validation tooltip if naming rules are violated - ${unsupportedChar}`, async () => {
+      if (!page.url().includes('newView')) {
+        await newViewBtn.click();
+      }
+      await nameField.clear();
+      await nameField.fill(unsupportedChar);
+      await nameField.blur();
+      await expect(page.locator('.error')).toBeVisible();
+      await expect(page.locator('.error')).toContainText(ozData.unsupportedCharTooltip);
+    });
+  }
 });
