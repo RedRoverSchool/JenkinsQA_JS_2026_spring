@@ -36,6 +36,12 @@ export const manageCredentialsLocators = {
   addCredentialsBtn: 'button[data-type="credentials-add-store-item"]',
 };
 
+export const viewLocators = {
+  myView: 'label[for="hudson.model.MyView"]',
+  newViewBtn: '.tab a.addTab',
+  viewNameField: 'input#name',
+};
+
 export const credentials = [
   'Username with password',
   'GitHub App',

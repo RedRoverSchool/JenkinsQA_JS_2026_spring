@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@/base';
-import { createNewItem, ozData, ozhJenkinsLocators } from './testData/ozh-data';
+import { createNewItem, ozData, ozhJenkinsLocators, viewLocators } from './testData/ozh-data';
 import { cleanData } from '../helpers/cleanData';
 import { Locator } from '@playwright/test';
 import { faker } from '@faker-js/faker';
@@ -18,9 +18,9 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     page = await context.newPage();
     await page.goto('/');
 
-    newViewBtn = page.locator('.tab a.addTab');
-    nameField = page.locator('input#name');
-    myView = page.locator('label[for="hudson.model.MyView"]');
+    newViewBtn = page.locator(viewLocators.newViewBtn);
+    nameField = page.locator(viewLocators.viewNameField);
+    myView = page.locator(viewLocators.myView);
 
     if ((await page.locator('tr.job').count()) === 0) {
       await createNewItem(page, faker.word.noun());
