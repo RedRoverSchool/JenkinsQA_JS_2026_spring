@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@/tests/testData/ov-folder.fixture";
+import { test, expect, Page } from "@/tests/fixture/ov-folder.fixture";
 
 test.describe("US_01.002 | New Item > Folder", () => {
     test("TC_01.002.04 | Access New Item Page from existing folder", async ({page, existingFolderName }: {page: Page; existingFolderName: string}) => {
