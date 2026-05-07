@@ -9,6 +9,15 @@ export const generateProjectName = (): string => {
   return `test-${faker.string.alphanumeric(5)}`;
 };
 
+export const generateDisplayName = (): string => {
+  return faker.company.name();
+};
+
+export const generateDescription = (): string => {
+  return faker.lorem.sentence();
+};
+
+
 export const newItemData = {
   invalidItemName: "test?item",
   freestyleProjectName: "test-freestyle-project",
@@ -53,10 +62,12 @@ export async function createFolder(page: Page, folderName: string): Promise<void
   await page.locator("button[name='Submit']").click();
 }
 
-export async function createFreestyleProject(page: Page, projectName: string): Promise<void> {
+export async function createFreestyleProject(page: Page, 
+  projectName: string = generateProjectName()): Promise<string> {
   await openNewItemPage(page);
   await page.locator(newItemLocators.itemNameInput).fill(projectName);
   await page.locator(newItemLocators.freestyleProject).click();
   await page.locator(newItemLocators.okButton).click();
-  await page.locator("button[name='Submit']").click();
+  await page.locator(commonLocators.submitButton).click();
+  return projectName;
 }
