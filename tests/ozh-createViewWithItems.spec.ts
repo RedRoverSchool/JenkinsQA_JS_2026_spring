@@ -8,6 +8,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
   let page: Page;
   let newViewBtn: Locator;
   let nameField: Locator;
+  let myView: Locator;
 
   test.beforeAll(async ({ browser, request }) => {
     await cleanData(request);
@@ -19,6 +20,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
 
     newViewBtn = page.locator('.tab a.addTab');
     nameField = page.locator('input#name');
+    myView = page.locator('label[for="hudson.model.MyView"]');
 
     const itemsCount = await page.locator('tr.job').count();
     if (itemsCount === 0) {
@@ -45,11 +47,21 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
       if (!page.url().includes('newView')) {
         await newViewBtn.click();
       }
-      await nameField.clear();
       await nameField.fill(unsupportedChar);
       await nameField.blur();
       await expect(page.locator('.error')).toBeVisible();
       await expect(page.locator('.error')).toContainText(ozData.unsupportedCharTooltip);
+      await nameField.clear();
     });
   }
+
+  test('TC_23.001.03 | Verify New View creation form opens after selecting "My View" option', async () => {
+    const viewName = ozData.jobName;
+    await nameField.fill(viewName);
+    await nameField.blur();
+    await myView.check();
+    await page.locator('button[name="Submit"]').click();
+    await expect(page.locator(`.tabBar a[href*="${viewName}"]`)).toBeVisible();
+    await expect(page.locator(`.tabBar a[href*="${viewName}"]`)).toContainText(viewName);
+  });
 });
