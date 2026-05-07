@@ -17,7 +17,7 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
     await page.locator("a[href$='/configure']").click();
 
     await expect(page.getByRole("link", { name: "Preview" })).toBeVisible();
-});
+  });
 
   test("TC_02.002.08 | Verify description is displayed after Save", async ({ page }: { page: Page }) => {
     await createFreestyleProject(page, newItemData.freestyleProjectName);
@@ -32,6 +32,16 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
     await page.locator("button[name='Submit']").click();
 
     await expect(page.locator("#main-panel").getByText(freestyleConfigData.description, { exact: true })).toBeVisible();
+  });
+
+});
+
+test.describe("US_02.003 | Freestyle Project Configuration > Configure SCM", () => {
+  test("TC_02.003.02 | Verify Source Code Management section is available", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+    await page.getByRole("link", { name: "Configure" }).click();
+
+    await expect(page.locator("#source-code-management")).toBeVisible();
   });
 
 });

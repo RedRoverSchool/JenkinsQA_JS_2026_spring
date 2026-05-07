@@ -66,10 +66,12 @@ export async function createFolder(page: Page, folderName: string = generateFold
   return folderName;
 }
 
-export async function createFreestyleProject(page: Page, projectName: string): Promise<void> {
+export async function createFreestyleProject(page: Page, 
+  projectName: string = generateProjectName()): Promise<string> {
   await openNewItemPage(page);
   await page.locator(newItemLocators.itemNameInput).fill(projectName);
   await page.locator(newItemLocators.freestyleProject).click();
   await page.locator(newItemLocators.okButton).click();
-  await page.locator("button[name='Submit']").click();
+  await page.locator(commonLocators.submitButton).click();
+  return projectName;
 }
