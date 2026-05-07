@@ -14,6 +14,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
   let newViewBtn: Locator;
   let listView: Locator;
   let myView: Locator;
+  let nameField: Locator;
 
   test.beforeAll(async ({ browser, request }) => {
     await cleanData(request);
@@ -22,16 +23,19 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     });
     page = await context.newPage();
     await page.goto('/');
+
     newViewBtn = page.locator('.tab a.addTab');
     listView = page.locator('label[for="hudson.model.ListView"]');
     myView = page.locator('label[for="hudson.model.MyView"]');
+    nameField = page.locator('input#name');
 
     const itemsCount = await page.locator('tr.job').count();
     if (itemsCount === 0) {
       for (let i = 0; i < 4; i++) {
-        await createNewItem(page, faker.word.noun() + i);
+        await createNewItem(page, faker.word.noun());
         await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
       }
+
       await page.goto('/');
     }
   });
@@ -48,7 +52,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
   test('TC_23.001.02 | Verify validation tooltip if naming rules are violated', async () => {
     await newViewBtn.click();
     const randomChar = getRandomElementFromArray(ozData.unsupportedCharacters);
-    await page.locator('input#name').fill(randomChar);
+    await nameField.fill(randomChar);
     await listView.click();
     await expect(page.locator('.error')).toContainText(ozData.unsupportedCharTooltip);
   });
