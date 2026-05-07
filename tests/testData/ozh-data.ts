@@ -13,6 +13,7 @@ export const ozhJenkinsLocators = {
   newFreestyleProject: '.hudson_model_FreeStyleProject',
   itemNameInput: 'input.jenkins-input#name',
   okBtn: 'button#ok-button',
+  submitBtn: 'button.jenkins-submit-button',
   itemPageLink: `a.jenkins-table__link[href*="job/${ozData.jobName}/"]`,
   SCMButton: 'button[data-section-id=source-code-management]',
   repoUrlInput: 'input[name="_.url"]',
@@ -47,5 +48,4 @@ export async function createNewItem(page: Page, jobName: string = ozData.jobName
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
-  await page.waitForLoadState('networkidle');
 }
