@@ -1,5 +1,7 @@
+import { faker } from "@faker-js/faker";
+
 export const jenkinsData = {
-	projectName: Math.floor(Math.random() * 10000) + "projectName",
+	projectName: faker.company.name(),
 	unsafeCharacters: ["!", "@", "#", ";", "$", "%", "^", ":", "&", "?", "*", "|", "/", ">", "<"],
 	errorHeading: "Error",
 	errorMessages: {
