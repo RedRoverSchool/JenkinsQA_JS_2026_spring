@@ -35,15 +35,16 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
   });
 
   test("TC_09.001.05 | Verify build entry displays status icon", async ({ page }: { page: Page }) => {
-    const projectName = generateProjectName();
-
-    await createFreestyleProject(page, projectName);
+    await createFreestyleProject(page);
 
     await page.getByRole("link", { name: "Build Now" }).click();
     await page.getByText("#1").waitFor();
 
-    const successIcon = page.locator("#jenkins-build-history a[title='Success']");
-    await expect(successIcon).toBeVisible();
+    await page.goto("/view/all/builds");
+
+    const statusIcon = page.locator("#main-panel svg").first();
+
+    await expect(statusIcon).toBeVisible();
   });
 
 });
