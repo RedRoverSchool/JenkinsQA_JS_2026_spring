@@ -9,7 +9,7 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await page.getByRole("button", { name: "OK" }).click();
         await page.locator("#general").isVisible();
         await page.locator("textarea[name='description']").fill(jenkinsData.projectDescription);
-        page.getByRole("button", { name: "Save" }).click();
+        await page.getByRole("button", { name: "Save" }).click();
         await page.locator("jenkins-app-bar").isVisible();
         const desc = await page.locator("#description-content");
         
