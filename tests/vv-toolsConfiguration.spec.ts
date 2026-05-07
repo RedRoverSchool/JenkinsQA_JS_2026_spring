@@ -35,5 +35,21 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         await expect(filePathInput).toBeVisible();
     });
 
-    
+    test("TC_10.004.04 | Verify Maven global settings provider can be changed to custom", async ({ page }: { page: Page }) => {
+
+        const globalSettingsSelect = page
+            .locator('div.jenkins-form-item')
+            .filter({ hasText: 'Default global settings provider' })
+            .locator('select');
+            
+        await globalSettingsSelect.selectOption("Global settings file on filesystem");
+
+        const globalFilePathInput = page
+            .locator('div.jenkins-form-item')
+            .filter({ hasText: 'File path' })
+            .locator('input');
+
+        await expect(globalFilePathInput).toBeVisible();
+    });
+  
 });
