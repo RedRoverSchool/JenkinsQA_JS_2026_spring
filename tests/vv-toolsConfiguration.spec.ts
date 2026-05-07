@@ -13,11 +13,11 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         await expect(page.locator(".jenkins-breadcrumbs__list-item").filter({ hasText: "Tools" })).toBeVisible();
     });
 
-    test("TC_10.004.02 | Verify Configuration sections are displayed", async ({ page }: { page: Page }) => {
-        for (const section of vvData.toolsSections) {
+    for (const section of vvData.toolsSections) {
+        test(`TC_10.004.02 | Verify Configuration section '${section}' is displayed`, async ({ page }: { page: Page }) => {
             await expect(page.locator(".jenkins-section__title").filter({ hasText: section })).toBeVisible();
-        }
-    });
+        });
+    }
 
     test("TC_10.004.03 | Verify Maven settings provider can be changed to custom", async ({ page }: { page: Page }) => {
         const settingsSelect = page
@@ -25,7 +25,7 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
             .filter({ hasText: 'Default settings provider' })
             .locator('select');
 
-        await settingsSelect.selectOption('1');
+        await settingsSelect.selectOption("Settings file in filesystem");
 
         const filePathInput = page
             .locator('div.jenkins-form-item')
@@ -34,4 +34,6 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
 
         await expect(filePathInput).toBeVisible();
     });
+
+    
 });
