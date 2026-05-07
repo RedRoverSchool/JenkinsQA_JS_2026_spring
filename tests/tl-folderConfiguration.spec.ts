@@ -81,5 +81,16 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
     await expect(page.locator("input[name='_.displayNameOrNull']")).toHaveValue(displayName);
     await expect(page.locator("textarea")).toHaveValue(description);
   });
+});
 
+test.describe("US_05.004 | Folder Configuration > Save or Apply", () => {
+  test("TC_05.004.01 | Verify Save and Apply buttons are displayed", async ({ page }: { page: Page }) => {
+    const folderName = await createFolder(page);
+
+    await page.goto(`/job/${folderName}/configure`);
+
+    await expect(page.locator(commonLocators.submitButton)).toBeVisible();
+    await expect(page.locator(commonLocators.applyButton)).toBeVisible();
+  });
+  
 });
