@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 
 export const commonLocators = {
   submitButton: "button[name='Submit']",
+  jenkinsLogo: ".app-jenkins-logo",
 };
 
 export const generateProjectName = (): string => {
