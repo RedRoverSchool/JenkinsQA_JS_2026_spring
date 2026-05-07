@@ -34,4 +34,17 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     expect(buildsText!.indexOf("#2")).toBeLessThan(buildsText!.indexOf("#1"));
   });
 
+  test("TC_09.001.05 | Verify build entry displays status icon", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+
+    await page.getByRole("link", { name: "Build Now" }).click();
+    await page.getByText("#1").waitFor();
+
+    await page.goto("/view/all/builds");
+
+    const statusIcon = page.locator("#main-panel svg").first();
+
+    await expect(statusIcon).toBeVisible();
+  });
+
 });
