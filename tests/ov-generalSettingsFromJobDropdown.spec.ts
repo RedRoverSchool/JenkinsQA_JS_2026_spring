@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@/tests/fixture/ov-organizationFolder.fixtures";
+import { test, expect, Page } from "@/tests/testFixtures/ov-organizationFolder.fixtures";
 
 test.describe("US_07.001 | Organization folder Configuration > Change General Settings", () => {
     test("TC_07.001.01 | Access the General Settings from Job Dropdown on the main Jenkins page", async ({page, organizationFolderName }: {page: Page; organizationFolderName: string}) => {
