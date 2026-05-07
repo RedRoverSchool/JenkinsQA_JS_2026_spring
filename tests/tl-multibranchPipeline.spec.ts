@@ -19,4 +19,19 @@ test.describe("US_01.005 | New Item > Multibranch Pipeline ", () => {
     await expect(page.locator(newItemLocators.okButton)).toBeEnabled();
   });
 
+  test("TC_01.005.05 | Verify OK button requires valid name and item type", async ({ page }: { page: Page }) => {
+    const projectName = generateProjectName();
+    await openNewItemPage(page);
+
+    await expect(page.locator(newItemLocators.okButton)).toBeDisabled();
+
+    await page.locator(newItemLocators.itemNameInput).fill(projectName);
+
+    await expect(page.locator(newItemLocators.okButton)).toBeDisabled();
+
+    await page.getByText("Multibranch Pipeline").click();
+
+    await expect(page.locator(newItemLocators.okButton)).toBeEnabled();
+  });
+  
 });
