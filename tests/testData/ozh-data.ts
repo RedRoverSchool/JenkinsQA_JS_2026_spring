@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 
 export const ozData = {
   jobName: faker.word.noun(),
+  viewName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
   unsupportedCharacters: ['?', '*', '/', '|', '!', '%', '&', ';', ':'],
