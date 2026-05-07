@@ -59,4 +59,17 @@ test.describe("US_06.009| Multibranch pipeline Configuration > Change Health met
         const dropdownButtons = page.locator(".jenkins-dropdown__item ");
         await expect(dropdownButtons).toHaveCount(2);
     });
+
+    test("TC_06.009.05 | Metric is removed from the Health Metrics sections after clicking 'Remove' button", 
+    async ( {page} : {page : Page} ) => {
+        await page.locator(".task a[href*='configure']").click();
+        await navigateToHealthMetrics(page);
+        await chooseTheMetric(page, "Child item with the given name");
+
+        const addedMetrics = page.locator("div[name='healthMetrics']");
+        await expect(addedMetrics).toHaveCount(1);
+
+        await page.locator(".repeatable-delete.danger").click();
+        await expect(addedMetrics).toHaveCount(0);   
+        });
 });
