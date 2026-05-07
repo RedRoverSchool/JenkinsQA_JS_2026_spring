@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 
 export const ozData = {
   jobName: faker.word.noun(),
+  viewName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
   unsupportedCharacters: ['?', '*', '/', '|', '!', '%', '&', ';', ':'],
@@ -34,6 +35,12 @@ export const manageJenkinsLocators = {
 export const manageCredentialsLocators = {
   goToCredentialsBtn: 'a[href="credentials"]',
   addCredentialsBtn: 'button[data-type="credentials-add-store-item"]',
+};
+
+export const viewLocators = {
+  myView: 'label[for="hudson.model.MyView"]',
+  newViewBtn: '.tab a.addTab',
+  viewNameField: 'input#name',
 };
 
 export const credentials = [
