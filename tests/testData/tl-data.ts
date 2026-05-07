@@ -9,6 +9,14 @@ export const generateProjectName = (): string => {
   return `test-${faker.string.alphanumeric(5)}`;
 };
 
+export const generateDisplayName = (): string => {
+  return faker.company.name();
+};
+
+export const generateDescription = (): string => {
+  return faker.lorem.sentence();
+};
+
 export const newItemData = {
   invalidItemName: "test?item",
   freestyleProjectName: "test-freestyle-project",
