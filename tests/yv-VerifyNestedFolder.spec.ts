@@ -16,12 +16,18 @@ test.describe("US_01.002 | New Item > Folder", () =>{
         await page.getByRole('radio', {name: 'Folder Creates a container'}).click();
         await page.locator('#ok-button').click();
         await page.locator('.app-jenkins-logo').click();
-        
+
         await page.locator(`a[href$="job/${dataYV.itemName}/"] span`).click({ position: { x: 5, y: 5 }});
         await page.locator(`a[href$="job/${dataYV.nestedFolder}/"] span`).click({position: {x: 5, y:5 }});
         await expect(page.locator('.job-index-headline')).toHaveText(dataYV.nestedFolder);
 
-
-
     });
+
+    test("TC_01.002.22 | Verify that error message is displayed", async({ page }: { page : Page }) =>{
+        await page.getByRole('link', {name: 'New Item'}).click();
+        await page.getByRole('radio', {name: 'Folder Creates a container'}).click();
+        await expect(page.locator('#itemname-required')).toBeVisible();
+        
+    });
+
 });
