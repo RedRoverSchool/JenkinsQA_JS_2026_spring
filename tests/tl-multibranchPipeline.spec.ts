@@ -45,4 +45,18 @@ test.describe("US_01.005 | New Item > Multibranch Pipeline ", () => {
 
     expect(afterProjectLinksTexts).toEqual(beforeProjectLinksTexts);
   });
+
+  test("TC_01.005.07 | Verify redirection to configuration page after creating Multibranch Pipeline", async ({ page }: { page: Page }) => {
+    const projectName = generateProjectName();
+
+    await openNewItemPage(page);
+
+    await page.locator(newItemLocators.itemNameInput).fill(projectName);
+
+    await page.locator(newItemLocators.multibranchPipeline).click();
+
+    await page.locator(newItemLocators.okButton).click();
+
+    await expect(page).toHaveURL(/configure/);
+  });
 });
