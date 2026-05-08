@@ -35,14 +35,14 @@ test.describe("US_01.005 | New Item > Multibranch Pipeline ", () => {
   });
 
   test("TC_01.005.06 | Verify user can return to Dashboard without creating item", async ({ page }: { page: Page }) => {
-    const dashboardItems = page.locator(".jenkins-table__link.model-link.inside");
-    const beforeNewItem = await dashboardItems.allTextContents();
+    const dashboardProjectLinks = page.locator(".jenkins-table__link.model-link.inside");
+    const beforeProjectLinksTexts = await dashboardProjectLinks.allTextContents();
 
     await openNewItemPage(page);
     await page.locator(commonLocators.jenkinsLogo).click();
 
-    const afterNewItem = await dashboardItems.allTextContents();
-    expect(afterNewItem).toEqual(beforeNewItem);
+    const afterProjectLinksTexts = await dashboardProjectLinks.allTextContents();
+
+    expect(afterProjectLinksTexts).toEqual(beforeProjectLinksTexts);
   });
-  
 });
