@@ -34,7 +34,6 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     expect(buildsText!.indexOf("#2")).toBeLessThan(buildsText!.indexOf("#1"));
   });
 
-<<<<<<< TC_09.001.05-build-status-icon
   test("TC_09.001.05 | Verify build entry displays status icon", async ({ page }: { page: Page }) => {
     await createFreestyleProject(page);
 
@@ -47,30 +46,27 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
 
     await expect(statusIcon).toBeVisible();
   });
-=======
 });
 
 test.describe("US_09.002 | Build History > Sorting", () => {
   test("TC_09.002.01 | Verify columns are sortable", async ({ page }: { page: Page }) => {
-  await createFreestyleProject(page);
-  await createBuilds(page, 1);
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
 
-  await createFreestyleProject(page);
-  await createBuilds(page, 1);
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
 
-  await page.goto("/view/all/builds");
+    await page.goto("/view/all/builds");
 
-  const buildColumnValues = page.locator("table tbody tr td:nth-child(2)");
-  const beforeSorting = await buildColumnValues.allTextContents();
+    const buildColumnValues = page.locator("table tbody tr td:nth-child(2)");
+    const beforeSorting = await buildColumnValues.allTextContents();
 
-  const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
+    const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
 
-  await sortableHeader.click();
+    await sortableHeader.click();
 
-  const afterSorting = await buildColumnValues.allTextContents();
+    const afterSorting = await buildColumnValues.allTextContents();
 
-  expect(afterSorting).not.toEqual(beforeSorting);
-});
->>>>>>> main
-
+    expect(afterSorting).not.toEqual(beforeSorting);
+  });
 });

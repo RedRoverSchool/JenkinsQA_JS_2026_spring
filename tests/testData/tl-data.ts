@@ -75,8 +75,6 @@ export async function createFreestyleProject(page: Page, projectName: string = g
   await page.locator(newItemLocators.okButton).click();
   await page.locator(commonLocators.submitButton).click();
   return projectName;
-<<<<<<< TC_09.001.05-build-status-icon
-=======
 }
 
 export async function createBuilds(page: Page, count: number): Promise<void> {
@@ -84,5 +82,4 @@ export async function createBuilds(page: Page, count: number): Promise<void> {
     await page.getByRole("link", { name: "Build Now" }).click();
     await page.getByText(`#${i}`).waitFor();
   }
->>>>>>> main
 }
