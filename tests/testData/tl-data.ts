@@ -9,6 +9,10 @@ export const generateProjectName = (): string => {
   return `test-${faker.string.alphanumeric(5)}`;
 };
 
+export const generateFolderName = (): string => {
+  return `test-${faker.string.alphanumeric(8)}`;
+};
+
 export const generateDisplayName = (): string => {
   return faker.company.name();
 };
@@ -52,13 +56,14 @@ export async function openNewItemPage(page: Page): Promise<void> {
   await page.locator(newItemLocators.newItemLink).click();
 }
 
-export async function createFolder(page: Page, folderName: string): Promise<void> {
+export async function createFolder(page: Page, folderName: string = generateFolderName()): Promise<string> {
   await openNewItemPage(page);
   await page.locator(newItemLocators.itemNameInput).fill(folderName);
   await page.locator(folderConfigLocators.folderType).click();
   await page.locator(newItemLocators.okButton).click();
-  await page.locator("button[name='Submit']").waitFor();
-  await page.locator("button[name='Submit']").click();
+  await page.locator(commonLocators.submitButton).waitFor();
+  await page.locator(commonLocators.submitButton).click();
+  return folderName;
 }
 
 export async function createFreestyleProject(page: Page, projectName: string): Promise<void> {
