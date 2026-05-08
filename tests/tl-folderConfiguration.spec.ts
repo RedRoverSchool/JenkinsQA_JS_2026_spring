@@ -85,12 +85,11 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
 
 test.describe("US_05.004 | Folder Configuration > Save or Apply", () => {
   test("TC_05.004.01 | Verify Save and Apply buttons are displayed", async ({ page }: { page: Page }) => {
-    const folderName = await createFolder(page);
+    await createFolder(page);
+    await page.getByRole("link", { name: "Configure" }).click();
 
-    await page.goto(`/job/${folderName}/configure`);
-
-    await expect(page.locator(commonLocators.submitButton)).toBeVisible();
-    await expect(page.locator(commonLocators.applyButton)).toBeVisible();
+    const saveAndApplyButtons = page.locator(`${commonLocators.submitButton}, ${commonLocators.applyButton}`);
+    
+    await expect(saveAndApplyButtons).toHaveText(["Save", "Apply"]); 
   });
-  
 });
