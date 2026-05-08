@@ -34,19 +34,20 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     expect(buildsText!.indexOf("#2")).toBeLessThan(buildsText!.indexOf("#1"));
   });
 
-  test(
-  "TC_09.001.05 | Verify successful build entry displays success status icon", async ({ page }: { page: Page }) => {
-    await createFreestyleProject(page);
+  test("TC_09.001.05 | Verify successful build entry displays success status icon", async ({ page }: { page: Page }) => {
+    const projectName = await createFreestyleProject(page);
 
     await page.getByRole("link", { name: "Build Now" }).click();
     await page.getByText("#1").waitFor();
 
     await page.goto("/view/all/builds");
 
-    const successIcon = page.locator("svg#blue");
+    const successfulBuildEntry = page.locator("tr", { hasText: projectName });
+    const successIcon = successfulBuildEntry.locator("svg#blue");
 
     await expect(successIcon).toBeVisible();
-  });
+  }
+);
 });
 
 test.describe("US_09.002 | Build History > Sorting", () => {
