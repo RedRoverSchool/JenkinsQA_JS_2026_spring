@@ -53,11 +53,12 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
 
   test('TC_23.001.03 | Verify New View creation form opens after selecting "My View" option', async () => {
     const viewName = ozData.viewName;
+    const viewTab = page.locator(`.tabBar a[href*="${viewName}"]`);
     await nameField.fill(viewName);
     await nameField.blur();
     await myView.check();
     await page.locator('button[name="Submit"]').click();
-    await expect(page.locator(`.tabBar a[href*="${viewName}"]`)).toBeVisible();
-    await expect(page.locator(`.tabBar a[href*="${viewName}"]`)).toContainText(viewName);
+    await expect(viewTab).toBeVisible();
+    await expect(viewTab).toContainText(viewName);
   });
 });
