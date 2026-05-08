@@ -34,7 +34,8 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     expect(buildsText!.indexOf("#2")).toBeLessThan(buildsText!.indexOf("#1"));
   });
 
-  test("TC_09.001.05 | Verify build entry displays status icon", async ({ page }: { page: Page }) => {
+  test(
+  "TC_09.001.05 | Verify successful build entry displays success status icon", async ({ page }: { page: Page }) => {
     await createFreestyleProject(page);
 
     await page.getByRole("link", { name: "Build Now" }).click();
@@ -42,9 +43,9 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
 
     await page.goto("/view/all/builds");
 
-    const statusIcon = page.locator("#main-panel svg").first();
+    const successIcon = page.locator("svg#blue");
 
-    await expect(statusIcon).toBeVisible();
+    await expect(successIcon).toBeVisible();
   });
 });
 
