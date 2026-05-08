@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { vvData } from "./testData/vv-data";
+import { createJdkInstallation, vvData } from "./testData/vv-data";
 
 test.describe("US_10.004 | Manage Jenkins > Tools", () => {
 
@@ -51,5 +51,23 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
 
         await expect(globalFilePathInput).toBeVisible();
     });
-  
+
+   test("TC_10.004.05 | Verify JDK installation can be added", async ({ page }: { page: Page }) => {
+        const jdkName = await createJdkInstallation(page);
+
+        await page.locator("a[href$='configureTools']").click();
+        await page.getByRole("button", { name: "JDK installations" }).click();
+
+        const jdkContainer = page.locator("div.repeated-container").filter({ 
+            has: page.getByRole("button", { name: "Add JDK" }) 
+        });
+
+        const lastNameInput = jdkContainer
+            .locator("div.repeated-chunk").last()
+            .locator("div.jenkins-form-item")
+            .filter({ hasText: "Name" })
+            .locator("input");
+
+        await expect(lastNameInput).toHaveValue(jdkName);
+    });
 });
