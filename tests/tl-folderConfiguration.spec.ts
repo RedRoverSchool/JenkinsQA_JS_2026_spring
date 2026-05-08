@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { commonLocators, createFolder, folderConfigData, folderConfigLocators } from "./testData/tl-data";
+import { commonLocators, createFolder, folderConfigData, folderConfigLocators, generateDescription, generateDisplayName } from "./testData/tl-data";
 
 test.describe("US_05.001 | Folder Configuration > Display Name and Description", () => {
 
@@ -46,6 +46,40 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
     await page.locator(commonLocators.submitButton).click();
 
     await expect(page.locator("#main-panel").getByText(folderConfigData.updatedDescription, { exact: true })).toBeVisible();
+  });
+
+  test("TC_05.001.07 | Verify empty Display Name and Description can be saved", async ({ page }: { page: Page }) => {
+    await createFolder(page, folderConfigData.folderName);
+
+    await page.goto(`/job/${folderConfigData.folderName}/configure`);
+
+    await page.locator("input[name='_.displayNameOrNull']").fill(generateDisplayName());
+    await page.locator("textarea").fill(generateDescription());
+    await page.locator(commonLocators.submitButton).click();
+
+    await page.getByRole("link", { name: "Configure" }).click();
+
+    await page.locator("input[name='_.displayNameOrNull']").clear();
+    await page.locator("textarea").clear();
+    await page.locator(commonLocators.submitButton).click();
+    
+    await expect(page.getByRole("link", { name: "Configure" })).toBeVisible();
+  });
+
+  test("TC_05.001.08 | Verify Apply saves changes without leaving page", async ({ page }: { page: Page }) => {
+    const displayName = generateDisplayName();
+    const description = generateDescription();
+    const folderName = await createFolder(page);
+
+    await page.goto(`/job/${folderName}/configure`);
+
+    await page.locator("input[name='_.displayNameOrNull']").fill(displayName);
+    await page.locator("textarea").fill(description);
+    await page.locator("button[name='Apply']").click();
+
+    await expect(page).toHaveURL(/configure/);
+    await expect(page.locator("input[name='_.displayNameOrNull']")).toHaveValue(displayName);
+    await expect(page.locator("textarea")).toHaveValue(description);
   });
 
 });
