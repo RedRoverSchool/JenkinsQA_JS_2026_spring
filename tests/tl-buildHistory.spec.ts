@@ -46,8 +46,7 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     const successIcon = successfulBuildEntry.locator("svg#blue");
 
     await expect(successIcon).toBeVisible();
-  }
-);
+  });
 });
 
 test.describe("US_09.002 | Build History > Sorting", () => {
