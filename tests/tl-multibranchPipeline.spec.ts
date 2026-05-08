@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { generateProjectName, newItemLocators, openNewItemPage } from "./testData/tl-data";
+import { commonLocators, generateProjectName, newItemLocators, openNewItemPage } from "./testData/tl-data";
 
 test.describe("US_01.005 | New Item > Multibranch Pipeline ", () => {
   test("TC_01.005.03 | Verify Multibranch Pipeline type is displayed", async ({ page }: { page: Page }) => {
@@ -33,5 +33,16 @@ test.describe("US_01.005 | New Item > Multibranch Pipeline ", () => {
 
     await expect(page.locator(newItemLocators.okButton)).toBeEnabled();
   });
-  
+
+  test("TC_01.005.06 | Verify user can return to Dashboard without creating item", async ({ page }: { page: Page }) => {
+    const dashboardProjectLinks = page.locator(".jenkins-table__link.model-link.inside");
+    const beforeProjectLinksTexts = await dashboardProjectLinks.allTextContents();
+
+    await openNewItemPage(page);
+    await page.locator(commonLocators.jenkinsLogo).click();
+
+    const afterProjectLinksTexts = await dashboardProjectLinks.allTextContents();
+
+    expect(afterProjectLinksTexts).toEqual(beforeProjectLinksTexts);
+  });
 });
