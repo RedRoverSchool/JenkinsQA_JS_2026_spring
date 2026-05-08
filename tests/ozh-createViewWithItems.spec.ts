@@ -23,7 +23,7 @@ test.describe.serial('US_23.001 | Global View > Create View with items with acce
     myView = page.locator(viewLocators.myView);
 
     if ((await page.locator('tr.job').count()) === 0) {
-      await createNewItem(page, faker.word.noun());
+      await createNewItem(page);
       await page.locator(ozhJenkinsLocators.jenkinsLogo).click();
       await page.goto('/');
     }
