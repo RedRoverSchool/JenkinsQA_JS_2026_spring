@@ -66,4 +66,20 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
     await expect(page.getByRole("link", { name: "Configure" })).toBeVisible();
   });
 
+  test("TC_05.001.08 | Verify Apply saves changes without leaving page", async ({ page }: { page: Page }) => {
+    const displayName = generateDisplayName();
+    const description = generateDescription();
+    const folderName = await createFolder(page);
+
+    await page.goto(`/job/${folderName}/configure`);
+
+    await page.locator("input[name='_.displayNameOrNull']").fill(displayName);
+    await page.locator("textarea").fill(description);
+    await page.locator("button[name='Apply']").click();
+
+    await expect(page).toHaveURL(/configure/);
+    await expect(page.locator("input[name='_.displayNameOrNull']")).toHaveValue(displayName);
+    await expect(page.locator("textarea")).toHaveValue(description);
+  });
+
 });
