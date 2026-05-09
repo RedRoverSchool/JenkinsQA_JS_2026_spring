@@ -1,8 +1,5 @@
 import { test, expect } from "@/base";
-import { assert } from "node:console";
 import { URLs, errorText, unsupported_symbols } from "./testData/kd-data";
-import { faker } from "@faker-js/faker";
-
 
 test.describe('US_01.001 | New Item > Creatе a new item #6', () => {
     test('TC_01.001.29 | Button New Item Follow To Correct Page', async({ page }) => {
@@ -17,8 +14,10 @@ test.describe('US_01.001 | New Item > Creatе a new item #6', () => {
         
         for (const element of unsupported_symbols){
             // в рефакторе поменяю статичное name на фейкер
-            await page.locator('input#name').fill("name"+element);
-            await expect(page.locator('.error')).toHaveText(`‘${element}’${errorText}`);
+            await test.step(`validate symbol ${element}`, async(  ) => {
+                await page.locator('input#name').fill("name"+element);
+                await expect(page.locator('.error')).toHaveText(`‘${element}’${errorText}`);
+            })
         }
     })
 }); 
