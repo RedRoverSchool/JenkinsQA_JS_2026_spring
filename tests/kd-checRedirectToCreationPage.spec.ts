@@ -16,7 +16,7 @@ test.describe('US_01.001 | New Item > Creatе a new item #6', () => {
             // в рефакторе поменяю статичное name на фейкер
             await test.step(`validate symbol ${element}`, async(  ) => {
                 await page.locator('input#name').fill("name"+element);
-                await expect(page.locator('[class *= "error" ] > div')).toHaveText(`‘${element}’${errorText}`);
+                await expect(page.locator('[class *= "error" ] > div')).toHaveText(`‘${element}’ ${errorText}`);
             })
         }
     })

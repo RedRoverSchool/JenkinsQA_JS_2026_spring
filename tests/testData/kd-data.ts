@@ -4,4 +4,4 @@ export const URLs = {
 
 export const unsupported_symbols =  ['?', '*', '/', '!', '%', '$', '&', ';', ':'];
 
-export const errorText = ` is an unsafe character` ;
+export const errorText = `is an unsafe character` ;
