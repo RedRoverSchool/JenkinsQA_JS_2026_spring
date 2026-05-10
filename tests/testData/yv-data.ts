@@ -1,6 +1,6 @@
 
-import { faker, Faker } from "@faker-js/faker";
-import {Page, Locator} from "@playwright/test"
+import { faker } from "@faker-js/faker";
+import {Page, Locator} from "@playwright/test";
 
 export const dataYV ={
     jobName: "Job",
@@ -45,7 +45,7 @@ export class NewItemWhithDescription {
         await this.descriptionField.fill(dataYV.descriptionText);
         await this.saveBtn.click();
         await this.logo.click();
-    };
+    }
 
     async createFreestyleProj(){
         await this.NewitemLink.click();
@@ -53,5 +53,5 @@ export class NewItemWhithDescription {
         await this.freestylePr.click();
         await this.okBtn.click();
         await this.logo.click();
-    };
-};
+    }
+}
