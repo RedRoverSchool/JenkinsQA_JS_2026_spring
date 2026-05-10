@@ -31,4 +31,11 @@ test.describe("US_13.002 | Header > Global Search", () => {
         await expect(container.getByText(jenkinsData.jobName2)).toBeVisible();
     });
 
+     test("TC_13.002.03 | Verify long query", async ({ page }: { page: Page}) => {
+        await page.locator("#root-action-SearchAction").click();
+        await page.locator("#command-bar").fill(jenkinsData.jobNameLong);
+        
+        await expect(page.locator('#search-results-container')).toContainText("No results for");
+    });
+
 })
