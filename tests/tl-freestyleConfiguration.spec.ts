@@ -34,16 +34,6 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
     await expect(page.locator("#main-panel").getByText(freestyleConfigData.description, { exact: true })).toBeVisible();
   });
 
-});
-
-test.describe("US_02.003 | Freestyle Project Configuration > Configure SCM", () => {
-  test("TC_02.003.02 | Verify Source Code Management section is available", async ({ page }: { page: Page }) => {
-    await createFreestyleProject(page);
-    await page.getByRole("link", { name: "Configure" }).click();
-
-    await expect(page.locator("#source-code-management")).toBeVisible();
-  });
-
   test("TC_02.002.09 | Verify description can be added from Status page", async ({ page }: { page: Page }) => {
     await createFreestyleProject(page);
 
@@ -53,5 +43,31 @@ test.describe("US_02.003 | Freestyle Project Configuration > Configure SCM", () 
     await page.locator(commonLocators.submitButton).click();
 
     await expect(page.locator("#description-content").getByText(description, { exact: true })).toBeVisible();
+  });
+
+  test("TC_02.002.10 | Verify description can be edited from Status page", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+
+    await page.locator("#description-link").click();
+    const description = generateDescription();
+    await page.locator("textarea").fill(description);
+    await page.locator(commonLocators.submitButton).click();
+
+    await page.locator("#description-link").click();
+    await page.locator("textarea").clear();
+    const descriptionEdited = generateDescription();
+    await page.locator("textarea").fill(descriptionEdited);
+    await page.locator(commonLocators.submitButton).click();
+
+    await expect(page.locator("#description-content").getByText(descriptionEdited, { exact: true })).toBeVisible();
+  });
+});
+
+test.describe("US_02.003 | Freestyle Project Configuration > Configure SCM", () => {
+  test("TC_02.003.02 | Verify Source Code Management section is available", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+    await page.getByRole("link", { name: "Configure" }).click();
+
+    await expect(page.locator("#source-code-management")).toBeVisible();
   });
 });
