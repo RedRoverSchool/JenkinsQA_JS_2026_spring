@@ -26,6 +26,13 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await createNewFreeProj.locator(dataYV.saveBtn).click();
 
         await expect(createNewFreeProj.locator('#description-content')).toContainText(dataYV.descriptionText);
+    });
+
+    test("TC_02.002.16 | Verify Preview option is available", async ({createNewFreeProj}) =>{
+        await createNewFreeProj.locator(`a[href$="job/${dataYV.itemName}/"] span`).click({position: {x: 5, y: 5}});
+        await createNewFreeProj.locator('[href="editDescription"]').click();
+        
+        await expect(createNewFreeProj.locator(`a[previewendpoint="/markupFormatter/previewDescription"]`)).toBeEnabled();
     })
 });
 
