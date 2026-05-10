@@ -1,6 +1,5 @@
 import {test, expect, Page} from "@/tests/testFixtures/yv-fix"
 import { dataYV } from "./testData/yv-data";
-import { createNewItem } from "./testData/ozh-data";
 
 
 
