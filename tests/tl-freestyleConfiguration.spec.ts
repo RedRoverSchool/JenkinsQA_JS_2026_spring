@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { createFreestyleProject, newItemData, freestyleConfigData } from "./testData/tl-data";
+import { createFreestyleProject, newItemData, freestyleConfigData, commonLocators, generateDescription } from "./testData/tl-data";
 
 test.describe("US_02.002 | Freestyle Project Configuration > Project Description", () => {
 
@@ -44,4 +44,14 @@ test.describe("US_02.003 | Freestyle Project Configuration > Configure SCM", () 
     await expect(page.locator("#source-code-management")).toBeVisible();
   });
 
+  test("TC_02.002.09 | Verify description can be added from Status page", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+
+    await page.locator("#description-link").click();
+    const description = generateDescription();
+    await page.locator("textarea").fill(description);
+    await page.locator(commonLocators.submitButton).click();
+
+    await expect(page.locator("#description-content").getByText(description, { exact: true })).toBeVisible();
+  });
 });
