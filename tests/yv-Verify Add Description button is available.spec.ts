@@ -1,6 +1,5 @@
 import {test, expect, Page} from "@/tests/testFixtures/yv-fix"
 import { dataYV } from "./testData/yv-data";
-import { createNewItem } from "./testData/ozh-data";
 
 
 
@@ -34,5 +33,6 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         
         await expect(createNewFreeProj.locator(`a[previewendpoint="/markupFormatter/previewDescription"]`)).toBeEnabled();
     })
+
 });
 
