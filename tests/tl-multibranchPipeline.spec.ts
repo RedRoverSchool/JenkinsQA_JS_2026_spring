@@ -57,6 +57,6 @@ test.describe("US_01.005 | New Item > Multibranch Pipeline ", () => {
 
     await page.locator(newItemLocators.okButton).click();
 
-    await expect(page).toHaveURL(/configure/);
+    await expect(page.locator("#branch-sources")).toBeVisible();
   });
 });
