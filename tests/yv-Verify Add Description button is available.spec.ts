@@ -8,5 +8,13 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await createNewFreeProj.locator(`a[href$="job/${dataYV.itemName}/"] span`).click({ position: { x: 5, y: 5 }});
         await expect(createNewFreeProj.locator('[href="editDescription"]')).toBeVisible();
     });
+
+    test("TC_02.002.14| Verify description field is available", async ({createNewFreeProj}) =>{
+
+        await createNewFreeProj.locator(`a[href$="job/${dataYV.itemName}/"] span`).click({position: {x: 5, y: 5}});
+        await createNewFreeProj.locator('[href="editDescription"]').click();
+        
+        await expect(createNewFreeProj.locator('[name="description"]')).toBeVisible();
+    });
 });
 
