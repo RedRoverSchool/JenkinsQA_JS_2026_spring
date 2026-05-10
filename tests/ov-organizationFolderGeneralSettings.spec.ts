@@ -16,4 +16,16 @@ test.describe("US_07.001 | Organization folder Configuration > Change General Se
         await expect(page.locator("h2#general")).toBeVisible();
         await expect(page.locator("h2#general")).toHaveText("General");
     });
+    
+    test("TC_07.001.02 | Access the General Settings by clicking the job name in the project table", async ({page, organizationFolderName }: {page: Page; organizationFolderName: string}) => {
+        await page.locator("span.jenkins-mobile-hide").click();
+        
+        const folderName = page.getByRole('link', { name: organizationFolderName });
+        await folderName.click();
+
+        await page.getByRole('link', { name: 'Configure', exact: true }).click();
+
+        await expect(page.locator("h2#general")).toBeVisible();
+        await expect(page.locator("h2#general")).toHaveText("General");
+    });
 });
