@@ -57,13 +57,8 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         const jdkContainer = page.locator("div.repeated-container").filter({ 
             has: page.getByRole("button", { name: "Add JDK" }) 
         });
-
-        const isVisible = await jdkContainer.isVisible();
-        if (!isVisible) {
             await page.getByRole("button", { name: "JDK installations" }).click();
-            await jdkContainer.waitFor({ state: "visible" });
-        }
-
+            
         const jdkName = `jdk-${faker.system.semver()}-${faker.lorem.word()}`;
 
         await page.getByRole("button", { name: "Add JDK" }).first().click();
