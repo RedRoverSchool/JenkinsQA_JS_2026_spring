@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { generateProjectName, createFreestyleProject, newItemData } from "./testData/tl-data";
+import { generateProjectName, createFreestyleProject, newItemData, createBuilds } from "./testData/tl-data";
 
 test.describe("US_09.001 | Build History > Core Build History Display", () => {
   test("TC_09.001.02 | Verify Build History option is accessible from Dashboard", async ({ page }: { page: Page }) => {
@@ -34,4 +34,40 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     expect(buildsText!.indexOf("#2")).toBeLessThan(buildsText!.indexOf("#1"));
   });
 
+  test("TC_09.001.05 | Verify successful build entry displays success status icon", async ({ page }: { page: Page }) => {
+    const projectName = await createFreestyleProject(page);
+
+    await page.getByRole("link", { name: "Build Now" }).click();
+    await page.getByText("#1").waitFor();
+
+    await page.goto("/view/all/builds");
+
+    const successfulBuildEntry = page.locator("tr", { hasText: projectName });
+    const successIcon = successfulBuildEntry.locator("svg#blue");
+
+    await expect(successIcon).toBeVisible();
+  });
+});
+
+test.describe("US_09.002 | Build History > Sorting", () => {
+  test("TC_09.002.01 | Verify columns are sortable", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
+
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
+
+    await page.goto("/view/all/builds");
+
+    const buildColumnValues = page.locator("table tbody tr td:nth-child(2)");
+    const beforeSorting = await buildColumnValues.allTextContents();
+
+    const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
+
+    await sortableHeader.click();
+
+    const afterSorting = await buildColumnValues.allTextContents();
+
+    expect(afterSorting).not.toEqual(beforeSorting);
+  });
 });
