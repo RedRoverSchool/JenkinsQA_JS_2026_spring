@@ -38,24 +38,51 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
 
 test.describe("US_09.002 | Build History > Sorting", () => {
   test("TC_09.002.01 | Verify columns are sortable", async ({ page }: { page: Page }) => {
-  await createFreestyleProject(page);
-  await createBuilds(page, 1);
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
 
-  await createFreestyleProject(page);
-  await createBuilds(page, 1);
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
 
-  await page.goto("/view/all/builds");
+    await page.goto("/view/all/builds");
 
-  const buildColumnValues = page.locator("table tbody tr td:nth-child(2)");
-  const beforeSorting = await buildColumnValues.allTextContents();
+    const buildColumnValues = page.locator("table tbody tr td:nth-child(2)");
+    const beforeSorting = await buildColumnValues.allTextContents();
 
-  const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
+    const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
 
-  await sortableHeader.click();
+    await sortableHeader.click();
 
-  const afterSorting = await buildColumnValues.allTextContents();
+    const afterSorting = await buildColumnValues.allTextContents();
 
-  expect(afterSorting).not.toEqual(beforeSorting);
-});
+    expect(afterSorting).not.toEqual(beforeSorting);
+  });
 
+  test("TC_09.002.02 | Verify sorting toggles between ascending and descending", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+    await createBuilds(page, 4);
+
+    await page.locator(".jenkins-card__title-link.jenkins-card__reveal").click();
+
+    const buildValues = page.locator("#trend tbody tr td:nth-child(2)");
+    const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
+
+    await expect(buildValues.first()).toBeVisible();
+    const initialOrder = await buildValues.allTextContents();
+
+    await sortableHeader.click();
+
+    await expect(buildValues.first()).toBeVisible();
+    const firstSortOrder = await buildValues.allTextContents();
+
+    const sortedAscending = [...initialOrder].sort();
+
+    await sortableHeader.click();
+
+    await expect(buildValues.first()).toBeVisible();
+    const secondSortOrder = await buildValues.allTextContents();
+
+    expect(firstSortOrder).toEqual(sortedAscending);
+    expect(secondSortOrder).toEqual(initialOrder);
+  });
 });
