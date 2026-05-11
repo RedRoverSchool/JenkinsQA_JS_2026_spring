@@ -72,4 +72,16 @@ test.describe("US_06.009| Multibranch pipeline Configuration > Change Health met
         await page.locator(".repeatable-delete.danger").click();
         await expect(addedMetrics).toHaveCount(0);   
         });
+
+    test("TC_06.009.06 | Add Metrics dropdown filters options based on text input", async ( {page} : {page : Page}) => {
+        await page.locator(".task a[href*='configure']").click();
+        await navigateToHealthMetrics(page);
+        await page.getByRole("button", {name : "Add metric"}).click();
+        await page.getByPlaceholder("Filter").fill("child");
+
+        const filteredItems = page.locator(".jenkins-dropdown__item:visible");
+
+        await expect(filteredItems).toHaveCount(2);
+        await expect(filteredItems).toHaveText(["Child item with the given name" , "Child item with worst health"]);
+    });
 });
