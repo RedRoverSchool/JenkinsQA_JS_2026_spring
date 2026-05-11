@@ -3,6 +3,7 @@ import { Page } from "@playwright/test";
 export const jenkinsData = {
     multibranchPiplineName : "multibranchPiplineTest",
     invalidCharacters : ['!', '@', '#', '$', '%', '^', '&', '*', '/', '\\', '?', '<', '>', ':', '|'], 
+    childName : "This is Child",
 };
 
 export async function navigateToHealthMetrics(page : Page) : Promise<void> { 
