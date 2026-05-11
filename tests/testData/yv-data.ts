@@ -1,11 +1,12 @@
 
+import { faker, Faker } from "@faker-js/faker";
 import {Page, Locator} from "@playwright/test"
 
 export const dataYV ={
     jobName: "Job",
-    itemName: `Item${Math.random().toString(36).substring(2,5)}`,
-    nestedFolder: `Item${Math.random().toString(36).substring(2,5)}`,
-    descriptionText: "Some text",
+    itemName: faker.color.human(),
+    nestedFolder: faker.animal.cat(),
+    descriptionText: faker.lorem.lines(),
     NewitemLink: `[href="/view/all/newJob"]`,
     logo: '.app-jenkins-logo',
     inputName: '#name',
@@ -43,6 +44,14 @@ export class NewItemWhithDescription {
         await this.okBtn.click();
         await this.descriptionField.fill(dataYV.descriptionText);
         await this.saveBtn.click();
+        await this.logo.click();
+    };
+
+    async createFreestyleProj(){
+        await this.NewitemLink.click();
+        await this.inputName.fill(dataYV.itemName);
+        await this.freestylePr.click();
+        await this.okBtn.click();
         await this.logo.click();
     };
 };

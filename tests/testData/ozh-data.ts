@@ -3,8 +3,11 @@ import { faker } from '@faker-js/faker';
 
 export const ozData = {
   jobName: faker.word.noun(),
+  viewName: faker.word.noun(),
   incorrectGitUrl: 'someurl',
   repoErrorMessage: 'Failed to connect to repository',
+  unsupportedCharacters: ['?', '*', '/', '|', '!', '%', '&', ';', ':'],
+  unsupportedCharTooltip: ' is an unsafe character',
 };
 
 export const ozhJenkinsLocators = {
@@ -34,6 +37,12 @@ export const manageCredentialsLocators = {
   addCredentialsBtn: 'button[data-type="credentials-add-store-item"]',
 };
 
+export const viewLocators = {
+  myView: 'label[for="hudson.model.MyView"]',
+  newViewBtn: '.tab a.addTab',
+  viewNameField: 'input#name',
+};
+
 export const credentials = [
   'Username with password',
   'GitHub App',
@@ -48,4 +57,9 @@ export async function createNewItem(page: Page, jobName: string = ozData.jobName
   await page.locator(ozhJenkinsLocators.itemNameInput).fill(jobName);
   await page.locator(ozhJenkinsLocators.newFreestyleProject).click();
   await page.locator(ozhJenkinsLocators.okBtn).click();
+}
+
+export function getRandomElementFromArray(items: any[]) {
+  const randomItem = items[Math.floor(Math.random() * items.length)];
+  return randomItem;
 }

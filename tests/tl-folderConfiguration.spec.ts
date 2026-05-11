@@ -1,5 +1,6 @@
 import { test, expect, Page } from "@/base";
 import { commonLocators, createFolder, folderConfigData, folderConfigLocators, generateDescription, generateDisplayName } from "./testData/tl-data";
+import { description } from "./testData/ok-data";
 
 test.describe("US_05.001 | Folder Configuration > Display Name and Description", () => {
 
@@ -66,4 +67,43 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
     await expect(page.getByRole("link", { name: "Configure" })).toBeVisible();
   });
 
+  test("TC_05.001.08 | Verify Apply saves changes without leaving page", async ({ page }: { page: Page }) => {
+    const displayName = generateDisplayName();
+    const description = generateDescription();
+    const folderName = await createFolder(page);
+
+    await page.goto(`/job/${folderName}/configure`);
+
+    await page.locator("input[name='_.displayNameOrNull']").fill(displayName);
+    await page.locator("textarea").fill(description);
+    await page.locator("button[name='Apply']").click();
+
+    await expect(page).toHaveURL(/configure/);
+    await expect(page.locator("input[name='_.displayNameOrNull']")).toHaveValue(displayName);
+    await expect(page.locator("textarea")).toHaveValue(description);
+  });
+});
+
+test.describe("US_05.004 | Folder Configuration > Save or Apply", () => {
+  test("TC_05.004.01 | Verify Save and Apply buttons are displayed", async ({ page }: { page: Page }) => {
+    await createFolder(page);
+    await page.getByRole("link", { name: "Configure" }).click();
+
+    const saveAndApplyButtons = page.locator(`${commonLocators.submitButton}, ${commonLocators.applyButton}`);
+    
+    await expect(saveAndApplyButtons).toHaveText(["Save", "Apply"]); 
+  });
+
+  test("TC_05.004.02 | Verify Save persists changes and redirects to Folder main page", async ({ page }: { page: Page }) => {
+    const description = generateDescription();
+
+    await createFolder(page);
+
+    await page.getByRole("link", { name: "Configure" }).click();
+
+    await page.locator("textarea").fill(description);
+    await page.locator(commonLocators.submitButton).click();
+
+    await expect(page.getByText(description)).toBeVisible();
+  });
 });
