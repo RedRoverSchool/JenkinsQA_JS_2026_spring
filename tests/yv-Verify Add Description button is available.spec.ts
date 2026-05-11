@@ -17,6 +17,7 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await expect(createNewFreeProj.locator('[name="description"]')).toBeVisible();
     });
 
+
     test("TC_02.002.15 | Add description to Freestyle Project", async ({createNewFreeProj}) =>{
 
         await createNewFreeProj.locator(`a[href$="job/${dataYV.itemName}/"] span`).click({position: {x: 5, y: 5}});
@@ -33,6 +34,7 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         
         await expect(createNewFreeProj.locator(`a[previewendpoint="/markupFormatter/previewDescription"]`)).toBeEnabled();
     })
+
 
 });
 
