@@ -33,6 +33,7 @@ export const newItemLocators = {
   newItemLink: "a[href='/view/all/newJob']",
   itemNameInput: "#name",
   freestyleProject: "#j-add-item-type-standalone-projects li[class*=FreeStyleProject]",
+  multibranchPipeline: 'li:has-text("Multibranch Pipeline")',
   okButton: "#ok-button",
   invalidNameMessage: "#itemname-invalid",
 };
