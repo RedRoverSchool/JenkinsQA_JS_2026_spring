@@ -20,6 +20,5 @@ export const test = basa.extend<Fixture>({
     }
 })
 
-// разобраться. не понимаю что написано ниже))
 export const expect = basa.expect;
 export type { Page };
