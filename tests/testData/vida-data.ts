@@ -1,7 +1,7 @@
-import {Page} from "@playwright/test";
+import { faker } from '@faker-js/faker';
 
 export const jenkinsData = {
-    jobName: Math.random().toString(36).substring(2, 5),
+    jobName: faker.animal.cat(),
     libraryName: "LibraryName",
 }
 
@@ -15,13 +15,4 @@ export const jenkinsLocators = {
     propertiesButton: "button[data-section-id='properties']",
     addButton: ".jenkins-button.repeatable-add",
     libraryInputField: ".setting-main input[checkdependson='name']",
-}
-
-export async function createNewItem(page : Page) : Promise<void> {
-    await page.locator(jenkinsLocators.newItemButton).click();
-    await page.locator(jenkinsLocators.inputField).fill(jenkinsData.jobName);
-    await page.locator(jenkinsLocators.folderType).click();
-    await page.locator(jenkinsLocators.okButton).click();
-    await page.locator(jenkinsLocators.submitButton).click();
-    await page.locator(jenkinsLocators.jenkinsLogo).click();
 }
