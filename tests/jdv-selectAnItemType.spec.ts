@@ -20,4 +20,14 @@ test.describe('US_01.004 | New Item | Select an Item type', () => {
       'Organization Folder',
     ]);
   });
+  test('TC_01.004.02 | Verify an item type is selectable', async ({ page }: { page: Page }) => {
+    await page.getByRole('link', { name: 'New Item' }).click();
+
+    const freeStyleProject = await page.locator('.hudson_model_FreeStyleProject');
+    freeStyleProject.click();
+
+    const checkedItems = page.locator('.j-item-options li[aria-checked="true"]');
+    await expect(checkedItems).toHaveCount(1);
+    await expect(freeStyleProject).toHaveAttribute('aria-checked', 'true');
+  });
 });
