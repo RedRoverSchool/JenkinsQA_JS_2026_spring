@@ -7,7 +7,7 @@ import {Page, Locator} from "@playwright/test"
 export const dataYV ={
     jobName: "Job",
     itemName: faker.string.alphanumeric(7),
-    nestedFolder: faker.animal.cat(),
+    nestedFolder: faker.string.alphanumeric(8),
     descriptionText: faker.lorem.lines(),
     NewitemLink: `[href="/view/all/newJob"]`,
     logo: '.app-jenkins-logo',
