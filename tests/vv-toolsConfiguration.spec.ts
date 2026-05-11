@@ -56,12 +56,12 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
     test("TC_10.004.05 | Verify JDK installation can be added", async ({ page }: { page: Page }) => {
         const addJdkButton = page.locator('button:has-text("Add JDK")').first();
         const jdkInsttalationsButton = page.locator('button:has-text("JDK installations")');
-        if (await addJdkButton.isVisible().catch(() => false)) {
+
+        if (await addJdkButton.isVisible()) {
             await addJdkButton.click();
         } else {
-            await jdkInsttalationsButton.isVisible().catch(() => false);
+            await jdkInsttalationsButton.isVisible();
             await jdkInsttalationsButton.click();
-            await addJdkButton.click();
         }
 
         const jdkName = `jdk-${faker.system.semver()}-${faker.lorem.word()}`;
