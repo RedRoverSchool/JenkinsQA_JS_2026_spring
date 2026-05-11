@@ -1,5 +1,6 @@
 import { test, expect, Page } from "@/base";
 import { createJdkInstallation, vvData } from "./testData/vv-data";
+import { faker } from "@faker-js/faker";
 
 test.describe("US_10.004 | Manage Jenkins > Tools", () => {
 
@@ -53,21 +54,44 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
     });
 
    test("TC_10.004.05 | Verify JDK installation can be added", async ({ page }: { page: Page }) => {
-        const jdkName = await createJdkInstallation(page);
-
-        await page.locator("a[href$='configureTools']").click();
-        await page.getByRole("button", { name: "JDK installations" }).click();
-
         const jdkContainer = page.locator("div.repeated-container").filter({ 
             has: page.getByRole("button", { name: "Add JDK" }) 
         });
 
-        const lastNameInput = jdkContainer
-            .locator("div.repeated-chunk").last()
+        const isVisible = await jdkContainer.isVisible();
+        if (!isVisible) {
+            await page.getByRole("button", { name: "JDK installations" }).click();
+            await jdkContainer.waitFor({ state: "visible" });
+        }
+
+        const jdkName = `jdk-${faker.system.semver()}-${faker.lorem.word()}`;
+
+        await page.getByRole("button", { name: "Add JDK" }).first().click();
+
+        const lastChunk = jdkContainer.locator("div.repeated-chunk").last();
+        await lastChunk.waitFor({ state: "visible" });
+
+        await lastChunk
             .locator("div.jenkins-form-item")
             .filter({ hasText: "Name" })
-            .locator("input");
+            .locator("input")
+            .fill(jdkName);
 
-        await expect(lastNameInput).toHaveValue(jdkName);
+        await page.locator("button[name='Submit']").click();
+        await page.locator("a[href$='configureTools']").click();
+
+        const isVisibleAfter = await jdkContainer.isVisible();
+        if (!isVisibleAfter) {
+            await page.getByRole("button", { name: "JDK installations" }).click();
+            await jdkContainer.waitFor({ state: "visible" });
+        }
+
+        await expect(
+            jdkContainer
+                .locator("div.repeated-chunk").last()
+                .locator("div.jenkins-form-item")
+                .filter({ hasText: "Name" })
+                .locator("input")
+        ).toHaveValue(jdkName); 
     });
 });
