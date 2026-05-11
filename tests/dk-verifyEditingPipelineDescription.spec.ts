@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/dk-data";
 
-test.describe("TC_03.002.01 | Project Description > Verify editing Pipeline description", () => {
+test.describe("US_03.002.01 | Project Description > Verify editing Pipeline description", () => {
 
    test.beforeEach(async ({ page }: { page: Page }) => {
     // create pipline
