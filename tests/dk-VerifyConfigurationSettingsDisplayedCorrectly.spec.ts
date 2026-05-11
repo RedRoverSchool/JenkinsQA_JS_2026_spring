@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/dk-data";
 
-test.describe('US_10.004.06 Epic Name > User Story Name' , ()=> {
+test.describe('US_10.004.06 Manage Jenkins > Tools' , ()=> {
     
     test.beforeEach(async ({ page }: { page: Page }) => {
         await page.locator('.jenkins-header__actions > #root-action-ManageJenkinsAction').click()
