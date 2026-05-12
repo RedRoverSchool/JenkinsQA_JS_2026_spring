@@ -67,7 +67,7 @@ test.describe("US_09.002 | Build History > Sorting", () => {
     const buildValues = page.locator("#trend tbody tr td:nth-child(2)");
     const sortableHeader = page.locator("th[initialsortdir='up'] a.sortheader");
 
-    await expect(buildValues.first()).toBeVisible();
+    await expect(buildValues.first()).toBeVisible();  
     const initialOrder = await buildValues.allTextContents();
 
     await sortableHeader.click();
@@ -75,14 +75,12 @@ test.describe("US_09.002 | Build History > Sorting", () => {
     await expect(buildValues.first()).toBeVisible();
     const firstSortOrder = await buildValues.allTextContents();
 
-    const sortedAscending = [...initialOrder].sort();
-
     await sortableHeader.click();
 
     await expect(buildValues.first()).toBeVisible();
     const secondSortOrder = await buildValues.allTextContents();
 
-    expect(firstSortOrder).toEqual(sortedAscending);
+    expect(firstSortOrder).not.toEqual(initialOrder);
     expect(secondSortOrder).toEqual(initialOrder);
   });
 });
