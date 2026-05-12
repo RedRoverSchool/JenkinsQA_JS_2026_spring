@@ -5,9 +5,14 @@ export class Header {
 
 	// locators
 	logoLink = () => this.page.locator(".app-jenkins-logo");
+	manageJenkinsLink = () => this.page.getByRole("link", { name: 'Manage Jenkins' });
 
 	// actions
 	async clickHome() {
 		await this.logoLink().click();
+	}
+
+	async clickManageJenkinsLink() {
+		await this.manageJenkinsLink().click();
 	}
 }
