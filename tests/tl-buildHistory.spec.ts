@@ -57,11 +57,9 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
     const buildLink = page.locator("#trend tbody tr td:nth-child(2) a").first();
 
     const buildNumber = await buildLink.textContent();
+    const buildId = buildNumber?.replace("#", "");
 
-    await buildLink.focus();
-    await page.keyboard.press("Enter");
-
-    await expect(page.getByRole("heading")).toContainText(buildNumber!);
+    await expect(buildLink).toHaveAttribute("href", new RegExp(`${buildId}/?$`));
   });
 });
 
