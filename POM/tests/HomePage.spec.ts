@@ -2,7 +2,7 @@ import { test, expect, App } from "@/POM/fixtures/baseFixtures";
 import { globalData } from "../testData/globalData";
 
 test.describe("US_01.001 | New Item > Create a new item", () => {
-	test("RF_01.001.01 | Verify new item creation", async ({ app }: { app: App }) => {
+	test("RF_01.001.01 | Verify new item creation.", async ({ app }: { app: App }) => {
 		await app.homePage.clickNewItemLink();
 
 		await app.newItemPage.fillItemNameField(globalData.itemName);
