@@ -54,26 +54,28 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
     });
 
     test("TC_10.004.05 | Verify JDK installation can be added", async ({ page }: { page: Page }) => {
-        const addJdkButton = page.locator('button:has-text("Add JDK")').first();
-        const jdkInsttalationsButton = page.locator('button:has-text("JDK installations")');
+        const addJdkButton = page.getByRole('button', { name: 'Add JDK' }).first();
+        const jdkInstallationsButton = page.getByRole('button', { name: 'JDK installations' });
 
-        if (await addJdkButton.isVisible()) {
+        if (await addJdkButton.isVisible().catch(() => false)) {
             await addJdkButton.click();
         } else {
-            await jdkInsttalationsButton.isVisible();
-            await jdkInsttalationsButton.click();
+            await jdkInstallationsButton.click();
+            await expect(addJdkButton).toBeVisible();
+            await addJdkButton.click();
         }
 
         const jdkName = `jdk-${faker.system.semver()}-${faker.lorem.word()}`;
-        const firstChunk = page.locator('div.repeated-chunk.first').first();
+        const newJdkChunk = page.locator('div.repeated-chunk').first();
 
-        await expect(firstChunk.locator('input[name="_.name"]')).toBeVisible();
-        await firstChunk.locator('input[name="_.name"]').fill(jdkName);
+        const nameInput = newJdkChunk.locator('input[name="_.name"]');
+        await nameInput.fill(jdkName);
 
         await page.locator("button[name='Submit']").click();
         await page.locator("a[href$='configureTools']").click();
-        await jdkInsttalationsButton.click();
+        await jdkInstallationsButton.click();
 
-        await expect(firstChunk.locator('input[name="_.name"]')).toHaveValue(jdkName);
+        const savedJdkRow = page.locator('div.repeated-chunk').first();
+        await expect(savedJdkRow.locator('input[name="_.name"]')).toHaveValue(jdkName);
     });
 });
