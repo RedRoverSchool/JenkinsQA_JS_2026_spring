@@ -1,6 +1,5 @@
 import { test, expect, Page } from "@/base";
 import { commonLocators, createFolder, folderConfigData, folderConfigLocators, generateDescription, generateDisplayName } from "./testData/tl-data";
-import { description } from "./testData/ok-data";
 
 test.describe("US_05.001 | Folder Configuration > Display Name and Description", () => {
 
@@ -105,5 +104,17 @@ test.describe("US_05.004 | Folder Configuration > Save or Apply", () => {
     await page.locator(commonLocators.submitButton).click();
 
     await expect(page.getByText(description)).toBeVisible();
+  });
+
+  test("TC_05.004.03 | Verify Apply persists changes without redirecting", async ({ page }: { page: Page }) => {
+    const description = generateDescription();
+    
+    await createFolder(page);
+    await page.getByRole("link", { name: "Configure" }).click();
+
+    await page.locator("textarea").fill(description);
+    await page.locator(commonLocators.applyButton).click();
+
+    await expect(page.locator("textarea")).toHaveValue(description);
   });
 });
