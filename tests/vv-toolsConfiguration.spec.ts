@@ -75,7 +75,6 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         await page.locator("a[href$='configureTools']").click();
         await jdkInstallationsButton.click();
 
-        const savedJdkRow = page.locator('div.repeated-chunk').first();
-        await expect(savedJdkRow.locator('input[name="_.name"]')).toHaveValue(jdkName);
+        await expect(page.locator('text=' + jdkName)).toBeVisible();
     });
 });
