@@ -38,4 +38,11 @@ test.describe("US_13.002 | Header > Global Search", () => {
         await expect(page.locator('#search-results-container')).toContainText("No results for");
     });
 
+    test("TC_13.002.04 | Verify different letter cases", async ({ page }: {page: Page}) => {
+        await page.locator("#root-action-SearchAction").click();
+        await page.locator("#command-bar").fill(jenkinsData.jobName.toUpperCase());
+
+        await expect(page.locator('#search-results-container')).toContainText(jenkinsData.jobName);
+    });
+
 })
