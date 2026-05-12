@@ -13,4 +13,10 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
 
 		await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
 	});
+
+	test("RF_01.001.21 | New Item > Create a new item > Verify new item page opens from dashboard", async ({ app }: { app: App }) => {
+  		await app.homePage.clickNewItemLink();
+
+  		await expect(app.newItemPage.newItemHeader()).toContainText("New Item");
+	});
 });
