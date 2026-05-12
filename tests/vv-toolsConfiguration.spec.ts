@@ -75,6 +75,6 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         await page.locator("a[href$='configureTools']").click();
         await jdkInstallationsButton.click();
 
-        await expect(page.locator('text=' + jdkName)).toBeVisible();
+        await expect(page.locator(`input[name="_.name"][value="${jdkName}"]`)).toBeVisible();
     });
 });
