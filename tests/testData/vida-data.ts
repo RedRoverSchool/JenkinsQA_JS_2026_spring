@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 export const jenkinsData = {
-    jobName: faker.animal.cat(),
+    jobName: "JobName",
     libraryName: "LibraryName",
 }
 
