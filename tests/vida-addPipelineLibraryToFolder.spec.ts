@@ -10,7 +10,6 @@ test.describe("US_05.003 | Folder Configuration > Pipeline Libraries", (): void 
         await createdFolderPage.locator(jenkinsLocators.addButton).click();
         await createdFolderPage.locator(jenkinsLocators.libraryInputField).fill(jenkinsData.libraryName);
         await createdFolderPage.locator(jenkinsLocators.submitButton).click();
-
         await createdFolderPage.goto(`/job/${jenkinsData.jobName}/configure`);
         await createdFolderPage.locator(jenkinsLocators.propertiesButton).click();
 
