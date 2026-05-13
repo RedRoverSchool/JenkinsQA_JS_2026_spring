@@ -72,4 +72,17 @@ test.describe("US_06.009| Multibranch pipeline Configuration > Change Health met
         await page.locator(".repeatable-delete.danger").click();
         await expect(addedMetrics).toHaveCount(0);   
         });
+
+    test("TC_06.009.07 | Verify text can be entered and saved in the 'Child Name' field", async ( {page} : {page : Page} ) => {
+        await page.locator(".task a[href*='configure']").click();
+        await navigateToHealthMetrics(page);
+        await chooseTheMetric(page, "Child item with the given name");
+        await page.locator("input[name='_.childName']").fill(jenkinsData.childName);
+        await page.getByRole("button", {name : "Save"}).click();
+        await page.locator("span a" , {hasText : "Configure"}).click();
+        await navigateToHealthMetrics(page);
+
+        const childFieldName = page.locator("input[name='_.childName']");
+        await expect(childFieldName).toHaveValue(`${jenkinsData.childName}`);
+    });
 });
