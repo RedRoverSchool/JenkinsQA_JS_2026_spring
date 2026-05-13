@@ -1,4 +1,5 @@
 import { BasePage } from "./@components";
+
 export class ConfigureFolderPage extends BasePage {
 
   generalSection = () => this.page.locator("#general");
