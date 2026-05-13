@@ -13,7 +13,8 @@ export class HomePage extends BasePage {
 	}
 
 	async hoverItemName() {
-		await this.itemName().hover();
+		await this.itemName().hover()
+		return this;
 	}
 
 	async clickArrowButton() {

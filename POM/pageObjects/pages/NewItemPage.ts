@@ -23,5 +23,6 @@ export class NewItemPage extends BasePage {
 
 	async clickOrganizationFolder() {
 		await this.itemType_OrganizationFolder().click();
+		return this;
 	}
 }
