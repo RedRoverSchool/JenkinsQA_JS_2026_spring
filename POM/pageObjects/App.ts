@@ -3,12 +3,17 @@ import { HomePage } from './pages/HomePage';
 import { NewItemPage } from './pages/NewItemPage';
 import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
 import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
+import { ManageJenkinsPage } from './pages/ManageJenkinsPage';
+import { ToolsPage } from './pages/ToolsPage';
 
 export class App {
   private _homePage: HomePage | null = null;
   private _newItemPage: NewItemPage | null = null;
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
+  private _manageJenkinsPage: ManageJenkinsPage | null = null;
+  private _toolsPage: ToolsPage | null = null;
+  
 
   constructor(private readonly page: Page) {}
 
@@ -26,5 +31,13 @@ export class App {
 
   get freeStyleProjectPage() {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
+  }
+
+  get manageJenkinsPage() {
+    return (this._manageJenkinsPage ??= new ManageJenkinsPage(this.page));
+  }
+
+  get toolsPage() {
+    return (this._toolsPage ??= new ToolsPage(this.page));
   }
 }
