@@ -2,8 +2,8 @@ import { Page } from "@playwright/test";
 import { HomePage } from "./pages/HomePage";
 import { NewItemPage } from "./pages/NewItemPage";
 import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
-import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
-import { PluginsPage } from "./pages/PluginsPage";
+import { ManageJenkinsPage } from "@/POM/pageObjects/pages/ManageJenkinsPage";
+import { PluginsPage } from "@/POM/pageObjects/pages/PluginsPage";
 
 export class App {
 	private _homePage: HomePage | null = null;
