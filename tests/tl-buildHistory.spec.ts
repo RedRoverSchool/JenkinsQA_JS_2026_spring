@@ -47,6 +47,20 @@ test.describe("US_09.001 | Build History > Core Build History Display", () => {
 
     await expect(successIcon).toBeVisible();
   });
+
+  test("TC_09.001.06 | Verify build number links to Build Summary page", async ({ page }: { page: Page }) => {
+    await createFreestyleProject(page);
+    await createBuilds(page, 1);
+
+    await page.locator(".jenkins-card__title-link.jenkins-card__reveal").click();
+
+    const buildLink = page.locator("#trend tbody tr td:nth-child(2) a").first();
+
+    const buildNumber = await buildLink.textContent();
+    const buildId = buildNumber?.replace("#", "");
+
+    await expect(buildLink).toHaveAttribute("href", new RegExp(`${buildId}/?$`));
+  });
 });
 
 test.describe("US_09.002 | Build History > Sorting", () => {
