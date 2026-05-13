@@ -13,7 +13,7 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
 
     await app.configureFolderPage.clickSaveButton();
 
-    await app.folderPage.clickConfigureLink();
+    await app.folderPage.clickConfigureMenuItem();
 
     await expect(app.configureFolderPage.generalSection()).toBeVisible();
    });
