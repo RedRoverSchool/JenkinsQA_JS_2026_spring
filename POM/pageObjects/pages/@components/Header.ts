@@ -12,7 +12,7 @@ export class Header {
 		await this.logoLink().click();
 	}
 
-	async clickManageJenkinsLink() {
+	async clickManageJenkins() {
 		await this.manageJenkinsLink().click();
 	}
 }

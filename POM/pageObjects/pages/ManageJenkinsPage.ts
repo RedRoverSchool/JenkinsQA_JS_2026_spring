@@ -6,7 +6,7 @@ export class ManageJenkinsPage extends BasePage {
     pluginsLink = () => this.page.getByRole("link", { name: 'Plugins Add, remove, disable' });
 
     // actions
-    async clickPluginsLink() {
+    async clickPlugins() {
         await this.pluginsLink().click();
     }
 }
