@@ -14,5 +14,6 @@ export class StatusPage extends BasePage {
 
     async clickPreviewLink(){
         await this.previewLink().click();
+        return this;
     }
 }
