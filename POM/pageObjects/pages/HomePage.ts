@@ -19,6 +19,7 @@ export class HomePage extends BasePage {
 
 	async clickArrowButton() {
 		await this.arrowButton().click();
+		return this;
 	}
 
 	async selectJobDropdownOption(optionName: string) {
