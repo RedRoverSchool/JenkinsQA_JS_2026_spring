@@ -12,6 +12,6 @@ export class HomePage extends BasePage {
   }
 
   async clickItemNameLink() {
-    await this.itemName().click();
+    await this.itemName().dispatchEvent('click');
   }
 }
