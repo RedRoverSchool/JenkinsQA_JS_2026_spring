@@ -12,6 +12,7 @@ export class HomePage extends BasePage {
   }
 
   async clickItemNameLink() {
-    await this.itemName().click({ position: { x: 0, y: 0 } });
+    await this.itemName().focus();
+    await this.itemName().press('Enter');
   }
 }
