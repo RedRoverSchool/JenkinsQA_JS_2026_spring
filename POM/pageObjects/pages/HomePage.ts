@@ -9,5 +9,4 @@ export class HomePage extends BasePage {
 	async clickNewItemLink() {
 		await this.newItemLink().click();
 	}
-
 }
