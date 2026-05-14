@@ -1,5 +1,6 @@
 import { test, expect, App } from '@/POM/fixtures/baseFixtures';
 import { newItemPageData } from '../testData/newItemPageData';
+import { footer } from '../testData/jenkinsData';
 
 test.describe('US_01.001 | New Item > Create a new item', () => {
   test('RF_01.001.01 | Verify new item creation', async ({ app }: { app: App }) => {
@@ -45,4 +46,11 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
     await app.freeStyleProjectPage.clickYesInDeleteDialog();
     await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
   });
+});
+
+test.describe('US_15.001 | Footer > Jenkins version',() => {
+  test(`RF_15.001.01 | Verify Footer Version`, async ({ app } : { app : App }) => {
+    await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(footer.jenkinsVersion);
+  });
+
 });
