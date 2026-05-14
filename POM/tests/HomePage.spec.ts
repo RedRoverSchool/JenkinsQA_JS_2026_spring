@@ -52,5 +52,10 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
   test(`RF_15.001.01 | Verify Footer Version`, async ({ app } : { app : App }) => {
     await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(footer.jenkinsVersion);
   });
+  
+ test(`RF_15.001.02 | Verify Footer Dropdown`, async ({ app } : { app : App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdown()).toBeVisible();
+  });
 
 });
