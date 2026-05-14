@@ -1,9 +1,11 @@
-import { BasePage } from "./@components";
+import { BasePage } from './@components';
 
 export class NewItemPage extends BasePage {
 	itemNameField = () => this.page.locator("#name");
 	itemType_FreestyleProject = () => this.page.locator(".hudson_model_FreeStyleProject");
 	itemType_OrganizationFolder = () => this.page.getByRole('radio', { name: 'Organization Folder Creates a' });
+	itemNameValidationMessage = () => this.page.locator("#itemname-required");
+
 	// itemType_Pipeline = () =>
 	okButton = () => this.page.locator("#ok-button");
 

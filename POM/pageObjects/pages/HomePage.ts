@@ -10,24 +10,29 @@ export class HomePage extends BasePage {
 
 	// actions
 	async clickNewItemLink() {
-		await this.newItemLink().click();
+	  await this.newItemLink().click();
 	}
 
 	async hoverItemName() {
-		await this.itemName().hover()
-		return this;
+	  await this.itemName().hover()
+	  return this;
 	}
 
 	async clickArrowButton() {
-		await this.arrowButton().click();
-		return this;
+	  await this.arrowButton().click();
+	  return this;
 	}
 
 	async selectDropdownOption(optionName: string) {
-		await this.dropdownMenu().getByText(optionName).click();
+	  await this.dropdownMenu().getByText(optionName).click();
 	}
 
     async clickItemName() {
-       await this.itemName().click();
+      await this.itemName().click();
     }
+
+	async clickItemNameLink() {
+      await this.itemName().focus();
+      await this.itemName().press('Enter');
+  }
 }

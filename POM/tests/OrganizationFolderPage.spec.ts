@@ -1,6 +1,6 @@
-import { test, expect, App } from "@/POM/fixtures/baseFixtures";
-import { newItemPageData } from "@/POM/testData/newItemPageData";
-import { dropdownMenuOptions } from "@/POM/testData/DropdownMenuOptions";
+import { test, expect, App } from '@/POM/fixtures/baseFixtures';
+import { newItemPageData } from '@/POM/testData/newItemPageData';
+import { dropdownMenuOptions } from '@/POM/testData/DropdownMenuOptions';
 
 test.describe("US_07.001 | Organization folder Configuration > Change General Settings", () => {
     test("RF_07.001.01 | Access the General Settings from Job Dropdown on the main Jenkins page", async ({app }: {app: App}) => {
