@@ -1,16 +1,45 @@
-import { test, expect, App } from "@/POM/fixtures/baseFixtures";
-import { newItemPageData } from "../testData/newItemPageData";
+import { test, expect, App } from '@/POM/fixtures/baseFixtures';
+import { newItemPageData } from '../testData/newItemPageData';
+import { footer } from '../testData/jenkinsData';
 
-test.describe("US_01.001 | New Item > Create a new item", () => {
-	test("RF_01.001.01 | Verify new item creation", async ({ app }: { app: App }) => {
-		await app.homePage.clickNewItemLink();
+test.describe('US_01.001 | New Item > Create a new item', () => {
+  test('RF_01.001.01 | Verify new item creation', async ({ app }: { app: App }) => {
+    await app.homePage.clickNewItemLink();
 
-		await app.newItemPage.fillItemNameField(newItemPageData.itemName);
-		await app.newItemPage.clickFreestyleProject();
-		await app.newItemPage.clickOkButton();
+    await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+    await app.newItemPage.clickFreestyleProject();
+    await app.newItemPage.clickOkButton();
 
-		await app.configureFreestylePage.header.clickHome();
+    await app.configureFreestylePage.header.clickHome();
 
 		await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
 	});
+});
+
+test.describe('US_16.008 | Freestyle Project Management', () => {
+  test(`RF_16.008.02 |  Verify deleting freestyle project on project's page`, async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    await app.homePage.clickNewItemLink();
+
+    await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+    await app.newItemPage.clickFreestyleProject();
+    await app.newItemPage.clickOkButton();
+
+    await app.configureFreestylePage.header.clickHome();
+
+    await app.homePage.clickItemNameLink();
+    await app.freeStyleProjectPage.clickDeleteProjectBtn();
+    await app.freeStyleProjectPage.clickYesInDeleteDialog();
+    await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
+  });
+});
+
+test.describe('US_15.001 | Footer > Jenkins version',() => {
+  test(`RF_15.001.01 | Verify Footer Version`, async ({ app } : { app : App }) => {
+    await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(footer.jenkinsVersion);
+  });
+
 });
