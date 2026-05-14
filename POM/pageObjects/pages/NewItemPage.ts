@@ -7,6 +7,7 @@ export class NewItemPage extends BasePage {
   itemNameValidationMessage = () => this.page.locator("#itemname-required");
   itemType_Folder = () =>
     this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
+  newItemTitle = () => this.page.getByRole("heading");
   // itemType_Pipeline = () =>
   okButton = () => this.page.locator("#ok-button");
 

@@ -15,7 +15,7 @@ export class App {
   private _folderPage?: FolderPage;
   private _configureFolderPage?: ConfigureFolderPage;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
-  private _manageJenkisPage: ManageJenkinsPage | null = null;
+  private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
 
   constructor(private readonly page: Page) {}
@@ -46,8 +46,8 @@ export class App {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
   }
 
-  get manageJenkisPage() {
-    return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
+  get manageJenkinsPage() {
+    return (this._manageJenkinsPage ??= new ManageJenkinsPage(this.page));
   }
 
   get toolsPage() {
