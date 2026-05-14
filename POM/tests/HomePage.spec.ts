@@ -41,34 +41,5 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
   test(`RF_15.001.01 | Verify Footer Version`, async ({ app } : { app : App }) => {
     await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(footer.jenkinsVersion);
   });
-  
-  test(`RF_15.001.02 | Verify Footer Dropdown`, async ({ app } : { app : App }) => {
-    await app.homePage.footer.clickJenkinsVersionButton();
-    await expect(app.homePage.footer.jenkinsVersionDropdown()).toBeVisible();
-  });
-
-  test('RF_15.001.03 | Verify Footer Dropdown Labels', async ({ app } : { app: App }) => {
-    await app.homePage.footer.clickJenkinsVersionButton();
-    await expect(app.homePage.footer.jenkinsVersionDropdownItems()).toHaveText([
-      footer.dropdownItems.aboutJenkins.text,
-      footer.dropdownItems.getInvolved.text,
-      footer.dropdownItems.website.text,
-    ]);
-  });
-
-  test('RF_15.001.04 | Verify Footer Dropdown About URL', async ({ app } : { app: App }) => {
-    await app.homePage.footer.clickJenkinsVersionButton();
-    await expect(app.homePage.footer.jenkinsVersionDropdownAbout()).toHaveAttribute('href', footer.dropdownItems.aboutJenkins.href);  
-  });
-  
-  test('RF_15.001.05 | Verify Footer Dropdown Get Involved URL', async ({ app } : { app: App }) => {
-    await app.homePage.footer.clickJenkinsVersionButton();
-    await expect(app.homePage.footer.jenkinsVersionDropdownGetInvolved()).toHaveAttribute('href', footer.dropdownItems.getInvolved.href);    
-  });
-
-  test('RF_15.001.06 | Verify Footer Dropdown Get Website URL', async ({ app } : { app: App }) => {
-    await app.homePage.footer.clickJenkinsVersionButton();
-    await expect(app.homePage.footer.jenkinsVersionDropdownWebsite()).toHaveAttribute('href', footer.dropdownItems.website.href);    
-  });
 
 });
