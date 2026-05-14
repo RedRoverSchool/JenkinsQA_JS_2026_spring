@@ -1,11 +1,12 @@
-import { BasePage } from "./@components";
+import { BasePage } from './@components';
 
 export class HomePage extends BasePage {
 	// locators
 	newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
 	itemName = () => this.page.locator("#projectstatus .jenkins-table__link");
+	projectTableRow = (itemName: string) => this.page.locator(`tr#job_${itemName}`);
 	arrowButton = () => this.page.locator("button.jenkins-menu-dropdown-chevron");
-	jobDropdownMenu = () => this.page.locator("div[id^='tippy-'] .jenkins-dropdown");
+	dropdownMenu = () => this.page.locator("div[id^='tippy-'] .jenkins-dropdown");
 
 	// actions
 	async clickNewItemLink() {
@@ -22,7 +23,11 @@ export class HomePage extends BasePage {
 		return this;
 	}
 
-	async selectJobDropdownOption(optionName: string) {
-		await this.jobDropdownMenu().getByText(optionName).click();
-	}	
+	async selectDropdownOption(optionName: string) {
+		await this.dropdownMenu().getByText(optionName).click();
+	}
+
+    async clickItemName() {
+       await this.itemName().click();
+    }
 }

@@ -1,5 +1,5 @@
 
-export const dropdownMenuOptionsOrganizationFolder = {
+export const dropdownMenuOptions = {
     optionName: {
 		configure: "Configure",
 		scanOrganizationFolderLog: "Scan Organization Folder Log",

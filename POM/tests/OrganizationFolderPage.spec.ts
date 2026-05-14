@@ -1,6 +1,6 @@
 import { test, expect, App } from "@/POM/fixtures/baseFixtures";
 import { newItemPageData } from "@/POM/testData/newItemPageData";
-import { dropdownMenuOptionsOrganizationFolder } from "@/POM/testData/DropdownMenuOptions";
+import { dropdownMenuOptions } from "@/POM/testData/DropdownMenuOptions";
 
 test.describe("US_07.001 | Organization folder Configuration > Change General Settings", () => {
     test("RF_07.001.01 | Access the General Settings from Job Dropdown on the main Jenkins page", async ({app }: {app: App}) => {
@@ -14,8 +14,8 @@ test.describe("US_07.001 | Organization folder Configuration > Change General Se
 
         await app.homePage.hoverItemName();
         await app.homePage.clickArrowButton();
-        await app.homePage.selectJobDropdownOption(dropdownMenuOptionsOrganizationFolder.optionName.configure);
+        await app.homePage.selectDropdownOption(dropdownMenuOptions.optionName.configure);
 
-        await expect(app.configureOrganizationFolderPage.headerGeneral()).toHaveText("General");
+        await expect(app.configureOrganizationFolderPage.contentTitle()).toHaveText("General");
     });
 });
