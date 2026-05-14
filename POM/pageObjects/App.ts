@@ -12,8 +12,8 @@ export class App {
   private _homePage: HomePage | null = null;
   private _newItemPage: NewItemPage | null = null;
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
-	private _folderPage?: FolderPage;
-	private _configureFolderPage?: ConfigureFolderPage;
+  private _folderPage?: FolderPage;
+  private _configureFolderPage?: ConfigureFolderPage;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
   private _manageJenkisPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
@@ -36,13 +36,13 @@ export class App {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
   }
 
-	get folderPage() {
-		return (this._folderPage ??= new FolderPage(this.page));
-	}
+  get folderPage() {
+	return (this._folderPage ??= new FolderPage(this.page));
+  }
 
-	get configureFolderPage() {
-		return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
-	}
+  get configureFolderPage() {
+	return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
+  }
   get manageJenkinsPage() {
     return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
   }
