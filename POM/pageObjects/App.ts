@@ -12,7 +12,7 @@ export class App {
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
   private _manageJenkisPage: ManageJenkinsPage | null = null;
-  private _ToolsPage: ToolsPage | null = null;
+  private _toolsPage: ToolsPage | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -36,7 +36,7 @@ export class App {
     return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
   }
 
-  get ToolsPage() {
-    return (this._ToolsPage ??= new ToolsPage(this.page));
+  get toolsPage() {
+    return (this._toolsPage ??= new ToolsPage(this.page));
   }
 }
