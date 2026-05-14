@@ -1,7 +1,7 @@
 import { BasePage } from "./@components";
 
 export class ToolsPage extends BasePage {
-    async isToolsPageOpened() {
+    async verifyToolsPageOpened() {
         await this.page.waitForURL(/.*configureTools/);
     }
 }
