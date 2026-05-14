@@ -2,6 +2,7 @@ import { BasePage } from "./@components";
 
 export class NewItemPage extends BasePage {
 	itemNameField = () => this.page.locator("#name");
+	newItemTitle = () => this.page.getByRole("heading");
 	itemType_FreestyleProject = () => this.page.locator(".hudson_model_FreeStyleProject");
 	itemNameValidationMessage = () => this.page.locator("#itemname-required");
 	// itemType_Pipeline = () =>
