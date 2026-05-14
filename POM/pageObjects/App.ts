@@ -16,7 +16,7 @@ export class App {
   private _manageJenkisPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
 
-  constructor(private readonly page: Page) { }
+  constructor(private readonly page: Page) {}
 
   get homePage() {
     return (this._homePage ??= new HomePage(this.page));
