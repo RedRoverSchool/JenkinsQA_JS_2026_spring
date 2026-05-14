@@ -11,8 +11,8 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
 
     await app.configureFreestylePage.header.clickHome();
 
-    await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
-  });
+		await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
+	});
 });
 
 test.describe('US_16.008 | Freestyle Project Management', () => {
