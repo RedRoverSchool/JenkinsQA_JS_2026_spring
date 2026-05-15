@@ -139,9 +139,13 @@ export async function cleanData(request: APIRequestContext) {
 		await postPage("submitDescription", body, crumb);
 	}
 
-	await deleteViews();
-	await deleteJobs();
-	await deleteUsers();
-	await deleteNodes();
-	await deleteDescription();
+	const tasks = [deleteViews, deleteJobs, deleteUsers, deleteNodes, deleteDescription];
+	for (const [index, task] of tasks.entries()) {
+		console.log(`🧹 Cleanup: Running ${task.name}...`);
+		await task();
+
+		if (index < tasks.length - 1) {
+			await new Promise((resolve) => setTimeout(resolve, 2000));
+		}
+	}
 }

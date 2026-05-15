@@ -3,8 +3,8 @@ name: CI
 on:
     pull_request:
         branches:
-          - 'main'
-          - '**'
+            - "main"
+            - "**"
 
 jobs:
     run-test:
@@ -51,22 +51,22 @@ jobs:
               run: |
                   cat ${{ github.workspace }}/_jenkins_data/jenkins_backup* > jenkins_backup.tar.gz
                   md5sum jenkins_backup.tar.gz
-                  
+
                   mkdir -p temp_extract
                   tar -xvf jenkins_backup.tar.gz -C temp_extract
-                  
+
                   # Find the directory containing config.xml regardless of backup depth
                   REAL_DATA=$(find temp_extract -name "config.xml" -exec dirname {} \; | head -n 1)
                   mkdir -p ${{ github.workspace }}/jenkins_home
                   cp -R "$REAL_DATA"/. ${{ github.workspace }}/jenkins_home/
-                  
+
                   rm -rf ${{ github.workspace }}/jenkins_home/war
                   rm -rf ${{ github.workspace }}/jenkins_home/updates
 
                   # Prevent Jenkins 2.0 migration
                   echo "2.541.3" > ${{ github.workspace }}/jenkins_home/jenkins.install.UpgradeWizard.state
                   echo "2.541.3" > ${{ github.workspace }}/jenkins_home/jenkins.install.InstallUtil.lastExecVersion
-                  
+
                   rm -rf temp_extract jenkins_backup.tar.gz
 
             - name: Inject Password Sync Script
@@ -127,3 +127,13 @@ jobs:
               with:
                   name: Artifacts
                   path: test-results/
+
+            - name: Display Jenkins Server Logs
+              if: always()
+              run: |
+                  echo "--- Jenkins System Logs ---"
+                  if [ -f jenkins_stdout.log ]; then
+                    cat jenkins_stdout.log
+                  else
+                    echo "Log file not found."
+                  fi
