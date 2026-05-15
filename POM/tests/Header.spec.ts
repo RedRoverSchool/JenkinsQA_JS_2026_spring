@@ -17,6 +17,6 @@ test.describe('US_13.001 | Header > Navigate to Dashboard', () => {
 
         await app.configureFreestylePage.header.clickHome();
 
-        await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
+        await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);     
     });
 });
