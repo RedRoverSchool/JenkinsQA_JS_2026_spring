@@ -84,7 +84,16 @@ export async function cleanData(request: APIRequestContext) {
 	async function deleteByLink(link: string, names: Set<string>, crumb: string) {
 		const fullCrumb = `Jenkins-Crumb=${crumb}`;
 		for (const name of names) {
-			await postPage(link.replace("{name}", name), fullCrumb, crumb);
+			try {
+				await postPage(link.replace("{name}", name), fullCrumb, crumb);
+			} catch (e: any) {
+				if (e.message.includes("status 500")) {
+					console.log(`- Note: ${name} already gone, skipping.`);
+					continue;
+				}
+
+				throw e;
+			}
 		}
 	}
 
