@@ -98,28 +98,26 @@ export async function cleanData(request: APIRequestContext) {
 	}
 
 	async function deleteViews() {
-		const mainPage = await getPage("");
-		await deleteByLink(
-			"view/{name}/doDelete",
-			getSubstringsFromPage(mainPage, 'href="/view/', '/"'),
-			getCrumbFromPage(mainPage)
-		);
+		const locations = [
+			{ path: "", prefix: 'href="/view/' },
+			{ path: "me/my-views/view/all/", prefix: `href="/user/${USERNAME.toLowerCase()}/my-views/view/` }
+		];
 
-		const viewPage = await getPage("me/my-views/view/all/");
+		for (const loc of locations) {
+			const pageHtml = await getPage(loc.path);
+			const crumb = getCrumbFromPage(pageHtml);
+			const names = getSubstringsFromPage(pageHtml, loc.prefix, '/"');
 
-		const myViews = getSubstringsFromPage(
-			viewPage,
-			`href="/user/${USERNAME.toLowerCase()}/my-views/view/`,
-			'/"'
-		);
-		myViews.delete("all");
-		myViews.delete("");
+			names.delete("all");
+			names.delete("");
 
-		await deleteByLink(
-			`user/${USERNAME.toLowerCase()}/my-views/view/{name}/doDelete`,
-			myViews,
-			getCrumbFromPage(viewPage)
-		);
+			const deleteUri =
+				loc.path === ""
+					? "view/{name}/doDelete"
+					: `user/${USERNAME.toLowerCase()}/my-views/view/{name}/doDelete`;
+
+			await deleteByLink(deleteUri, names, crumb);
+		}
 	}
 
 	async function deleteNodes() {
