@@ -139,8 +139,8 @@ jobs:
                   fi
 
             - name: Upload Jenkins Logs Artifact
-                  if: always()
-                     uses: actions/upload-artifact@v4
-                  with:
-                     name: jenkins-server-logs
-                     path: jenkins_output.txt
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: jenkins-server-logs
+                  path: jenkins_output.txt
