@@ -1,3 +1,7 @@
-import { BasePage } from './@components';
+import { BasePage } from "./@components";
 
-export class ToolsPage extends BasePage {};
+export class ToolsPage extends BasePage {
+    async getCurrentUrl() {
+        return this.page.url();
+    }
+}
