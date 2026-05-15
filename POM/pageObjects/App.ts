@@ -1,17 +1,26 @@
-import { Page } from '@playwright/test';
-import { HomePage } from './pages/HomePage';
-import { NewItemPage } from './pages/NewItemPage';
-import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
-import { ConfigureOrganizationFolderPage } from '@/POM/pageObjects/pages/ConfigureOrganizationFolderPage';
-import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
-
+import { Page } from "@playwright/test";
+import { HomePage } from "./pages/HomePage";
+import { NewItemPage } from "./pages/NewItemPage";
+import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
+import { FreestyleProjectPage } from "./pages/FreestyleProjectPage";
+import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
+import { ToolsPage } from "./pages/ToolsPage";
+import { PluginsPage } from "./pages/PluginsPage";
+import { FolderPage } from "./pages/FolderPage";
+import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
+import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
 
 export class App {
   private _homePage: HomePage | null = null;
   private _newItemPage: NewItemPage | null = null;
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
-  private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
+  private _folderPage?: FolderPage;
+  private _configureFolderPage?: ConfigureFolderPage;
+  private _manageJenkinsPage: ManageJenkinsPage | null = null;
+  private _toolsPage: ToolsPage | null = null;
+  private _pluginsPage: PluginsPage | null = null;
+  private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -27,11 +36,30 @@ export class App {
 	return (this._configureFreestylePage ??= new ConfigureFreestylePage(this.page));
 	}
 
+  get configureFolderPage() {
+    return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
+  }
+
+  get folderPage() {
+    return (this._folderPage ??= new FolderPage(this.page));
+  }
+  get freeStyleProjectPage() {
+    return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
+  }
+
+  get manageJenkinsPage() {
+    return (this._manageJenkinsPage ??= new ManageJenkinsPage(this.page));
+  }
+
+  get toolsPage() {
+    return (this._toolsPage ??= new ToolsPage(this.page));
+  }
+
+  get pluginsPage() {
+    return (this._pluginsPage ??= new PluginsPage(this.page));
+  }
+
   get configureOrganizationFolderPage() {
 	return (this._configureOrganizationFolderPage ??= new ConfigureOrganizationFolderPage(this.page));
 	}
-
-	get freeStyleProjectPage() {
-    return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
-  }
 }
