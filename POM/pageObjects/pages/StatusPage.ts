@@ -3,7 +3,7 @@ import { BasePage } from "./@components";
 export class StatusPage extends BasePage {
 
     addDescriptionButton = () => this.page.locator("a[href='editDescription']");
-    previewLink = () => this.page.getByRole('link', {name: 'Preview'});
+    previewLink = () => this.page.locator("a[previewendpoint='/markupFormatter/previewDescription']");
     previewTextArea =() => this.page.locator(".textarea-preview");
     descriptionField = () => this.page.locator('textarea[name="description"]');
     saveButton = () => this.page.locator('[name="Submit"]');
