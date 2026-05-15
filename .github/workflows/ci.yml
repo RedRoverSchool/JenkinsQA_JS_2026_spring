@@ -42,7 +42,7 @@ jobs:
               run: npm run build
 
             - name: Install Playwright Browsers
-              run: npx playwright install --with-deps
+              run: npx playwright install chromium --with-deps
 
             - name: Update Submodule
               run: git submodule update --remote _jenkins_data
