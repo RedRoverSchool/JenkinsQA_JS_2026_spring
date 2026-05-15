@@ -1,1 +1,0 @@
-{"version":3,"file":"vv-data.js","sourceRoot":"","sources":["../../../tests/testData/vv-data.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,MAAM,GAAG;IAClB,OAAO,EAAE,UAAU;IACnB,iBAAiB,EAAE,qBAAqB;IACxC,iBAAiB,EAAE,4BAA4B;IAC/C,aAAa,EAAE;QACX,qBAAqB;QACrB,mBAAmB;QACnB,mBAAmB;QACnB,sBAAsB;QACtB,mBAAmB;QACnB,qBAAqB;KACxB;CACJ,CAAC"}

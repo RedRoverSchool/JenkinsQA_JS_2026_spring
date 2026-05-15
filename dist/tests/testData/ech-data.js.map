@@ -1,1 +1,0 @@
-{"version":3,"file":"ech-data.js","sourceRoot":"","sources":["../../../tests/testData/ech-data.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,iBAAiB,CAAC;AAExC,MAAM,CAAC,MAAM,WAAW,GAAG;IAC1B,OAAO,EAAE,OAAO;IAChB,QAAQ,EAAE,cAAc;IACxB,WAAW,EAAE,KAAK,CAAC,MAAM,CAAC,YAAY,CAAC,IAAI,CAAC;CAC5C,CAAC"}

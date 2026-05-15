@@ -1,1 +1,0 @@
-{"version":3,"file":"kd-data.js","sourceRoot":"","sources":["../../../tests/testData/kd-data.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,IAAI,GAAG;IAChB,aAAa,EAAE,kBAAkB;CACpC,CAAA;AAED,MAAM,CAAC,MAAM,mBAAmB,GAAI,CAAC,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,CAAC,CAAC;AAElF,MAAM,CAAC,MAAM,SAAS,GAAG,wBAAwB,CAAE"}

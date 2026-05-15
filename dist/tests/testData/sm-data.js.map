@@ -1,1 +1,0 @@
-{"version":3,"file":"sm-data.js","sourceRoot":"","sources":["../../../tests/testData/sm-data.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,WAAW,GAAG;IACvB,OAAO,EAAE,YAAY;IACrB,gBAAgB,EAAE,CAAC,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE,GAAG,CAAC;IAC/D,iCAAiC,EAAE,yDAAyD;IAC5F,gCAAgC,EAAE,6BAA6B;CAClE,CAAA"}

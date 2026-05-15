@@ -1,1 +1,0 @@
-{"version":3,"file":"tz-data.js","sourceRoot":"","sources":["../../../tests/testData/tz-data.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,WAAW,GAAG;IACvB,UAAU,EAAE,UAAU;IACtB,gBAAgB,EAAE,GAAG,EAAE,CAAC,QAAQ,IAAI,CAAC,MAAM,EAAE,CAAC,QAAQ,CAAC,EAAE,CAAC,CAAC,SAAS,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE;IAC5E,mBAAmB,EAAE,CAAC;IACtB,qBAAqB,EAAE,EAAc;CACxC,CAAA"}
