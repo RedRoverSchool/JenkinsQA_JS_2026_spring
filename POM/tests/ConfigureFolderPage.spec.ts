@@ -11,7 +11,8 @@ test.describe("US_05.003 | Folder Configuration > Pipeline Libraries", (): void 
 
         await app.configureFolderPage.header.clickHome();
 
-        await app.homePage.clickItemDropDownMenuButton();
+        await app.homePage.hoverItemName();
+        await app.homePage.openItemDropdownMenu()
         await app.homePage.clickItemDropDownConfigureButton(newItemPageData.itemName);
 
         await app.configureFolderPage.clickPropertiesButton();
