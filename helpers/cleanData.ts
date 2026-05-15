@@ -140,12 +140,19 @@ export async function cleanData(request: APIRequestContext) {
 	}
 
 	const tasks = [deleteViews, deleteJobs, deleteUsers, deleteNodes, deleteDescription];
-	for (const [index, task] of tasks.entries()) {
-		console.log(`🧹 Cleanup: Running ${task.name}...`);
-		await task();
+	let currentTask = "";
 
-		if (index < tasks.length - 1) {
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+	try {
+		for (const [index, task] of tasks.entries()) {
+			currentTask = task.name;
+			await task();
+
+			if (index < tasks.length - 1) {
+				await new Promise((resolve) => setTimeout(resolve, 2000));
+			}
 		}
+	} catch (error) {
+		console.error(`❌ Cleanup failed during: ${currentTask}`);
+		throw error; // Re-throw so Playwright still marks the test as failed
 	}
 }
