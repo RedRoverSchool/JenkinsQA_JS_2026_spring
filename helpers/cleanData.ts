@@ -6,7 +6,7 @@ const USERNAME = process.env.LOCAL_USERNAME ?? "";
 const API_TOKEN = process.env.API_TOKEN ?? "";
 
 export async function cleanData(request: APIRequestContext) {
-	await new Promise((r) => setTimeout(r, 2000));
+	await new Promise((r) => setTimeout(r, 3000));
 
 	const baseUrl = `http://${HOST}:${PORT}/`;
 	const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
@@ -38,9 +38,17 @@ export async function cleanData(request: APIRequestContext) {
 	async function getPage(uri: string) {
 		const response = await request.get(`${baseUrl}${uri}`, { headers: { Authorization: authHeader } });
 		const status = response.status();
-		if (status !== 200) {
-			throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${status}`);
+
+		if (status === 500) {
+			console.warn(`⚠️ Jenkins is busy (500) at ${uri}. Sleeping for 5s to let it recover...`);
+			await new Promise((r) => setTimeout(r, 5000));
+			const retry = await request.get(`${baseUrl}${uri}`, { headers: { Authorization: authHeader } });
+			if (retry.status() !== 200)
+				throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${retry.status()}`);
+			return await retry.text();
 		}
+
+		if (status !== 200) throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${status}`);
 		return await response.text();
 	}
 
@@ -63,15 +71,14 @@ export async function cleanData(request: APIRequestContext) {
 
 	async function deleteByLink(link: string, names: Set<string>, crumb: string) {
 		const fullCrumb = `Jenkins-Crumb=${crumb}`;
-
 		for (const name of names) {
 			try {
 				await postPage(link.replace("{name}", name), fullCrumb, crumb);
-
-				await new Promise((r) => setTimeout(r, 150));
+				await new Promise((r) => setTimeout(r, 250));
 			} catch (e: any) {
 				if (e.message.includes("status 500")) {
-					console.log(`⚠️ ${name} already deleted or busy, skipping...`);
+					console.log(`⚠️ Jenkins skipped ${name} (likely already deleted). Continuing...`);
+					await new Promise((r) => setTimeout(r, 500));
 					continue;
 				}
 				throw e;
@@ -102,7 +109,6 @@ export async function cleanData(request: APIRequestContext) {
 				loc.path === ""
 					? "view/{name}/doDelete"
 					: `user/${USERNAME.toLowerCase()}/my-views/view/{name}/doDelete`;
-
 			await deleteByLink(deleteUri, names, getCrumbFromPage(html));
 		}
 	}
@@ -116,10 +122,9 @@ export async function cleanData(request: APIRequestContext) {
 
 	async function deleteUsers() {
 		const userPage = await getPage("manage/securityRealm/");
-		const crumb = getCrumbFromPage(userPage);
 		const users = getSubstringsFromPage(userPage, 'href="user/', '/"');
 		users.delete(USERNAME.toLowerCase());
-		await deleteByLink("manage/securityRealm/user/{name}/doDelete", users, crumb);
+		await deleteByLink("manage/securityRealm/user/{name}/doDelete", users, getCrumbFromPage(userPage));
 	}
 
 	async function deleteDescription() {
@@ -134,16 +139,9 @@ export async function cleanData(request: APIRequestContext) {
 	for (const task of tasks) {
 		try {
 			await task();
+			await new Promise((r) => setTimeout(r, 1000));
 		} catch (err) {
-			console.warn(`⚠️ Cleanup task ${task.name} failed. Retrying in 3s...`);
-			await new Promise((r) => setTimeout(r, 3000));
-
-			try {
-				await task();
-			} catch (retryErr) {
-				console.error(`❌ Cleanup failed after retry during: ${task.name}`);
-				throw retryErr;
-			}
+			console.warn(`⚠️ Cleanup category ${task.name} failed. Skipping to avoid server crash.`);
 		}
 	}
 }
