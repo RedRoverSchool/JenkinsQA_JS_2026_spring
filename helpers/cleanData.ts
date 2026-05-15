@@ -33,19 +33,40 @@ export async function cleanData(request: APIRequestContext) {
 		return result;
 	}
 
-	async function getPage(uri = "") {
-		const res = await request.get(`${baseUrl}${uri}`, {
-			headers: { Authorization: authHeader }
-		});
+	async function getPage(uri = ""): Promise<string> {
+		const maxRetries = 3;
 
-		if (res.status() !== 200) {
-			if (res.status() === 404) {
-				console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
-			} else {
-				throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${res.status()}`);
+		for (let attempt = 1; attempt <= maxRetries; attempt++) {
+			const res = await request.get(`${baseUrl}${uri}`, {
+				headers: { Authorization: authHeader }
+			});
+
+			const status = res.status();
+
+			// Success: return the text immediately
+			if (status === 200) {
+				return await res.text();
 			}
+
+			// Already deleted / missing: return empty string immediately
+			if (status === 404) {
+				console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
+				return "";
+			}
+
+			// Jenkins hiccup (500/503): Wait and retry ONLY if we have attempts left
+			if ([500, 503].includes(status) && attempt < maxRetries) {
+				console.log(`⚠️ Jenkins returned ${status} on attempt ${attempt}. Retrying in 2s...`);
+				await new Promise((resolve) => setTimeout(resolve, 2000));
+				continue;
+			}
+
+			// If it's a hard error (401, 403) OR we ran out of retries on a 500:
+			throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${status}`);
 		}
-		return await res.text();
+
+		// TypeScript safety net (execution should never logically reach here because of the throw above)
+		throw new Error(`🛑 Cleanup failed! Unexpected exit in retry loop for GET ${uri}`);
 	}
 
 	async function postPage(uri: string, body: string, crumb: string) {
