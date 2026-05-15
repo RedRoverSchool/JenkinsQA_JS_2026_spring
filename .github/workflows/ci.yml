@@ -128,12 +128,19 @@ jobs:
                   name: Artifacts
                   path: test-results/
 
-            - name: Display Jenkins Server Logs
+            - name: Save Jenkins Server Logs to File (Silent)
               if: always()
               run: |
-                  echo "--- Jenkins System Logs ---"
+                  echo "--- Jenkins System Logs ---" > jenkins_output.txt
                   if [ -f jenkins_stdout.log ]; then
-                    cat jenkins_stdout.log
+                     cat jenkins_stdout.log >> jenkins_output.txt
                   else
-                    echo "Log file not found."
+                     echo "Log file not found." >> jenkins_output.txt
                   fi
+
+            - name: Upload Jenkins Logs Artifact
+                  if: always()
+                     uses: actions/upload-artifact@v4
+                  with:
+                     name: jenkins-server-logs
+                     path: jenkins_output.txt
