@@ -1,10 +1,11 @@
-import { Page } from "@playwright/test";
-import { HomePage } from "./pages/HomePage";
-import { NewItemPage } from "./pages/NewItemPage";
-import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
+import { Page } from '@playwright/test';
+import { HomePage } from './pages/HomePage';
+import { NewItemPage } from './pages/NewItemPage';
+import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
 import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
 import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
-import { PluginsPage } from "./pages/PluginsPage";
+import { ToolsPage } from './pages/ToolsPage';
+import { PluginsPage } from './pages/PluginsPage';
 
 export class App {
 	private _homePage: HomePage | null = null;
@@ -12,6 +13,7 @@ export class App {
 	private _configureFreestylePage: ConfigureFreestylePage | null = null;
 	private _freestyleProjectPage: FreestyleProjectPage | null = null;
 	private _manageJenkinsPage: ManageJenkinsPage | null = null;
+	private _toolsPage: ToolsPage | null = null;
 	private _pluginsPage: PluginsPage | null = null;
 
 	constructor(private readonly page: Page) { }
@@ -36,7 +38,11 @@ export class App {
 		return (this._manageJenkinsPage ??= new ManageJenkinsPage(this.page));
 	}
 
+	get toolsPage() {
+		return (this._toolsPage ??= new ToolsPage(this.page));
+	}
+
 	get pluginsPage() {
 		return (this._pluginsPage ??= new PluginsPage(this.page));
-	}	
+	}
 }
