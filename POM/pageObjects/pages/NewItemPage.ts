@@ -8,7 +8,10 @@ export class NewItemPage extends BasePage {
   itemType_Folder = () =>
     this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
   itemNameValidationMessage = () => this.page.locator("#itemname-required");
-  // itemType_Pipeline = () =>
+  invalidItemNameValidationMessage = () => this.page.locator("#itemname-invalid");
+   itemType_Pipeline = () =>
+     this.page.locator(".org_jenkinsci_plugins_workflow_job_WorkflowJob");
+
   okButton = () => this.page.locator("#ok-button");
 
   async fillItemNameField(name: string) {
@@ -33,5 +36,10 @@ export class NewItemPage extends BasePage {
 
   async clickOkButton() {
     await this.okButton().click();
+  }
+
+  async clickPipeline(){
+    await this.itemType_Pipeline().click();
+    return this;
   }
 }

@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export const newItemPageData = {
   itemName: faker.word.noun(),
+  invalidItemName : "Build@Test",
   folderName: `folder-${faker.string.alphanumeric(8)}`,
   itemTypes: {
     pipeline: "Pipeline",
@@ -9,6 +10,7 @@ export const newItemPageData = {
     multiConfigurationProject: "Multi-configuration project",
     folder: "Folder",
     multibranchPipeline: "Multibranch Pipeline",
-    organizationFolder: "Organization Folder"
-  }
+    organizationFolder: "Organization Folder",
+    }
+  
 };
