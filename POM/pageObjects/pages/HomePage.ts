@@ -4,6 +4,7 @@ export class HomePage extends BasePage {
   // locators
   newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
   itemName = () => this.page.locator('#projectstatus .jenkins-table__link');
+  itemDropDownConfigureButton = (jobName: string) => this.page.locator(`a[href*='/job/${jobName}/configure']`);
   projectTableRow = (itemName: string) => this.page.locator(`tr#job_${itemName}`);
   itemDropDown = () => this.page.locator(`div.jenkins-dropdown`);
   deleteProjectInDropdownBtn = (itemName: string) =>
@@ -33,6 +34,9 @@ export class HomePage extends BasePage {
     await this.itemMenuChevron().click();
     return this;
   }
+
+  async clickItemDropDownConfigureButton(jobName: string) {
+    await this.itemDropDownConfigureButton(jobName).click();}
 
   async clickConfirmDeleteBtn() {
     await this.confirmDeleteBtn().click();
