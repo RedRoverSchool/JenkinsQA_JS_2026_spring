@@ -1,12 +1,13 @@
-import { Page } from '@playwright/test';
-import { HomePage } from './pages/HomePage';
-import { NewItemPage } from './pages/NewItemPage';
-import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
-import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
+import { Page } from "@playwright/test";
+import { HomePage } from "./pages/HomePage";
+import { NewItemPage } from "./pages/NewItemPage";
+import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
+import { FreestyleProjectPage } from "./pages/FreestyleProjectPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
-import { ManageJenkinsPage } from './pages/ManageJenkinsPage';
-import { ToolsPage } from './pages/ToolsPage';
+import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
+import { ToolsPage } from "./pages/ToolsPage";
+import { PluginsPage } from "./pages/PluginsPage";
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -15,8 +16,9 @@ export class App {
   private _folderPage?: FolderPage;
   private _configureFolderPage?: ConfigureFolderPage;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
-  private _manageJenkisPage: ManageJenkinsPage | null = null;
+  private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
+  private _pluginsPage: PluginsPage | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -29,7 +31,9 @@ export class App {
   }
 
   get configureFreestylePage() {
-    return (this._configureFreestylePage ??= new ConfigureFreestylePage(this.page));
+    return (this._configureFreestylePage ??= new ConfigureFreestylePage(
+      this.page,
+    ));
   }
 
   get freeStyleProjectPage() {
@@ -37,17 +41,21 @@ export class App {
   }
 
   get folderPage() {
-	return (this._folderPage ??= new FolderPage(this.page));
+    return (this._folderPage ??= new FolderPage(this.page));
   }
 
   get configureFolderPage() {
-	return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
+    return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
   }
   get manageJenkinsPage() {
-    return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
+    return (this._manageJenkinsPage ??= new ManageJenkinsPage(this.page));
   }
 
   get toolsPage() {
     return (this._toolsPage ??= new ToolsPage(this.page));
+  }
+
+  get pluginsPage() {
+    return (this._pluginsPage ??= new PluginsPage(this.page));
   }
 }
