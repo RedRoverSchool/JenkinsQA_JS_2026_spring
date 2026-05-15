@@ -3,7 +3,7 @@ import { HomePage } from './pages/HomePage';
 import { NewItemPage } from './pages/NewItemPage';
 import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
 import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
-import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
+import { ManageJenkinsPage } from './pages/ManageJenkinsPage';
 import { ToolsPage } from './pages/ToolsPage';
 import { PluginsPage } from './pages/PluginsPage';
 
