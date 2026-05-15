@@ -1,17 +1,14 @@
 import { BasePage } from "./@components";
 
 export class ManageJenkinsPage extends BasePage {
-        
-    // locators
-    plugins = () => this.page.locator("a[href$='pluginManager']");
-    tools = () => this.page.locator("a[href$='configureTools']");
-
-    // actions
-    async clickPlugins() {
-        await this.plugins().click();
-    }
+    toolsLink = () => this.page.locator("[href='configureTools']");
+    pluginsLink = () => this.page.getByRole("link", { name: 'Plugins Add, remove, disable' });
 
     async clickTools() {
-        await this.tools().click();
+        await this.toolsLink().click();
+    }
+
+    async clickPlugins() {
+        await this.pluginsLink().click();
     }
 }

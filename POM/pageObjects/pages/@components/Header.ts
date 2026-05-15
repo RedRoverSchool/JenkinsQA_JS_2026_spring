@@ -5,7 +5,7 @@ export class Header {
 
 	// locators
 	logoLink = () => this.page.locator(".app-jenkins-logo");
-	manageJenkinsLink = () => this.page.locator("a[href$='manage']");
+	gearLink = () => this.page.locator("#root-action-ManageJenkinsAction");
 
 	// actions
 	async clickHome() {
@@ -13,6 +13,6 @@ export class Header {
 	}
 
 	async clickManageJenkins() {
-		await this.manageJenkinsLink().click();
+		await this.gearLink().click();
 	}
 }
