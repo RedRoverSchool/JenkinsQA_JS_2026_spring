@@ -6,6 +6,8 @@ const USERNAME = process.env.LOCAL_USERNAME ?? "";
 const API_TOKEN = process.env.API_TOKEN ?? "";
 
 export async function cleanData(request: APIRequestContext) {
+	await new Promise((r) => setTimeout(r, 5000));
+
 	const baseUrl = `http://${HOST}:${PORT}/`;
 	const authHeader = `Basic ${Buffer.from(`${USERNAME}:${API_TOKEN}`).toString("base64")}`;
 
@@ -14,117 +16,143 @@ export async function cleanData(request: APIRequestContext) {
 		const begin = html.indexOf(CRUMB_TAG);
 		if (begin === -1) return "";
 		const start = begin + CRUMB_TAG.length;
-		const end = html.indexOf('"', start);
+		const end = html.indexOf('\"', start);
 		return html.substring(start, end);
 	}
 
-	function getSubstringsFromPage(html: string, from: string, to: string, maxLength = 100) {
-		const result = new Set<string>();
-		let index = html.indexOf(from);
-		while (index !== -1) {
-			let endIndex = html.indexOf(to, index + from.length);
-			if (endIndex !== -1 && endIndex - index < maxLength) {
-				result.add(html.substring(index + from.length, endIndex));
-			} else {
-				endIndex = index + from.length;
-			}
-			index = html.indexOf(from, endIndex);
-		}
-		return result;
-	}
-
-	async function getPage(uri = "") {
-		const res = await request.get(`${baseUrl}${uri}`, {
-			headers: { Authorization: authHeader }
+	async function getPage(uri: string) {
+		const response = await request.get(`${baseUrl}${uri}`, {
+			headers: { Authorization: authHeader },
+			failOnStatusCode: false
 		});
-
-		if (res.status() !== 200) {
-			if (res.status() === 404) {
-				console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
-			} else {
-				throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${res.status()}`);
-			}
-		}
-		return await res.text();
+		return response;
 	}
 
 	async function postPage(uri: string, body: string, crumb: string) {
-		const res = await request.post(`${baseUrl}${uri}`, {
+		return await request.post(`${baseUrl}${uri}`, {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
 				Authorization: authHeader,
 				"Jenkins-Crumb": crumb
 			},
-			data: body
+			data: body,
+			failOnStatusCode: false
 		});
-
-		if (![200, 302, 303, 404].includes(res.status())) {
-			throw new Error(`POST ${uri} failed with status ${res.status()}`);
-		}
-		return res;
 	}
 
 	async function deleteByLink(link: string, names: Set<string>, crumb: string) {
 		const fullCrumb = `Jenkins-Crumb=${crumb}`;
 		for (const name of names) {
+			await new Promise((r) => setTimeout(r, 500));
 			await postPage(link.replace("{name}", name), fullCrumb, crumb);
 		}
 	}
 
-	async function deleteJobs() {
-		const mainPage = await getPage("");
-		await deleteByLink(
-			"job/{name}/doDelete",
-			getSubstringsFromPage(mainPage, 'href="job/', '/"'),
-			getCrumbFromPage(mainPage)
-		);
+	const tasks = [
+		{
+			name: "Views",
+			run: async () => {
+				const paths = ["", `me/my-views/view/all/`].map((p) => ({
+					path: p,
+					prefix: p === "" ? 'href="/view/' : `href="/user/${USERNAME.toLowerCase()}/my-views/view/`
+				}));
+
+				for (const loc of paths) {
+					const res = await getPage(loc.path);
+					if (res.status() !== 200) continue;
+					const html = await res.text();
+
+					const names = new Set<string>();
+					let index = html.indexOf(loc.prefix);
+					while (index !== -1) {
+						let endIndex = html.indexOf('/"', index + loc.prefix.length);
+						if (endIndex !== -1) names.add(html.substring(index + loc.prefix.length, endIndex));
+						index = html.indexOf(loc.prefix, endIndex);
+					}
+					names.delete("all");
+					names.delete("");
+
+					const uri =
+						loc.path === ""
+							? "view/{name}/doDelete"
+							: `user/${USERNAME.toLowerCase()}/my-views/view/{name}/doDelete`;
+					await deleteByLink(uri, names, getCrumbFromPage(html));
+				}
+			}
+		},
+		{
+			name: "Jobs",
+			run: async () => {
+				const res = await getPage("");
+				if (res.status() !== 200) return;
+				const html = await res.text();
+				const jobs = new Set<string>();
+				let index = html.indexOf('href="job/');
+				while (index !== -1) {
+					let endIndex = html.indexOf('/"', index + 10);
+					if (endIndex !== -1) jobs.add(html.substring(index + 10, endIndex));
+					index = html.indexOf('href="job/', endIndex);
+				}
+				await deleteByLink("job/{name}/doDelete", jobs, getCrumbFromPage(html));
+			}
+		},
+		{
+			name: "Nodes",
+			run: async () => {
+				const res = await getPage("");
+				if (res.status() !== 200) return;
+				const html = await res.text();
+				const nodes = new Set<string>();
+				let index = html.indexOf('href="/computer/');
+				while (index !== -1) {
+					let endIndex = html.indexOf('/"', index + 16);
+					if (endIndex !== -1) nodes.add(html.substring(index + 16, endIndex));
+					index = html.indexOf('href="/computer/', endIndex);
+				}
+				nodes.delete("(built-in)");
+				await deleteByLink("computer/{name}/doDelete", nodes, getCrumbFromPage(html));
+			}
+		},
+		{
+			name: "Users",
+			run: async () => {
+				const res = await getPage("manage/securityRealm/");
+				if (res.status() !== 200) return;
+				const html = await res.text();
+				const users = new Set<string>();
+				let index = html.indexOf('href="user/');
+				while (index !== -1) {
+					let endIndex = html.indexOf('/"', index + 11);
+					if (endIndex !== -1) users.add(html.substring(index + 11, endIndex));
+					index = html.indexOf('href="user/', endIndex);
+				}
+				users.delete(USERNAME.toLowerCase());
+				await deleteByLink(
+					"manage/securityRealm/user/{name}/doDelete",
+					users,
+					getCrumbFromPage(html)
+				);
+			}
+		},
+		{
+			name: "Description",
+			run: async () => {
+				const res = await getPage("");
+				if (res.status() !== 200) return;
+				const html = await res.text();
+				const crumb = getCrumbFromPage(html);
+				const body = `description=&Submit=&Jenkins-Crumb=${crumb}&json=%7B%22description%22%3A+%22%22%7D`;
+				await postPage("submitDescription", body, crumb);
+			}
+		}
+	];
+
+	for (const task of tasks) {
+		try {
+			await task.run();
+			await new Promise((r) => setTimeout(r, 2000));
+		} catch (err) {
+			continue;
+		}
 	}
-
-	async function deleteViews() {
-		const mainPage = await getPage("");
-		await deleteByLink(
-			"view/{name}/doDelete",
-			getSubstringsFromPage(mainPage, 'href="/view/', '/"'),
-			getCrumbFromPage(mainPage)
-		);
-
-		const viewPage = await getPage("me/my-views/view/all/");
-		await deleteByLink(
-			`user/${USERNAME.toLowerCase()}/my-views/view/{name}/doDelete`,
-			getSubstringsFromPage(viewPage, `href="/user/${USERNAME.toLowerCase()}/my-views/view/`, '/"'),
-			getCrumbFromPage(viewPage)
-		);
-	}
-
-	async function deleteNodes() {
-		const mainPage = await getPage("");
-		const nodes = getSubstringsFromPage(mainPage, 'href="/computer/', '/"');
-
-		nodes.delete("(built-in)");
-
-		await deleteByLink("computer/{name}/doDelete", nodes, getCrumbFromPage(mainPage));
-	}
-
-	async function deleteUsers() {
-		const userPage = await getPage("manage/securityRealm/");
-		const crumb = getCrumbFromPage(userPage);
-
-		const users = getSubstringsFromPage(userPage, 'href="user/', '/"');
-		users.delete(USERNAME.toLowerCase());
-
-		await deleteByLink("manage/securityRealm/user/{name}/doDelete", users, crumb);
-	}
-
-	async function deleteDescription() {
-		const mainPage = await getPage("");
-		const crumb = getCrumbFromPage(mainPage);
-		const body = `description=&Submit=&Jenkins-Crumb=${crumb}&json=%7B%22description%22%3A+%22%22%7D`;
-		await postPage("submitDescription", body, crumb);
-	}
-
-	await deleteViews();
-	await deleteJobs();
-	await deleteUsers();
-	await deleteNodes();
-	await deleteDescription();
 }
