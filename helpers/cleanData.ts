@@ -33,36 +33,18 @@ export async function cleanData(request: APIRequestContext) {
 		return result;
 	}
 
-	async function getPage(uri = ""): Promise<string> {
-		const maxRetries = 2;
+	async function getPage(uri: string) {
+		const response = await request.get(`${baseUrl}${uri}`, { headers: { Authorization: authHeader } });
 
-		for (let attempt = 1; attempt <= maxRetries; attempt++) {
-			const res = await request.get(`${baseUrl}${uri}`, {
-				headers: { Authorization: authHeader }
-			});
-
-			const status = res.status();
-
-			if (status === 200) {
-				return await res.text();
-			}
-
-			if (status === 404) {
-				console.log(`ℹ️ Note: Resource at ${uri} not found (likely already deleted). Continuing...`);
-				return "";
-			}
-
-			// Jenkins hiccup (500/503): Wait and retry
-			if ([500, 503].includes(status) && attempt < maxRetries) {
-				console.log(`⚠️ Jenkins returned ${status} on attempt ${attempt}. Retrying in 3s...`);
-				await new Promise((resolve) => setTimeout(resolve, 1000));
-				continue;
-			}
-
-			throw new Error(`🛑 Cleanup failed! GET ${uri} returned ${status}`);
+		if (response.status() === 500) {
+			console.warn(`⚠️ Server returned 500 for GET ${uri}. Skipping this task.`);
+			return "";
 		}
 
-		throw new Error(`🛑 Cleanup failed! Unexpected exit in retry loop for GET ${uri}`);
+		if (response.status() !== 200) {
+			throw new Error(`🛑 GET ${uri} failed with status ${response.status()}`);
+		}
+		return await response.text();
 	}
 
 	async function postPage(uri: string, body: string, crumb: string) {
@@ -88,10 +70,9 @@ export async function cleanData(request: APIRequestContext) {
 				await postPage(link.replace("{name}", name), fullCrumb, crumb);
 			} catch (e: any) {
 				if (e.message.includes("status 500")) {
-					console.log(`- Note: ${name} already gone, skipping.`);
+					await new Promise((r) => setTimeout(r, 200));
 					continue;
 				}
-
 				throw e;
 			}
 		}
