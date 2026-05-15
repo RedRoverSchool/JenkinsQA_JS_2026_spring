@@ -12,8 +12,8 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
 
     await app.configureFreestylePage.header.clickHome();
 
-		await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
-	});
+    await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
+  });
 });
 
 test.describe('US_16.008 | Freestyle Project Management > Delete Project', () => {
@@ -25,8 +25,8 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
     await app.configureFreestylePage.header.clickHome();
   });
   test(`RF_16.008.01 |  Verify deleting project via dropdown menu`, async ({
-    app,
-  }: {
+                                                                             app,
+                                                                           }: {
     app: App;
   }) => {
     await app.homePage.hoverItemName();
@@ -37,8 +37,8 @@ test.describe('US_16.008 | Freestyle Project Management > Delete Project', () =>
   });
 
   test(`RF_16.008.02 |  Verify deleting freestyle project on project's page`, async ({
-    app,
-  }: {
+                                                                                       app,
+                                                                                     }: {
     app: App;
   }) => {
     await app.homePage.clickItemNameLink();
@@ -52,8 +52,8 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
   test(`RF_15.001.01 | Verify Footer Version`, async ({ app } : { app : App }) => {
     await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(footer.jenkinsVersion);
   });
-  
- test(`RF_15.001.02 | Verify Footer Dropdown`, async ({ app } : { app : App }) => {
+
+  test(`RF_15.001.02 | Verify Footer Dropdown`, async ({ app } : { app : App }) => {
     await app.homePage.footer.clickJenkinsVersionButton();
     await expect(app.homePage.footer.jenkinsVersionDropdown()).toBeVisible();
   });

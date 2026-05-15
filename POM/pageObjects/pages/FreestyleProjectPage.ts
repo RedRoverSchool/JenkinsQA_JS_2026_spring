@@ -6,6 +6,9 @@ export class FreestyleProjectPage extends BasePage {
   confirmDeleteBtn = () => this.page.locator("button[data-id=ok]");
   buildNowLink = () => this.page.getByRole("link", { name: "Build Now" });
   buildNumber = (buildNumber: string) => this.page.getByText(buildNumber);
+  disabledProjectWarning = () => this.page.locator('form[id="enable-project"]');
+  enableProjectBtn = () => this.page.locator('button[value="Enable"]');
+
   // actions
   async clickDeleteProjectBtn() {
     await this.deleteProjectBtn().click();

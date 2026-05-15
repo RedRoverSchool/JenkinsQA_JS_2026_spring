@@ -7,16 +7,22 @@ import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
 import { ToolsPage } from "./pages/ToolsPage";
 import { BuildHistoryPage } from "./pages/BuildHistoryPage";
 import { Header } from "./pages/@components/Header";
+import { PluginsPage } from "./pages/PluginsPage";
+import { FolderPage } from "./pages/FolderPage";
+import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 
 export class App {
   private _homePage: HomePage | null = null;
   private _newItemPage: NewItemPage | null = null;
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
-  private _manageJenkisPage: ManageJenkinsPage | null = null;
+  private _folderPage?: FolderPage;
+  private _configureFolderPage?: ConfigureFolderPage;
+  private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
   private _buildHistoryPage: BuildHistoryPage | null = null;
   private _header: Header | null = null;
+  private _pluginsPage: PluginsPage | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -34,12 +40,19 @@ export class App {
     ));
   }
 
+  get configureFolderPage() {
+    return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
+  }
+
+  get folderPage() {
+    return (this._folderPage ??= new FolderPage(this.page));
+  }
   get freeStyleProjectPage() {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
   }
 
   get manageJenkinsPage() {
-    return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
+    return (this._manageJenkinsPage ??= new ManageJenkinsPage(this.page));
   }
 
   get toolsPage() {
@@ -52,5 +65,9 @@ export class App {
 
   get header() {
     return (this._header ??= new Header(this.page));
+  }
+
+  get pluginsPage() {
+    return (this._pluginsPage ??= new PluginsPage(this.page));
   }
 }
