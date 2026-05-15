@@ -1,0 +1,1 @@
+{"version":3,"file":"olesk-data.js","sourceRoot":"","sources":["../../../tests/testData/olesk-data.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,UAAU,GAAG;IACtB,WAAW,EAAE,YAAY;IACzB,WAAW,EAAE,iCAAiC;CACjD,CAAA;AAED,MAAM,CAAC,MAAM,oBAAoB,GAAG;IAChC,WAAW,EAAE,oCAAoC;IACjD,WAAW,EAAE,iCAAiC;CACjD,CAAA"}

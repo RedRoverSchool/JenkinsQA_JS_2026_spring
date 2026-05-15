@@ -1,10 +1,11 @@
-import { BasePage } from './@components';
+import { BasePage } from "./@components";
 
 export class FreestyleProjectPage extends BasePage {
   // locators
   deleteProjectBtn = () => this.page.locator('a[data-title="Delete Project"]');
-  confirmDeleteBtn = () => this.page.locator('button[data-id=ok]');
-
+  confirmDeleteBtn = () => this.page.locator("button[data-id=ok]");
+  buildNowLink = () => this.page.getByRole("link", { name: "Build Now" });
+  buildNumber = (buildNumber: string) => this.page.getByText(buildNumber);
   // actions
   async clickDeleteProjectBtn() {
     await this.deleteProjectBtn().click();
@@ -13,5 +14,10 @@ export class FreestyleProjectPage extends BasePage {
 
   async clickYesInDeleteDialog() {
     await this.confirmDeleteBtn().click();
+  }
+
+  async clickBuildNowLink() {
+    await this.buildNowLink().click();
+    return this;
   }
 }

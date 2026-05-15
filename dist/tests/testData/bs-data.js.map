@@ -1,0 +1,1 @@
+{"version":3,"file":"bs-data.js","sourceRoot":"","sources":["../../../tests/testData/bs-data.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,iBAAiB,CAAC;AAExC,MAAM,CAAC,MAAM,WAAW,GAAG;IAC1B,OAAO,EAAE,KAAK,CAAC,IAAI,CAAC,IAAI,EAAE;IAC1B,cAAc,EAAE,OAAO;IACvB,cAAc,EAAE,iBAAiB;CACjC,CAAC"}

@@ -1,15 +1,21 @@
-import { BasePage } from './@components';
+import { BasePage } from "./@components";
 
 export class HomePage extends BasePage {
   // locators
   newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
-  itemName = () => this.page.locator('#projectstatus .jenkins-table__link');
-  projectTableRow = (itemName: string) => this.page.locator(`tr#job_${itemName}`);
+  itemName = () => this.page.locator("#projectstatus .jenkins-table__link");
+  projectTableRow = (itemName: string) =>
+    this.page.locator(`tr#job_${itemName}`);
   itemDropDown = () => this.page.locator(`div.jenkins-dropdown`);
   deleteProjectInDropdownBtn = (itemName: string) =>
-    this.itemDropDown().locator(`button[href*="job/${itemName}/doDelete"].jenkins-dropdown__item`);
-  itemMenuChevron = () => this.page.locator('button.jenkins-menu-dropdown-chevron');
-  confirmDeleteBtn = () => this.page.locator('button[data-id=ok]');
+    this.itemDropDown().locator(
+      `button[href*="job/${itemName}/doDelete"].jenkins-dropdown__item`,
+    );
+  itemMenuChevron = () =>
+    this.page.locator("button.jenkins-menu-dropdown-chevron");
+  confirmDeleteBtn = () => this.page.locator("button[data-id=ok]");
+  buildHistoryLink = () =>
+    this.page.getByRole("link", { name: "Build History" });
   // actions
   async clickNewItemLink() {
     await this.newItemLink().click();
@@ -17,7 +23,7 @@ export class HomePage extends BasePage {
 
   async clickItemNameLink() {
     await this.itemName().focus();
-    await this.itemName().press('Enter');
+    await this.itemName().press("Enter");
   }
 
   async hoverItemName() {
@@ -36,5 +42,10 @@ export class HomePage extends BasePage {
 
   async clickConfirmDeleteBtn() {
     await this.confirmDeleteBtn().click();
+  }
+
+  async clickBuildHistoryLink() {
+    await this.buildHistoryLink().click();
+    return this;
   }
 }
