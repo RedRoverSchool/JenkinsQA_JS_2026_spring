@@ -78,3 +78,4 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
   });
 
 });
+}
