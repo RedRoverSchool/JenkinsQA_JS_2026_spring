@@ -5,7 +5,7 @@ test.describe('US_13.001 | Header > Navigate to Dashboard', () => {
         await app.homePage.header.clickManageJenkins();
         await app.manageJenkinsPage.clickToolsLink();
 
-        expect (app.toolsPage.header.logoLink()).toBeVisible;
+        await expect (app.toolsPage.header.logoLink()).toBeVisible();
     });
 
 });
