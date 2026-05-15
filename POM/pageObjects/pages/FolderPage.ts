@@ -1,9 +1,15 @@
-import {BasePage} from "@/POM/pageObjects/pages/@components";
+import { BasePage } from "./@components";
 
 export class FolderPage extends BasePage {
-    configureButton = (itemName: string) => this.page.locator(`a[href="/job/${itemName}/configure"]`);
+  configureMenuItem = () => this.page.getByRole("link", { name: "Configure" });
+  configureButton = (itemName: string) =>
+    this.page.locator(`a[href="/job/${itemName}/configure"]`);
 
-    async clickConfigureButton(itemName: string) {
-        await this.configureButton(itemName).click();
-    }
+  async clickConfigureMenuItem() {
+    await this.configureMenuItem().click();
+  }
+
+  async clickConfigureButton(itemName: string) {
+    await this.configureButton(itemName).click();
+  }
 }
