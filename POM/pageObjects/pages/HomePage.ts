@@ -7,8 +7,11 @@ export class HomePage extends BasePage {
   itemMenuChevron = () => this.page.locator('button.jenkins-menu-dropdown-chevron');
   itemDropDownConfigureButton = (jobName: string) => this.page.locator(`a[href*='/job/${jobName}/configure']`);
   projectTableRow = (itemName: string) => this.page.locator(`tr#job_${itemName}`);
-
-
+  itemDropDown = () => this.page.locator(`div.jenkins-dropdown`);
+  deleteProjectInDropdownBtn = (itemName: string) =>
+    this.itemDropDown().locator(`button[href*="job/${itemName}/doDelete"].jenkins-dropdown__item`);
+  itemMenuChevron = () => this.page.locator('button.jenkins-menu-dropdown-chevron');
+  confirmDeleteBtn = () => this.page.locator('button[data-id=ok]');
   // actions
   async clickNewItemLink() {
     await this.newItemLink().click();
@@ -23,6 +26,10 @@ export class HomePage extends BasePage {
     await this.itemName().hover();
     return this;
   }
+  async clickDeleteProjectInDropdown(itemName: string) {
+    await this.deleteProjectInDropdownBtn(itemName).click();
+    return this;
+  }
 
   async openItemDropdownMenu() {
     await this.itemMenuChevron().click();
@@ -31,5 +38,7 @@ export class HomePage extends BasePage {
 
   async clickItemDropDownConfigureButton(jobName: string) {
     await this.itemDropDownConfigureButton(jobName).click();
+  async clickConfirmDeleteBtn() {
+    await this.confirmDeleteBtn().click();
   }
 }

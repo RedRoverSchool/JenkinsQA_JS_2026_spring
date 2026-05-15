@@ -35,11 +35,46 @@ test.describe('US_16.008 | Freestyle Project Management', () => {
         await app.freeStyleProjectPage.clickYesInDeleteDialog();
         await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
     });
+test.describe('US_16.008 | Freestyle Project Management > Delete Project', () => {
+  test.beforeEach(async ({ app }: { app: App }) => {
+    await app.homePage.clickNewItemLink();
+    await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+    await app.newItemPage.clickFreestyleProject();
+    await app.newItemPage.clickOkButton();
+    await app.configureFreestylePage.header.clickHome();
+  });
+  test(`RF_16.008.01 |  Verify deleting project via dropdown menu`, async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    await app.homePage.hoverItemName();
+    await app.homePage.openItemDropdownMenu();
+    await app.homePage.clickDeleteProjectInDropdown(newItemPageData.itemName);
+    await app.homePage.clickConfirmDeleteBtn();
+    await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
+  });
+
+  test(`RF_16.008.02 |  Verify deleting freestyle project on project's page`, async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    await app.homePage.clickItemNameLink();
+    await app.freeStyleProjectPage.clickDeleteProjectBtn();
+    await app.freeStyleProjectPage.clickYesInDeleteDialog();
+    await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
+  });
 });
 
 test.describe('US_15.001 | Footer > Jenkins version',() => {
   test(`RF_15.001.01 | Verify Footer Version`, async ({ app } : { app : App }) => {
     await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(footer.jenkinsVersion);
+  });
+  
+ test(`RF_15.001.02 | Verify Footer Dropdown`, async ({ app } : { app : App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdown()).toBeVisible();
   });
 
 });
