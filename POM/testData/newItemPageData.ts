@@ -9,6 +9,7 @@ export const newItemPageData = {
     multiConfigurationProject: "Multi-configuration project",
     folder: "Folder",
     multibranchPipeline: "Multibranch Pipeline",
-    organizationFolder: "Organization Folder"
-  }
+    organizationFolder: "Organization Folder",
+  },
+  duplicateItemName: `duplicate-${faker.string.alphanumeric(8)}`,
 };
