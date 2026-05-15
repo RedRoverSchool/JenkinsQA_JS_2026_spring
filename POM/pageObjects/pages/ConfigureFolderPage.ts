@@ -3,7 +3,7 @@ import { BasePage } from "./@components";
 export class ConfigureFolderPage extends BasePage {
   propertiesButton = () =>
     this.page.locator("button[data-section-id='properties']");
-  addButton = () => this.page.locator(".jenkins-button.repetable-add");
+  addButton = () => this.page.locator(".jenkins-button.repeatable-add");
   libraryInputField = () =>
     this.page.locator(".setting-main input[checkdependson='name']");
   generalSection = () => this.page.locator("#general");
