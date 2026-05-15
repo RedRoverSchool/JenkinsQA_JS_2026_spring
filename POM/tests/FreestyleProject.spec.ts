@@ -18,6 +18,7 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
     await app.homePage.clickItemDropDownConfigureButton(newItemPageData.itemName);
     await app.configureFreestylePage.disableProject();
     await app.configureFreestylePage.saveChanges();
+
     await expect(app.freeStyleProjectPage.disabledProjectWarning()).toBeVisible();
     await expect(app.freeStyleProjectPage.disabledProjectWarning()).toContainText(
       "This project is currently disabled",

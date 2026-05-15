@@ -6,6 +6,7 @@ export class ConfigureFreestylePage extends BasePage {
 
   async disableProject() {
     await this.enableProjectSwitcher().uncheck();
+    return this;
   }
   async saveChanges() {
     await this.saveChangesBtn().click();
