@@ -34,7 +34,7 @@ export async function cleanData(request: APIRequestContext) {
 	}
 
 	async function getPage(uri = ""): Promise<string> {
-		const maxRetries = 5;
+		const maxRetries = 2;
 
 		for (let attempt = 1; attempt <= maxRetries; attempt++) {
 			const res = await request.get(`${baseUrl}${uri}`, {
@@ -55,7 +55,7 @@ export async function cleanData(request: APIRequestContext) {
 			// Jenkins hiccup (500/503): Wait and retry
 			if ([500, 503].includes(status) && attempt < maxRetries) {
 				console.log(`⚠️ Jenkins returned ${status} on attempt ${attempt}. Retrying in 3s...`);
-				await new Promise((resolve) => setTimeout(resolve, 3000));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 				continue;
 			}
 
@@ -106,9 +106,18 @@ export async function cleanData(request: APIRequestContext) {
 		);
 
 		const viewPage = await getPage("me/my-views/view/all/");
+
+		const myViews = getSubstringsFromPage(
+			viewPage,
+			`href="/user/${USERNAME.toLowerCase()}/my-views/view/`,
+			'/"'
+		);
+		myViews.delete("all");
+		myViews.delete("");
+
 		await deleteByLink(
 			`user/${USERNAME.toLowerCase()}/my-views/view/{name}/doDelete`,
-			getSubstringsFromPage(viewPage, `href="/user/${USERNAME.toLowerCase()}/my-views/view/`, '/"'),
+			myViews,
 			getCrumbFromPage(viewPage)
 		);
 	}
@@ -148,11 +157,11 @@ export async function cleanData(request: APIRequestContext) {
 			await task();
 
 			if (index < tasks.length - 1) {
-				await new Promise((resolve) => setTimeout(resolve, 2000));
+				await new Promise((resolve) => setTimeout(resolve, 500));
 			}
 		}
 	} catch (error) {
 		console.error(`❌ Cleanup failed during: ${currentTask}`);
-		throw error; // Re-throw so Playwright still marks the test as failed
+		throw error;
 	}
 }
