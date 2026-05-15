@@ -7,6 +7,7 @@ import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
 import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
 import { ManageJenkinsPage } from './pages/ManageJenkinsPage';
 import { ToolsPage } from './pages/ToolsPage';
+import { PluginsPage } from './pages/PluginsPage';
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -17,6 +18,7 @@ export class App {
   private _toolsPage: ToolsPage | null = null;
   private _configureFolderPage: ConfigureFolderPage | null = null;
   private _folderPage: FolderPage | null = null;
+	private _pluginsPage: PluginsPage | null = null;
 
     constructor(private readonly page: Page) {
     }
@@ -40,15 +42,20 @@ export class App {
     get folderPage() {
         return (this._folderPage ??= new FolderPage(this.page));
     }
-  get freeStyleProjectPage() {
-    return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
-  }
 
-  get manageJenkinsPage() {
-    return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
-  }
+    get freeStyleProjectPage() {
+      return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
+    }
 
-  get toolsPage() {
-    return (this._toolsPage ??= new ToolsPage(this.page));
-  }
+    get manageJenkinsPage() {
+      return (this._manageJenkisPage ??= new ManageJenkinsPage(this.page));
+    }
+
+    get toolsPage() {
+      return (this._toolsPage ??= new ToolsPage(this.page));
+    }
+
+    get pluginsPage() {
+      return (this._pluginsPage ??= new PluginsPage(this.page));
+    }
 }
