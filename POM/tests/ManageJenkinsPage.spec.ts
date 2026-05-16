@@ -19,6 +19,5 @@ test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
     await app.homePage.header.clickManageJenkins();
     const actualSections = await app.manageJenkinsPage.jenkinsSectionTitle().allTextContents();
     expect(actualSections).toEqual(manageJenkinsPageData.sections);
-    console.log(await app.manageJenkinsPage.jenkinsSectionTitle().allTextContents());
   });
 });
