@@ -10,7 +10,7 @@ test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
   });
 });
 
-test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins > `, () => {
+test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
   test("TC_11.003.01 | Verify Manage Jenkins page contains all grouped sections", async ({
     app,
   }: {
