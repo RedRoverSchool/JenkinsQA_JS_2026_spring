@@ -4,7 +4,7 @@ export class ConfigureMultibranchPage extends BasePage {
     healthMetricsSection = () => this.page.getByRole("button", {name : "Health metrics"});
     
     async clickHealthMetricsSection() {
-        this.healthMetricsSection().click();
+        await this.healthMetricsSection().click();
         return this;
     } 
 }
