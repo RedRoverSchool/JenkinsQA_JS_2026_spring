@@ -41,6 +41,5 @@ export class NewItemPage extends BasePage {
     await this.fillItemNameField(name);
     await this.clickFreestyleProject();
     await this.clickOkButton();
-    return this;
   }
 }
