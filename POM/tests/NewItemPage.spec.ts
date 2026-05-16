@@ -12,6 +12,18 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
     await expect(app.newItemPage.newItemTitle()).toContainText("New Item");
   });
 
+  test("RF_01.001.22 | Verify blank item name validation", async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    await app.homePage.clickNewItemLink();
+
+    await expect(app.newItemPage.itemNameValidationMessage()).toContainText(
+      "This field cannot be empty",
+    );
+  });
+
   test("RF_01.001.25 | Verify warning for duplicate item name", async ({
     app,
   }: {
