@@ -15,6 +15,7 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
     await app.homePage.clickNewItemLink();
     await app.newItemPage.createFolder(folderName);
 
+    await expect(app.configureFolderPage.generalSection()).toBeVisible();
     await app.configureFolderPage.fillDisplayName(displayName);
     await app.configureFolderPage.fillDescription(description);
 

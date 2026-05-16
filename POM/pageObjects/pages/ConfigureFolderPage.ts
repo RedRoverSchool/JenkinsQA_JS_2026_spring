@@ -10,7 +10,7 @@ export class ConfigureFolderPage extends BasePage {
   submitButton = () => this.page.locator("button[name='Submit']");
   displayNameInput = () =>
     this.page.locator('input[name="_.displayNameOrNull"]');
-  descriptionInput = () => this.page.locator("textarea");
+  descriptionInput = () => this.page.locator(".setting-main textarea");
   applyButton = () => this.page.locator('button[name="Apply"]');
 
   async clickPropertiesButton() {

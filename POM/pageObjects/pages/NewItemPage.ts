@@ -38,6 +38,5 @@ export class NewItemPage extends BasePage {
   async createFolder(name: string) {
     await this.fillItemNameField(name);
     await this.clickFolderAndOkButton();
-    return this;
   }
 }
