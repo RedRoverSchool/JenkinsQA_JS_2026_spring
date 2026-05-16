@@ -8,7 +8,6 @@ import { ToolsPage } from "./pages/ToolsPage";
 import { PluginsPage } from "./pages/PluginsPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
-import { Header } from "./pages/@components/Header";
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -20,7 +19,6 @@ export class App {
   private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
   private _pluginsPage: PluginsPage | null = null;
-  private _header: Header | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -59,9 +57,5 @@ export class App {
 
   get pluginsPage() {
     return (this._pluginsPage ??= new PluginsPage(this.page));
-  }
-
-  get header() {
-    return (this._header ??= new Header(this.page));
   }
 }

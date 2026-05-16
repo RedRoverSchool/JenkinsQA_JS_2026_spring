@@ -23,7 +23,7 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
 
     await app.newItemPage.createFreestyleProject(itemName);
 
-    await app.header.clickHome();
+    await app.newItemPage.header.clickHome();
 
     await app.homePage.clickNewItemLink();
 
