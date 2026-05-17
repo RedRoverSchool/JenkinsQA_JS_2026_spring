@@ -11,6 +11,7 @@ export class HomePage extends BasePage {
     this.itemDropDown().locator(`button[href*="job/${itemName}/doDelete"].jenkins-dropdown__item`);
   itemMenuChevron = () => this.page.locator('button.jenkins-menu-dropdown-chevron');
   confirmDeleteBtn = () => this.page.locator('button[data-id=ok]');
+  buildHistoryButton = () => this.page.locator('#tasks a[href$="builds"]');
   // actions
   async clickNewItemLink() {
     await this.newItemLink().click();
@@ -40,5 +41,9 @@ export class HomePage extends BasePage {
 
   async clickConfirmDeleteBtn() {
     await this.confirmDeleteBtn().click();
+  }
+
+  async clickBuildHistoryButton(){
+    await this.buildHistoryButton().click();
   }
 }
