@@ -59,3 +59,12 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
   });
 
 });
+
+test('RF_01.002.05_Verify new folder creation', async ({app} : {app:App}) => {
+   await app.homePage.clickNewItemLink();
+   await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+   await app.newItemPage.clickFolder();
+   await app.configureFolderPage.clickSaveButton()
+   await app.configureFolderPage.header.clickHome();
+   await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName)
+})
