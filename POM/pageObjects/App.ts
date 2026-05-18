@@ -2,6 +2,7 @@ import { Page } from "@playwright/test";
 import { HomePage } from "./pages/HomePage";
 import { NewItemPage } from "./pages/NewItemPage";
 import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
+import { StatusPage } from "./pages/StatusPage";
 import { FreestyleProjectPage } from "./pages/FreestyleProjectPage";
 import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
 import { ToolsPage } from "./pages/ToolsPage";
@@ -9,7 +10,6 @@ import { PluginsPage } from "./pages/PluginsPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
-import { StatusPage } from "./pages/StatusPage";
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -24,7 +24,6 @@ export class App {
   private _pluginsPage: PluginsPage | null = null;
   private _configurePipelinePage: ConfigurePipelinePage | null = null;
 
-
   constructor(private readonly page: Page) { }
 
   get homePage() {
@@ -34,6 +33,7 @@ export class App {
   get newItemPage() {
     return (this._newItemPage ??= new NewItemPage(this.page));
   }
+
 
   get configureFreestylePage() {
     return (this._configureFreestylePage ??= new ConfigureFreestylePage(
@@ -49,10 +49,6 @@ export class App {
     return (this._folderPage ??= new FolderPage(this.page));
   }
 
-  get statusPage() {
-    return (this._statusPage ??= new StatusPage(this.page));
-  }
-
   get freeStyleProjectPage() {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
   }
@@ -63,6 +59,10 @@ export class App {
 
   get toolsPage() {
     return (this._toolsPage ??= new ToolsPage(this.page));
+  }
+
+  get statusPage() {
+    return (this._statusPage ??= new StatusPage(this.page));
   }
 
   get pluginsPage() {
