@@ -8,6 +8,8 @@ export class NewItemPage extends BasePage {
   itemType_Folder = () =>
     this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
   itemNameValidationMessage = () => this.page.locator("#itemname-required");
+  duplicateItemNameWarning = () =>
+    this.page.getByText("A job already exists with the name");
   // itemType_Pipeline = () =>
   okButton = () => this.page.locator("#ok-button");
 
@@ -38,5 +40,11 @@ export class NewItemPage extends BasePage {
   async createFolder(name: string) {
     await this.fillItemNameField(name);
     await this.clickFolderAndOkButton();
+  }
+
+  async createFreestyleProject(name: string) {
+    await this.fillItemNameField(name);
+    await this.clickFreestyleProject();
+    await this.clickOkButton();
   }
 }
