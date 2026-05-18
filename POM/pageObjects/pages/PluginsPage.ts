@@ -5,4 +5,6 @@ export class PluginsPage extends BasePage {
     // locators
     mainTitle = () => this.page.getByRole('heading', { name: 'Plugins' });
     updatesTaskLink = () => this.page.getByText('Updates', { exact: true }); 
+    plaginsName = (name: string) => this.page.getByRole('link', { name });
+
 }
