@@ -83,11 +83,4 @@ export class NewItemPage extends BasePage {
     return this;
   }
 
-  async openNewItemPage() {
-    await this.newItemLink().click();
-  }
-
-  async openItem(name: string) {
-    await this.page.locator(`#job_${name}`).click();
-  }
 }

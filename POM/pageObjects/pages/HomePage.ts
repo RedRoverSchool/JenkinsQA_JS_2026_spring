@@ -85,4 +85,8 @@ export class HomePage extends BasePage {
   async openItem(name: string) {
     await this.page.locator(`#job_${name}`).click();
   }
+  async openNewItemPage() {
+  await this.page.locator("#side-panel a[href$='newJob']").click();
+}
+
 }
