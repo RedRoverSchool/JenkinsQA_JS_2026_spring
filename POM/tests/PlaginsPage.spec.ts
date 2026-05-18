@@ -3,7 +3,7 @@ import {plaginsPageData} from '../testData/plaginsPageData';
 
 test.describe("US_10.006 | Manage Jenkins > Plugins", () => {
 
-    test("Verify Available plugins are displayed", async ({ app }: { app: App }) => {
+    test("RF_10.006.01 | Verify Available plugins are displayed", async ({ app }: { app: App }) => {
         await app.homePage.header.clickManageJenkins();
         await app.manageJenkinsPage.clickPlugins();
  
