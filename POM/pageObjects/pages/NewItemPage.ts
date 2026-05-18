@@ -4,6 +4,8 @@ export class NewItemPage extends BasePage {
   itemNameField = () => this.page.locator("#name");
   newItemTitle = () => this.page.getByRole("heading");
 
+  newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
+
   itemType_FreestyleProject = () => this.page.locator(".hudson_model_FreeStyleProject");
   itemNameValidationMessage = () => this.page.locator("#itemname-required");
   errorMessage = () => this.page.locator("#itemname-invalid");
@@ -47,8 +49,9 @@ export class NewItemPage extends BasePage {
   }
 
   async createFolder(name: string) {
-    await this.fillItemNameField(name);
-    await this.clickFolderAndOkButton();
+  await this.openNewItemPage();
+  await this.fillItemNameField(name);
+  await this.clickFolderAndOkButton();
   }
 
   async clickPipeline() {
@@ -66,4 +69,8 @@ export class NewItemPage extends BasePage {
     await this.itemType_OrganizationFolder().click();
     return this;
   }
+
+  async openNewItemPage() {
+  await this.newItemLink().click();
+}
 }

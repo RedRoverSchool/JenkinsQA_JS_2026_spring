@@ -64,4 +64,14 @@ export class HomePage extends BasePage {
 	  await this.arrowButton().click();
 	  return this;
 	}
+
+  async goHome() {
+  await this.page.locator(".app-jenkins-logo").click();
+}
+
+async openItem(name: string) {
+  await this.page.locator(`#job_${name}`).click();
+}
+
+
 }
