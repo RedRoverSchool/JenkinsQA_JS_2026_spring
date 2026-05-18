@@ -1,4 +1,4 @@
-import { BasePage } from "./@components";
+import { BasePage } from './@components';
 
 export class NewItemPage extends BasePage {
   itemNameField = () => this.page.locator("#name");
@@ -12,6 +12,7 @@ export class NewItemPage extends BasePage {
     this.page.locator("[class='org_jenkinsci_plugins_workflow_job_WorkflowJob']"); 
   duplicateItemNameWarning = () =>
     this.page.getByText("A job already exists with the name");
+  itemType_OrganizationFolder = () => this.page.getByRole('radio', { name: 'Organization Folder Creates a' });
   // itemType_Pipeline = () =>
   okButton = () => this.page.locator("#ok-button");
 
@@ -49,4 +50,9 @@ export class NewItemPage extends BasePage {
     await this.clickFreestyleProject();
     await this.clickOkButton();
   }
+
+    async clickOrganizationFolder() {
+		await this.itemType_OrganizationFolder().click();
+		return this;
+	}
 }
