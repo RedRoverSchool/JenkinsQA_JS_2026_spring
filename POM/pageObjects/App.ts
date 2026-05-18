@@ -10,6 +10,7 @@ import { PluginsPage } from "./pages/PluginsPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
+import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -22,24 +23,22 @@ export class App {
   private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
   private _pluginsPage: PluginsPage | null = null;
-  private _configurePipelinePage: ConfigurePipelinePage | null = null;
+   private _configurePipelinePage: ConfigurePipelinePage | null = null;
+  private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
 
   constructor(private readonly page: Page) { }
 
   get homePage() {
-    return (this._homePage ??= new HomePage(this.page));
-  }
+	return (this._homePage ??= new HomePage(this.page));
+    }
 
   get newItemPage() {
-    return (this._newItemPage ??= new NewItemPage(this.page));
-  }
-
+	return (this._newItemPage ??= new NewItemPage(this.page));
+	}
 
   get configureFreestylePage() {
-    return (this._configureFreestylePage ??= new ConfigureFreestylePage(
-      this.page,
-    ));
-  }
+	return (this._configureFreestylePage ??= new ConfigureFreestylePage(this.page));
+	}
 
   get configureFolderPage() {
     return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
@@ -69,7 +68,11 @@ export class App {
     return (this._pluginsPage ??= new PluginsPage(this.page));
   }
 
-  get configurePipelinePage() {
+    get configurePipelinePage() {
     return (this._configurePipelinePage ??= new ConfigurePipelinePage(this.page));
   }
+
+  get configureOrganizationFolderPage() {
+	return (this._configureOrganizationFolderPage ??= new ConfigureOrganizationFolderPage(this.page));
+	}
 }
