@@ -27,6 +27,8 @@ export class NewItemPage extends BasePage {
     this.page.getByRole("radio", { name: "Organization Folder Creates a" });
 
   okButton = () => this.page.locator("#ok-button");
+  itemTypesOptions = () => this.page.locator('.j-item-options .label');
+
 
   async fillItemNameField(name: string) {
     await this.itemNameField().fill(name);
