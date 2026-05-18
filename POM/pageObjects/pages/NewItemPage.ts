@@ -1,19 +1,17 @@
-import { BasePage } from "./@components";
+import { BasePage } from './@components';
 
 export class NewItemPage extends BasePage {
-  itemNameField = () => this.page.locator("#name");
-  newItemTitle = () => this.page.getByRole("heading");
-  itemType_FreestyleProject = () =>
-    this.page.locator(".hudson_model_FreeStyleProject");
-  itemType_Folder = () =>
-    this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
-  itemNameValidationMessage = () => this.page.locator("#itemname-required");
+  itemNameField = () => this.page.locator('#name');
+  newItemTitle = () => this.page.getByRole('heading');
+  itemType_FreestyleProject = () => this.page.locator('.hudson_model_FreeStyleProject');
+  itemType_Folder = () => this.page.locator('.com_cloudbees_hudson_plugins_folder_Folder');
+  itemNameValidationMessage = () => this.page.locator('#itemname-required');
   itemType_Pipeline = () =>
-    this.page.locator("[class='org_jenkinsci_plugins_workflow_job_WorkflowJob']"); 
-  duplicateItemNameWarning = () =>
-    this.page.getByText("A job already exists with the name");
+    this.page.locator("[class='org_jenkinsci_plugins_workflow_job_WorkflowJob']");
+  duplicateItemNameWarning = () => this.page.getByText('A job already exists with the name');
   // itemType_Pipeline = () =>
-  okButton = () => this.page.locator("#ok-button");
+  okButton = () => this.page.locator('#ok-button');
+  itemTypesOptions = () => this.page.locator('.j-item-options .label');
 
   async fillItemNameField(name: string) {
     await this.itemNameField().fill(name);
