@@ -78,15 +78,15 @@ export class HomePage extends BasePage {
     return this;
   }
 
-  async goHome() {
-    await this.page.locator(".app-jenkins-logo").click();
-  }
-
   async openItem(name: string) {
     await this.page.locator(`#job_${name}`).click();
   }
   async openNewItemPage() {
   await this.page.locator("#side-panel a[href$='newJob']").click();
+}
+
+  getItemLink(name: string) {
+  return this.page.getByRole("link", { name });
 }
 
 }

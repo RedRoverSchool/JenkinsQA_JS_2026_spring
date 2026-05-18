@@ -1,25 +1,20 @@
-import { test, expect } from "@/base";
-import { HomePage } from "../pageObjects/pages/HomePage";
-import { NewItemPage } from "../pageObjects/pages/NewItemPage";
+import { test, expect, App } from "@/POM/fixtures/baseFixtures";
 
-test.describe("US_01.002.25 | New Item > Nested Folder", () => {
-    test("TC_01.002.25 | Verify nested folder creation.", async ({ page }) => {
+test.describe("US_01.002.24 | New Item > Nested Folder", () => {
+  test("RF_01.002.24 | Verify nested folder creation.", async ({ app }) => {
 
-        const parentFolder = `parent_${Date.now()}`;
-        const childFolder = `child_${Date.now()}`;
+    const parentFolder = `parent_${Date.now()}`;
+    const childFolder = `child_${Date.now()}`;
 
-        const home = new HomePage(page);
-        const newItem = new NewItemPage(page);
+    await app.newItemPage.createFolder(parentFolder);
 
-        await newItem.createFolder(parentFolder);
-        await home.goHome();
+    await app.header.clickHome();
 
-        await home.openItem(parentFolder);
+    await app.homePage.openItem(parentFolder);
 
-        await newItem.createFolder(childFolder);
+    await app.newItemPage.createFolder(childFolder);
 
-        await expect(page.getByRole("link", { name: childFolder })).toBeVisible();
+    await expect(app.homePage.getItemLink(childFolder)).toBeVisible();
 
-    });
 });
-
+});

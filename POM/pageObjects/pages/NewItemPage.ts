@@ -3,8 +3,7 @@ import { BasePage } from './@components';
 export class NewItemPage extends BasePage {
   itemNameField = () => this.page.locator("#name");
   newItemTitle = () => this.page.getByRole("heading");
-  newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
-
+  
   itemType_FreestyleProject = () =>
     this.page.locator(".hudson_model_FreeStyleProject");
 
@@ -53,19 +52,12 @@ export class NewItemPage extends BasePage {
     return this;
   }
 
-  async clickFolderAndOkButton() {
-    await this.itemType_Folder().click();
-    await this.okButton().click();
+  async createFolder(name: string) {
+    await this.fillItemNameField(name);
+    await this.clickFolder();
+    await this.clickOkButton();
   }
 
-  async createFolder(name: string) {
-  const newItemButton = this.newItemLink();
-  if (await newItemButton.isVisible()) {
-    await newItemButton.click();
-  }
-    await this.fillItemNameField(name);
-    await this.clickFolderAndOkButton();
-  }
 
   async clickPipeline() {
     await this.itemType_Pipeline().click();
