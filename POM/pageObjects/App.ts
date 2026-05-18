@@ -9,11 +9,13 @@ import { PluginsPage } from "./pages/PluginsPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
+import { StatusPage } from "./pages/StatusPage";
 
 export class App {
   private _homePage: HomePage | null = null;
   private _newItemPage: NewItemPage | null = null;
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
+  private _statusPage: StatusPage | null = null;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
   private _folderPage?: FolderPage;
   private _configureFolderPage?: ConfigureFolderPage;
@@ -23,7 +25,7 @@ export class App {
   private _configurePipelinePage: ConfigurePipelinePage | null = null;
 
 
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) { }
 
   get homePage() {
     return (this._homePage ??= new HomePage(this.page));
@@ -46,6 +48,11 @@ export class App {
   get folderPage() {
     return (this._folderPage ??= new FolderPage(this.page));
   }
+
+  get statusPage() {
+    return (this._statusPage ??= new StatusPage(this.page));
+  }
+
   get freeStyleProjectPage() {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
   }
@@ -63,6 +70,6 @@ export class App {
   }
 
   get configurePipelinePage() {
-    return (this._configurePipelinePage ??= new ConfigurePipelinePage (this.page));
+    return (this._configurePipelinePage ??= new ConfigurePipelinePage(this.page));
   }
 }
