@@ -27,32 +27,51 @@ test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
       await expect(app.pluginsPage.updatesTaskLink()).toBeVisible();
     });
   });
+});
 
-  test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
-    test.beforeEach(async ({ app }: { app: App }) => {
-      await app.homePage.header.clickManageJenkins();
-    });
+test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
+  test.beforeEach(async ({ app }: { app: App }) => {
+    await app.homePage.header.clickManageJenkins();
+  });
 
-    test("TC_11.003.01 | Verify Manage Jenkins page contains all grouped sections", async ({
+  test("TC_11.003.01 | Verify Manage Jenkins page contains all grouped sections", async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    const actualSections = await app.manageJenkinsPage.jenkinsSectionTitle().allTextContents();
+    const expectedSections = Object.values(manageJenkinsPageData.sections).map((s) => s.name);
+    expect(actualSections).toEqual(expectedSections);
+  });
+
+  for (const item of Object.values(
+    manageJenkinsPageData.sections.systemConfiguration.configurationItems,
+  )) {
+    test(`TC_11.003.02 | Verify search input filters "${item.name}" in search results`, async ({
       app,
     }: {
       app: App;
     }) => {
-      const actualSections = await app.manageJenkinsPage.jenkinsSectionTitle().allTextContents();
+      await app.manageJenkinsPage.settingsSearchBar().fill(item.name);
 
-      expect(actualSections).toEqual(manageJenkinsPageData.sections);
+      await expect(app.manageJenkinsPage.searchBarDropdownItem().first()).toContainText(item.name);
     });
+  }
 
-    for (const item of manageJenkinsPageData.systemConfigurationItems) {
-      test(`TC_11.003.02 | Verify search input filters "${item}" in search results`, async ({
-        app,
-      }: {
-        app: App;
-      }) => {
-        await app.manageJenkinsPage.settingsSearchBar().fill(item);
-
-        await expect(app.manageJenkinsPage.searchBarDropdownItem().first()).toContainText(item);
-      });
-    }
-  });
+  for (const item of Object.values(
+    manageJenkinsPageData.sections.systemConfiguration.configurationItems,
+  )) {
+    test(`TC_11.003.03 | Verify System Configuration group contains ${item.name}`, async ({
+      app,
+    }: {
+      app: App;
+    }) => {
+      await expect(
+        app.manageJenkinsPage.systemConfigSection(
+          item.name,
+          manageJenkinsPageData.sections.systemConfiguration.name,
+        ),
+      ).toHaveAttribute("href", item.href);
+    });
+  }
 });
