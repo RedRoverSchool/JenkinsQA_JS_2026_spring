@@ -8,6 +8,7 @@ export class FreestyleProjectPage extends BasePage {
   buildNumber = (buildNumber: string) => this.page.getByText(buildNumber);
   disabledProjectWarning = () => this.page.locator('form[id="enable-project"]');
   enableProjectBtn = () => this.page.locator('button[value="Enable"]');
+  activeNavLink = () => this.page.locator("a.task-link--active");
 
   // actions
   async clickDeleteProjectBtn() {

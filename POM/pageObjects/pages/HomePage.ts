@@ -18,6 +18,11 @@ export class HomePage extends BasePage {
   confirmDeleteBtn = () => this.page.locator("button[data-id=ok]");
   buildHistoryLink = () =>
     this.page.getByRole("link", { name: "Build History" });
+  jobName = (itemName: string) =>
+    this.page.locator(`a[href='job/${itemName}/'] span`);
+  arrowButton = () => this.page.locator("button.jenkins-menu-dropdown-chevron");
+  dropdownMenu = () => this.page.locator("div[id^='tippy-'] .jenkins-dropdown");
+
   // actions
   async clickNewItemLink() {
     await this.newItemLink().click();
@@ -28,10 +33,15 @@ export class HomePage extends BasePage {
     await this.itemName().press("Enter");
   }
 
+  async clickJobName(itemName: string) {
+    await this.jobName(itemName).click();
+  }
+
   async hoverItemName() {
     await this.itemName().hover();
     return this;
   }
+
   async clickDeleteProjectInDropdown(itemName: string) {
     await this.deleteProjectInDropdownBtn(itemName).click();
     return this;
@@ -52,6 +62,19 @@ export class HomePage extends BasePage {
 
   async clickBuildHistoryLink() {
     await this.buildHistoryLink().click();
+    return this;
+  }
+
+  async selectDropdownOption(optionName: string) {
+    await this.dropdownMenu().getByText(optionName).click();
+  }
+
+  async clickItemName() {
+    await this.itemName().click();
+  }
+
+  async clickArrowButton() {
+    await this.arrowButton().click();
     return this;
   }
 }
