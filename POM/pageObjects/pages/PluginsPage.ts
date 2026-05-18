@@ -5,6 +5,8 @@ export class PluginsPage extends BasePage {
     // locators
     mainTitle = () => this.page.getByRole('heading', { name: 'Plugins' });
     updatesTaskLink = () => this.page.getByText('Updates', { exact: true }); 
-    plaginsName = (name: string) => this.page.getByRole('link', { name });
+    plaginsName = (name: string) =>  this.page.locator('a.jenkins-table__link').filter({
+        hasText: name
+    }).first();
 
 }
