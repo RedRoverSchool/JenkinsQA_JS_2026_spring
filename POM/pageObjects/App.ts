@@ -1,13 +1,14 @@
-import { ConfigureFolderPage } from "@/POM/pageObjects/pages/ConfigureFolderPage";
-import { FolderPage } from "@/POM/pageObjects/pages/FolderPage";
-import { Page } from '@playwright/test';
-import { HomePage } from './pages/HomePage';
-import { NewItemPage } from './pages/NewItemPage';
-import { ConfigureFreestylePage } from './pages/ConfigureFreestylePage';
-import { FreestyleProjectPage } from './pages/FreestyleProjectPage';
-import { ManageJenkinsPage } from './pages/ManageJenkinsPage';
-import { ToolsPage } from './pages/ToolsPage';
-import { PluginsPage } from './pages/PluginsPage';
+import { Page } from "@playwright/test";
+import { HomePage } from "./pages/HomePage";
+import { NewItemPage } from "./pages/NewItemPage";
+import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
+import { FreestyleProjectPage } from "./pages/FreestyleProjectPage";
+import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
+import { ToolsPage } from "./pages/ToolsPage";
+import { PluginsPage } from "./pages/PluginsPage";
+import { FolderPage } from "./pages/FolderPage";
+import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
+import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { StatusPage } from "./pages/StatusPage";
 
 export class App {
@@ -21,6 +22,8 @@ export class App {
   private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
   private _pluginsPage: PluginsPage | null = null;
+  private _configurePipelinePage: ConfigurePipelinePage | null = null;
+
 
   constructor(private readonly page: Page) { }
 
@@ -64,5 +67,9 @@ export class App {
 
   get pluginsPage() {
     return (this._pluginsPage ??= new PluginsPage(this.page));
+  }
+
+  get configurePipelinePage() {
+    return (this._configurePipelinePage ??= new ConfigurePipelinePage(this.page));
   }
 }
