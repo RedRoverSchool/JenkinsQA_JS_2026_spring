@@ -3,20 +3,21 @@ import { BasePage } from "./@components";
 export class NewItemPage extends BasePage {
   itemNameField = () => this.page.locator("#name");
   newItemTitle = () => this.page.getByRole("heading");
-  itemType_FreestyleProject = () =>
-    this.page.locator(".hudson_model_FreeStyleProject");
-  itemType_Folder = () =>
-    this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
+
+  newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
+
+  itemType_FreestyleProject = () => this.page.locator(".hudson_model_FreeStyleProject");
   itemNameValidationMessage = () => this.page.locator("#itemname-required");
+  errorMessage = () => this.page.locator("#itemname-invalid");
+
+  itemType_Folder = () => this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
   itemType_Pipeline = () =>
-    this.page.locator(
-      "[class='org_jenkinsci_plugins_workflow_job_WorkflowJob']",
-    );
+    this.page.locator("[class='org_jenkinsci_plugins_workflow_job_WorkflowJob']");
   duplicateItemNameWarning = () =>
     this.page.getByText("A job already exists with the name");
   itemType_OrganizationFolder = () =>
     this.page.getByRole("radio", { name: "Organization Folder Creates a" });
-  // itemType_Pipeline = () =>
+
   okButton = () => this.page.locator("#ok-button");
 
   async fillItemNameField(name: string) {
@@ -29,6 +30,14 @@ export class NewItemPage extends BasePage {
     return this;
   }
 
+  async clickOkButton() {
+    await this.okButton().click();
+  }
+
+  async getErrorText() {
+    return await this.errorMessage().innerText();
+  }
+
   async clickFolder() {
     await this.itemType_Folder().click();
     return this;
@@ -39,13 +48,10 @@ export class NewItemPage extends BasePage {
     await this.okButton().click();
   }
 
-  async clickOkButton() {
-    await this.okButton().click();
-  }
-
   async createFolder(name: string) {
-    await this.fillItemNameField(name);
-    await this.clickFolderAndOkButton();
+  await this.openNewItemPage();
+  await this.fillItemNameField(name);
+  await this.clickFolderAndOkButton();
   }
 
   async clickPipeline() {
@@ -63,4 +69,13 @@ export class NewItemPage extends BasePage {
     await this.itemType_OrganizationFolder().click();
     return this;
   }
+  
+async openNewItemPage() {
+  await this.newItemLink().click();
+}
+
+  async openItem(name: string) {
+  await this.page.locator(`#job_${name}`).click();
+}
+
 }
