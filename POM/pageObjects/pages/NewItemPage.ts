@@ -29,16 +29,6 @@ export class NewItemPage extends BasePage {
     return this;
   }
 
-  async clickFolder() {
-    await this.itemType_Folder().click();
-    return this;
-  }
-
-  async clickFolderAndOkButton() {
-    await this.itemType_Folder().click();
-    await this.okButton().click();
-  }
-
   async clickOkButton() {
     await this.okButton().click();
   }
@@ -57,6 +47,16 @@ export class NewItemPage extends BasePage {
     await this.fillItemNameField(name);
     await this.clickFreestyleProject();
     await this.clickOkButton();
+  }
+
+  async clickFolder() {
+    await this.itemType_Folder().click();
+    return this;
+  }
+
+  async clickFolderAndOkButton() {
+    await this.itemType_Folder().click();
+    await this.okButton().click();
   }
 
   async clickOrganizationFolder() {
