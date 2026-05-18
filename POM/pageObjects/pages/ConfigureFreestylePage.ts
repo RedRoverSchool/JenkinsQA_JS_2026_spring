@@ -8,6 +8,11 @@ export class ConfigureFreestylePage extends BasePage {
   authTokenField = () => this.page.locator('input[name="authToken"]');
   triggerBuildsRemotelyCheckbox = () =>
     this.page.locator("label.attach-previous").filter({ hasText: "Trigger builds remotely" });
+  buildAfterOtherProjectsCheckBox = () =>
+    this.page
+      .locator("label.attach-previous")
+      .filter({ hasText: "Build after other projects are built" });
+  projectsToWatchInput = () => this.page.locator('input[name="_.upstreamProjects"]');
 
   async disableProject() {
     await this.enableProjectSwitcher().uncheck();
@@ -15,7 +20,7 @@ export class ConfigureFreestylePage extends BasePage {
   }
   async saveChanges() {
     await this.saveChangesBtn().click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async goToTriggersSection() {
@@ -25,6 +30,11 @@ export class ConfigureFreestylePage extends BasePage {
 
   async enableTriggerBuildsRemotely() {
     await this.triggerBuildsRemotelyCheckbox().click();
+    return this;
+  }
+
+  async enableBuildAfterOtherProjectsCheckBox() {
+    await this.buildAfterOtherProjectsCheckBox().click();
     return this;
   }
 }
