@@ -22,7 +22,7 @@ export class ConfigureFreestylePage extends BasePage {
     return this;
   }
 
-  async checkTriggerBuildsRemotely() {
+  async enableTriggerBuildsRemotely() {
     await this.triggerBuildsRemotelyCheckbox().click();
     return this;
   }

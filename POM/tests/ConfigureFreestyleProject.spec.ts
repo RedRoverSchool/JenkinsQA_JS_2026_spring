@@ -24,7 +24,7 @@ test.describe("US_02.004 | Freestyle Project Configuration > Build Triggers", ()
   }: {
     app: App;
   }) => {
-    await app.configureFreestylePage.checkTriggerBuildsRemotely();
+    await app.configureFreestylePage.enableTriggerBuildsRemotely();
     await expect(app.configureFreestylePage.authTokenField()).toBeVisible();
     await expect(app.configureFreestylePage.authTokenField()).toBeEnabled();
   });
