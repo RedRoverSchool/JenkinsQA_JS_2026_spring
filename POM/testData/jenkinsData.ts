@@ -19,12 +19,47 @@ export const footer = {
 };
 
 export const manageJenkinsPageData = {
-  sections: [
-    "System Configuration",
-    "Security",
-    "Status Information",
-    "Troubleshooting",
-    "Tools and Actions",
-  ],
-  systemConfigurationItems: ["System", "Tools", "Plugins", "Nodes", "Clouds", "Appearance"],
+  sections: {
+    systemConfiguration: {
+      name: "System Configuration",
+      configurationItems: {
+        system: {
+          name: "System",
+          href: "configure",
+        },
+        tools: {
+          name: "Tools",
+          href: "configureTools",
+        },
+        plugins: {
+          name: "Plugins",
+          href: "pluginManager",
+        },
+        nodes: {
+          name: "Nodes",
+          href: "computer",
+        },
+        clouds: {
+          name: "Clouds",
+          href: "cloud",
+        },
+        appearance: {
+          name: "Appearance",
+          href: "appearance",
+        },
+      },
+    },
+    security: {
+      name: "Security",
+    },
+    statusInfo: {
+      name: "Status Information",
+    },
+    troubleshooting: {
+      name: "Troubleshooting",
+    },
+    toolsAndActions: {
+      name: "Tools and Actions",
+    },
+  },
 };

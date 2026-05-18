@@ -82,4 +82,9 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
     await expect(app.homePage.footer.jenkinsVersionDropdownAbout()).toHaveAttribute('href', footer.dropdownItems.aboutJenkins.href);  
   });
 
+  test('RF_15.001.05 | Verify Footer Dropdown Get Involved URL', async ({ app } : { app: App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdownGetInvolved()).toHaveAttribute('href', footer.dropdownItems.getInvolved.href);    
+  });
+
 });
