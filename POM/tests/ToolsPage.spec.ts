@@ -17,6 +17,13 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
             test(`RF_10.004.02 | Verify Configuration section '${section}' is displayed`, async ({ app }: { app: App }) => {
                 await expect(app.toolsPage.sectionLocator(section)).toBeVisible();
             });
-    }
+    };
+
+    test("RF_10.004.03 | Verify Maven settings provider can be changed to custom", async ({ app }: { app: App }) => {
+        await app.toolsPage.clickMavenSettingsSelect();
+        await app.toolsPage.selectSettingsFileInFilesystem();
+
+        await expect(app.toolsPage.mavenFilePathInput()).toBeVisible();
+    });
 
 });
