@@ -26,4 +26,5 @@ export const manageJenkinsPageData = {
     "Troubleshooting",
     "Tools and Actions",
   ],
+  systemConfigurationItems: ["System", "Tools", "Plugins", "Nodes", "Clouds", "Appearance"],
 };

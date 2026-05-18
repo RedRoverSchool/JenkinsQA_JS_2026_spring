@@ -1,7 +1,9 @@
 import { BasePage } from "./@components";
 
 export class ConfigureFreestylePage extends BasePage {
-  enableProjectSwitcher = () => this.page.locator(".jenkins-toggle-switch__label");
+  saveButton = () => this.page.locator('button[name="Submit"]');
+  enableProjectSwitcher = () =>
+    this.page.locator(".jenkins-toggle-switch__label");
   saveChangesBtn = () => this.page.locator(".jenkins-submit-button");
   triggersSectionBtn = () => this.page.locator('button[data-section-id="triggers"]');
   triggersSectionTitle = () => this.page.locator("div.jenkins-section__title#triggers");
@@ -14,10 +16,16 @@ export class ConfigureFreestylePage extends BasePage {
       .filter({ hasText: "Build after other projects are built" });
   projectsToWatchInput = () => this.page.locator('input[name="_.upstreamProjects"]');
 
+  async clickSaveButton() {
+    await this.saveButton().click();
+    return this;
+  }
+
   async disableProject() {
     await this.enableProjectSwitcher().uncheck();
     return this;
   }
+
   async saveChanges() {
     await this.saveChangesBtn().click();
     await this.page.waitForLoadState("domcontentloaded");
