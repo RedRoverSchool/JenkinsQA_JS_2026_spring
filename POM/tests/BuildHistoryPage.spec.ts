@@ -21,10 +21,11 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
     ).toBeVisible();
   });
 
-  test("RF_09.001.01 | Item displays on Build History page after building", async({ app })=>{
-
+  test("RF_09.001.01 | Item displays on Build History page after building", async ({
+    app,
+  }) => {
     await app.homePage.clickNewItemLink();
-    await app.newItemPage.fillItemNameField(newItemPageData.itemName)
+    await app.newItemPage.fillItemNameField(newItemPageData.itemName);
     await app.newItemPage.clickFreestyleProject();
     await app.newItemPage.clickOkButton();
 
@@ -32,14 +33,15 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
     await app.freeStyleProjectPage.clickBuildNowLink();
     await app.freeStyleProjectPage.header.clickHome();
     await app.homePage.clickBuildHistoryLink();
-    
-    await expect(app.buildHistoryPage.newItemName()).toContainText(newItemPageData.itemName);
-  });
 
+    await expect(app.buildHistoryPage.newItemName()).toContainText(
+      newItemPageData.itemName,
+    );
+  });
 });
 
 test.describe("US_09.002 | Build history > Sorting", () => {
-  test("RF_09.002.02 | Verify sorting toggles between ascending and descending", async ({
+  test("RF_09.002.02 | Verify sorting toggle changes build order", async ({
     app,
   }: {
     app: App;
