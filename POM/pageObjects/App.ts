@@ -8,6 +8,7 @@ import { ToolsPage } from "./pages/ToolsPage";
 import { PluginsPage } from "./pages/PluginsPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
+import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -19,6 +20,8 @@ export class App {
   private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
   private _pluginsPage: PluginsPage | null = null;
+  private _configurePipelinePage: ConfigurePipelinePage | null = null;
+
 
   constructor(private readonly page: Page) {}
 
@@ -57,5 +60,9 @@ export class App {
 
   get pluginsPage() {
     return (this._pluginsPage ??= new PluginsPage(this.page));
+  }
+
+  get configurePipelinePage() {
+    return (this._configurePipelinePage ??= new ConfigurePipelinePage (this.page));
   }
 }
