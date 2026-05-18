@@ -12,6 +12,7 @@ export class ConfigureFreestylePage extends BasePage {
   }
   async saveChanges() {
     await this.saveChangesBtn().click();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async goToTriggersSection() {
