@@ -73,4 +73,5 @@ export class NewItemPage extends BasePage {
   async openNewItemPage() {
   await this.newItemLink().click();
 }
+
 }

@@ -73,5 +73,4 @@ async openItem(name: string) {
   await this.page.locator(`#job_${name}`).click();
 }
 
-
 }

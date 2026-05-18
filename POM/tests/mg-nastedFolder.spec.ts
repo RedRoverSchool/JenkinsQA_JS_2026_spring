@@ -4,7 +4,7 @@ import { NewItemPage } from "../pageObjects/pages/NewItemPage";
 
 
 test.describe("US_01.002 | New Item > Folder", () => {
-    test("RF_01.002.24 | Verify nasted folder creation", async ({ page }) => {
+    test("RF_01.002.24 | Verify nasted folder creation.", async ({ page }) => {
 
         const parentFolder = `parent_${Date.now()}`;
         const childFolder = `child_${Date.now()}`;
