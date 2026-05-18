@@ -12,4 +12,6 @@ export const newItemPageData = {
     organizationFolder: "Organization Folder",
   },
   duplicateItemName: `duplicate-${faker.string.alphanumeric(8)}`,
+  specialCharArray: ["?", "*", "/", "!", "%", "$", "&", ";", ":"],
+  itemNameInvalidValidationMessage: "» ‘’ is an unsafe character"
 };

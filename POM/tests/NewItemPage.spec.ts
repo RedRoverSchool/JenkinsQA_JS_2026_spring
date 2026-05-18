@@ -37,6 +37,21 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
 
     await expect(app.newItemPage.duplicateItemNameWarning()).toContainText(itemName);
   });
+
+  test('RF_01.001.36 | Verify new item name for invalid characters', async ({ app }: { app: App }) => {
+    await app.homePage.clickNewItemLink();
+    
+    for (let specialChar of newItemPageData.specialCharArray) {
+      await app.newItemPage.fillItemNameField(specialChar);
+
+      const expectedError = newItemPageData.itemNameInvalidValidationMessage.replace("‘’", `‘${specialChar}’`);
+      await expect(app.newItemPage.itemNameInvalidMessage()).toHaveText(expectedError);
+
+      await app.newItemPage.clearNewItemField();
+    }
+
+  });
+
 });
 test.describe('US_01.004 | New Item | Select an Item type', () => {
   test('RF_01.004.01 | Verify all required item types are available >', async ({
