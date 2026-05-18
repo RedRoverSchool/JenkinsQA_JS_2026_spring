@@ -59,7 +59,10 @@ export class NewItemPage extends BasePage {
   }
 
   async createFolder(name: string) {
-    await this.openNewItemPage();
+  const newItemButton = this.newItemLink();
+  if (await newItemButton.isVisible()) {
+    await newItemButton.click();
+  }
     await this.fillItemNameField(name);
     await this.clickFolderAndOkButton();
   }
