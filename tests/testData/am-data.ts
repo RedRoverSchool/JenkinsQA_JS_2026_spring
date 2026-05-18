@@ -17,7 +17,6 @@ export type HealthMetricsOptions =
 
 export async function chooseTheMetric(page : Page, metricsOption : HealthMetricsOptions) : Promise<void> {
     await page.getByRole("button", {name : "Add metric"}).click();
-    const dropdown = page.locator(".jenkins-dropdown:visible")
     await page.getByRole("button", {name : metricsOption}).click();
 }
 
