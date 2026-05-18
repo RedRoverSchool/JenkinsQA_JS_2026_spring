@@ -67,5 +67,19 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
     await app.homePage.footer.clickJenkinsVersionButton();
     await expect(app.homePage.footer.jenkinsVersionDropdown()).toBeVisible();
   });
+  
+  test('RF_15.001.03 | Verify Footer Dropdown Labels', async ({ app } : { app: App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdownItems()).toHaveText([
+      footer.dropdownItems.aboutJenkins.text,
+      footer.dropdownItems.getInvolved.text,
+      footer.dropdownItems.website.text,
+    ]);
+  });
+  
+  test('RF_15.001.04 | Verify Footer Dropdown About URL', async ({ app } : { app: App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdownAbout()).toHaveAttribute('href', footer.dropdownItems.aboutJenkins.href);  
+  });
 
 });

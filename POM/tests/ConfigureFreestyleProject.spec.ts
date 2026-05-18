@@ -28,4 +28,15 @@ test.describe("US_02.004 | Freestyle Project Configuration > Build Triggers", ()
     await expect(app.configureFreestylePage.authTokenField()).toBeVisible();
     await expect(app.configureFreestylePage.authTokenField()).toBeEnabled();
   });
+
+  test(`TC_02.004.02 | Verify "Projects to watch" field is displayed and enabled when "Build after other projects are built" is selected`, async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    await app.configureFreestylePage.enableBuildAfterOtherProjectsCheckBox();
+
+    await expect(app.configureFreestylePage.projectsToWatchInput()).toBeVisible();
+    await expect(app.configureFreestylePage.projectsToWatchInput()).toBeEnabled();
+  });
 });
