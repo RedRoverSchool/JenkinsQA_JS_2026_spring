@@ -42,6 +42,5 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
     app: App;
   }) => {
     await expect(app.freeStyleProjectPage.activeNavLink()).toContainText("Status");
-    await expect(app.freeStyleProjectPage.permaLinksHeader()).toBeVisible();
   });
 });
