@@ -4,6 +4,7 @@ export class ConfigureFreestylePage extends BasePage {
   saveButton = () => this.page.locator('button[name="Submit"]');
   enableProjectSwitcher = () =>
     this.page.locator(".jenkins-toggle-switch__label");
+
   saveChangesBtn = () => this.page.locator(".jenkins-submit-button");
   triggersSectionBtn = () => this.page.locator('button[data-section-id="triggers"]');
   triggersSectionTitle = () => this.page.locator("div.jenkins-section__title#triggers");
@@ -46,3 +47,4 @@ export class ConfigureFreestylePage extends BasePage {
     return this;
   }
 }
+

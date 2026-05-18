@@ -3,7 +3,7 @@ import { BasePage } from './@components';
 export class NewItemPage extends BasePage {
   itemNameField = () => this.page.locator("#name");
   newItemTitle = () => this.page.getByRole("heading");
-  
+
   itemType_FreestyleProject = () =>
     this.page.locator(".hudson_model_FreeStyleProject");
 
@@ -28,7 +28,6 @@ export class NewItemPage extends BasePage {
   okButton = () => this.page.locator("#ok-button");
   itemTypesOptions = () => this.page.locator('.j-item-options .label');
 
-
   async fillItemNameField(name: string) {
     await this.itemNameField().fill(name);
     return this;
@@ -52,12 +51,15 @@ export class NewItemPage extends BasePage {
     return this;
   }
 
-  async createFolder(name: string) {
-    await this.fillItemNameField(name);
-    await this.clickFolder();
-    await this.clickOkButton();
+  async clickFolderAndOkButton() {
+    await this.itemType_Folder().click();
+    await this.okButton().click();
   }
 
+  async createFolder(name: string) {
+    await this.fillItemNameField(name);
+    await this.clickFolderAndOkButton();
+  }
 
   async clickPipeline() {
     await this.itemType_Pipeline().click();
@@ -74,5 +76,4 @@ export class NewItemPage extends BasePage {
     await this.itemType_OrganizationFolder().click();
     return this;
   }
-
 }
