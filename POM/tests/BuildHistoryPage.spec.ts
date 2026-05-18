@@ -1,4 +1,4 @@
-import { test, expect } from "@/POM/fixtures/baseFixtures";
+import { test, expect, App } from "@/POM/fixtures/baseFixtures";
 import { newItemPageData } from "@/POM/testData/newItemPageData";
 
 test.describe("US_09.001 | Build history > Core Build History Display", () => {
@@ -19,5 +19,43 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
     await expect(
       app.buildHistoryPage.successfulBuildStatusIcon(projectName),
     ).toBeVisible();
+  });
+});
+
+test.describe("US_09.002 | Build history > Sorting", () => {
+  test("RF_09.002.02 | Verify sorting toggles between ascending and descending", async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    const projectName = newItemPageData.itemName;
+
+    await app.homePage.clickNewItemLink();
+    await app.newItemPage.createFreestyleProject(projectName);
+
+    await app.configureFreestylePage.clickSaveButton();
+    await app.freeStyleProjectPage.createBuilds(4);
+
+    await app.freeStyleProjectPage.header.clickHome();
+    await app.homePage.clickBuildHistoryLink();
+
+    await expect(app.buildHistoryPage.buildValues().first()).toBeVisible();
+
+    const initialOrder = await app.buildHistoryPage.getBuildValues();
+
+    await app.buildHistoryPage.clickSortableBuildHeader();
+
+    await expect(app.buildHistoryPage.buildValues().first()).toBeVisible();
+
+    const firstSortOrder = await app.buildHistoryPage.getBuildValues();
+
+    await app.buildHistoryPage.clickSortableBuildHeader();
+
+    await expect(app.buildHistoryPage.buildValues().first()).toBeVisible();
+
+    const secondSortOrder = await app.buildHistoryPage.getBuildValues();
+
+    expect(firstSortOrder).not.toEqual(initialOrder);
+    expect(secondSortOrder).toEqual(initialOrder);
   });
 });
