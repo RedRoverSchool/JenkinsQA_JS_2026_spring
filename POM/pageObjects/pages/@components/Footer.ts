@@ -6,7 +6,7 @@ export class Footer {
 	jenkinsVersionButton = () => this.page.locator("button.jenkins_ver");
 	jenkinsVersionDropdown = () => this.page.locator(".jenkins-dropdown");
 	jenkinsVersionDropdownItems = () => this.page.locator(".jenkins-dropdown__item");
-	jenkinsVersionDropdownAbout = () => this.page.locator(`[href="/manage/about"]`);
+	jenkinsVersionDropdownAbout = () => this.page.getByText("Get involved");
 	jenkinsVersionDropdownGetInvolved = () => this.page.locator(`[href="https://www.jenkins.io/participate/"]`);
 	jenkinsVersionDropdownWebsite = () => this.page.locator(`[href="https://www.jenkins.io/"]`);
 
