@@ -8,7 +8,7 @@ export class Footer {
 	jenkinsVersionDropdownItems = () => this.page.locator(".jenkins-dropdown__item");
 	jenkinsVersionDropdownAbout = () => this.page.getByText("About Jenkins");
 	jenkinsVersionDropdownGetInvolved = () => this.page.getByText("Get involved");
-	jenkinsVersionDropdownWebsite = () => this.page.locator("Website");
+	jenkinsVersionDropdownWebsite = () => this.page.getByText("Website");
 
 	async clickJenkinsVersionButton() {
 		return await this.jenkinsVersionButton().click();
