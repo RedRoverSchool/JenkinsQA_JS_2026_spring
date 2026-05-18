@@ -14,6 +14,16 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
 
     await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
   });
+
+   test('TC_01.001.38 | Verify Pipeline Creation', async ({ app }: { app: App }) => {
+    await app.homePage.clickNewItemLink();
+
+    await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+    await app.newItemPage.clickPipeline();
+    await app.newItemPage.clickOkButton();    
+    await app.configurePipelinePage.header.clickHome();   
+    await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
+  });
 });
 
 test.describe('US_16.008 | Freestyle Project Management > Delete Project', () => {
@@ -56,6 +66,15 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
   test(`RF_15.001.02 | Verify Footer Dropdown`, async ({ app } : { app : App }) => {
     await app.homePage.footer.clickJenkinsVersionButton();
     await expect(app.homePage.footer.jenkinsVersionDropdown()).toBeVisible();
+  });
+  
+  test('RF_15.001.03 | Verify Footer Dropdown Labels', async ({ app } : { app: App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdownItems()).toHaveText([
+      footer.dropdownItems.aboutJenkins.text,
+      footer.dropdownItems.getInvolved.text,
+      footer.dropdownItems.website.text,
+    ]);
   });
 
 });

@@ -35,4 +35,12 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
     await expect(app.freeStyleProjectPage.enableProjectBtn()).toBeVisible();
     await expect(app.freeStyleProjectPage.enableProjectBtn()).toBeEnabled();
   });
+
+  test("TC_02.001.10  | Verify user is redirected to project's Status page after disabling the project", async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    await expect(app.freeStyleProjectPage.activeNavLink()).toContainText("Status");
+  });
 });
