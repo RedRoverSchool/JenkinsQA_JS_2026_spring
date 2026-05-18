@@ -1,9 +1,6 @@
 import { BasePage } from "./@components";
 
 export class NewItemPage extends BasePage {
-import { BasePage } from "./@components";
-
-export class NewItemPage extends BasePage {
   itemNameField = () => this.page.locator("#name");
   newItemTitle = () => this.page.getByRole("heading");
 
