@@ -10,9 +10,7 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         expect(currentUrl).toContain("/configureTools");
     });
 
-});
-
-test('RF_10.004.06 | Verify Configuration settings are displayed correctly', async ({ app }: { app: App }) => {
+    test('RF_10.004.06 | Verify Configuration settings are displayed correctly', async ({ app }: { app: App }) => {
     await app.homePage.header.clickManageJenkins();
     await app.manageJenkinsPage.clickTools();
 
@@ -20,3 +18,6 @@ test('RF_10.004.06 | Verify Configuration settings are displayed correctly', asy
         await expect(app.toolsPage.getTitle(title)).toBeVisible()
     }
 })
+
+});
+
