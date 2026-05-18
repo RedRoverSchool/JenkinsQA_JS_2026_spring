@@ -5,6 +5,9 @@ export class ConfigureFreestylePage extends BasePage {
   saveChangesBtn = () => this.page.locator(".jenkins-submit-button");
   triggersSectionBtn = () => this.page.locator('button[data-section-id="triggers"]');
   triggersSectionTitle = () => this.page.locator("div.jenkins-section__title#triggers");
+  authTokenField = () => this.page.locator('input[name="authToken"]');
+  triggerBuildsRemotelyCheckbox = () =>
+    this.page.locator("label.attach-previous").filter({ hasText: "Trigger builds remotely" });
 
   async disableProject() {
     await this.enableProjectSwitcher().uncheck();
@@ -17,6 +20,11 @@ export class ConfigureFreestylePage extends BasePage {
 
   async goToTriggersSection() {
     await this.triggersSectionBtn().click();
+    return this;
+  }
+
+  async enableTriggerBuildsRemotely() {
+    await this.triggerBuildsRemotelyCheckbox().click();
     return this;
   }
 }
