@@ -14,6 +14,16 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
 
     await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
   });
+
+   test('TC_01.001.38 | Verify Pipeline Creation', async ({ app }: { app: App }) => {
+    await app.homePage.clickNewItemLink();
+
+    await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+    await app.newItemPage.clickPipeline();
+    await app.newItemPage.clickOkButton();    
+    await app.configurePipelinePage.header.clickHome();   
+    await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
+  });
 });
 
 test.describe('US_16.008 | Freestyle Project Management > Delete Project', () => {
