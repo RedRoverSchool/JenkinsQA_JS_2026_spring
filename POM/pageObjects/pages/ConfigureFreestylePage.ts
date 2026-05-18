@@ -3,6 +3,8 @@ import { BasePage } from "./@components";
 export class ConfigureFreestylePage extends BasePage {
   enableProjectSwitcher = () => this.page.locator(".jenkins-toggle-switch__label");
   saveChangesBtn = () => this.page.locator(".jenkins-submit-button");
+  triggersSectionBtn = () => this.page.locator('button[data-section-id="triggers"]');
+  triggersSectionTitle = () => this.page.locator("div.jenkins-section__title#triggers");
 
   async disableProject() {
     await this.enableProjectSwitcher().uncheck();
@@ -10,5 +12,10 @@ export class ConfigureFreestylePage extends BasePage {
   }
   async saveChanges() {
     await this.saveChangesBtn().click();
+  }
+
+  async goToTriggersSection() {
+    await this.triggersSectionBtn().click();
+    return this;
   }
 }
