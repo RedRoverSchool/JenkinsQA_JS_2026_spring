@@ -6,15 +6,17 @@ test.describe("US_01.002.24 | New Item > Nested Folder", () => {
     const parentFolder = `parent_${Date.now()}`;
     const childFolder = `child_${Date.now()}`;
 
+    await app.homePage.clickNewItemLink();
     await app.newItemPage.createFolder(parentFolder);
 
     await app.header.clickHome();
-
     await app.homePage.openItem(parentFolder);
 
+    await app.homePage.clickNewItemLink();
     await app.newItemPage.createFolder(childFolder);
 
     await expect(app.homePage.getItemLink(childFolder)).toBeVisible();
+
 
 });
 });
