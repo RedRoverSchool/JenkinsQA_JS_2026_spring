@@ -39,7 +39,10 @@ test.describe("US_05.003 | Folder Configuration > Pipeline Libraries", (): void 
   }) => {
     await app.homePage.clickNewItemLink();
     await app.newItemPage.fillItemNameField(newItemPageData.itemName);
-    await app.newItemPage.clickFolderAndOkButton();
+    await app.newItemPage.clickFolder();
+    await app.newItemPage.clickOkButton();
+
+
 
     await app.configureFolderPage.header.clickHome();
 
