@@ -39,6 +39,7 @@ test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
       app: App;
     }) => {
       const actualSections = await app.manageJenkinsPage.jenkinsSectionTitle().allTextContents();
+
       expect(actualSections).toEqual(manageJenkinsPageData.sections);
     });
 
@@ -49,6 +50,7 @@ test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
         app: App;
       }) => {
         await app.manageJenkinsPage.settingsSearchBar().fill(item);
+
         await expect(app.manageJenkinsPage.searchBarDropdownItem().first()).toContainText(item);
       });
     }
