@@ -2,39 +2,43 @@ import { Page } from "@playwright/test";
 import { HomePage } from "./pages/HomePage";
 import { NewItemPage } from "./pages/NewItemPage";
 import { ConfigureFreestylePage } from "./pages/ConfigureFreestylePage";
+import { StatusPage } from "./pages/StatusPage";
 import { FreestyleProjectPage } from "./pages/FreestyleProjectPage";
 import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
 import { ToolsPage } from "./pages/ToolsPage";
 import { PluginsPage } from "./pages/PluginsPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
+import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
+import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
 
 export class App {
   private _homePage: HomePage | null = null;
   private _newItemPage: NewItemPage | null = null;
   private _configureFreestylePage: ConfigureFreestylePage | null = null;
+  private _statusPage: StatusPage | null = null;
   private _freestyleProjectPage: FreestyleProjectPage | null = null;
   private _folderPage?: FolderPage;
   private _configureFolderPage?: ConfigureFolderPage;
   private _manageJenkinsPage: ManageJenkinsPage | null = null;
   private _toolsPage: ToolsPage | null = null;
   private _pluginsPage: PluginsPage | null = null;
+   private _configurePipelinePage: ConfigurePipelinePage | null = null;
+  private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
 
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) { }
 
   get homePage() {
-    return (this._homePage ??= new HomePage(this.page));
-  }
+	return (this._homePage ??= new HomePage(this.page));
+    }
 
   get newItemPage() {
-    return (this._newItemPage ??= new NewItemPage(this.page));
-  }
+	return (this._newItemPage ??= new NewItemPage(this.page));
+	}
 
   get configureFreestylePage() {
-    return (this._configureFreestylePage ??= new ConfigureFreestylePage(
-      this.page,
-    ));
-  }
+	return (this._configureFreestylePage ??= new ConfigureFreestylePage(this.page));
+	}
 
   get configureFolderPage() {
     return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
@@ -43,6 +47,7 @@ export class App {
   get folderPage() {
     return (this._folderPage ??= new FolderPage(this.page));
   }
+
   get freeStyleProjectPage() {
     return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
   }
@@ -55,7 +60,19 @@ export class App {
     return (this._toolsPage ??= new ToolsPage(this.page));
   }
 
+  get statusPage() {
+    return (this._statusPage ??= new StatusPage(this.page));
+  }
+
   get pluginsPage() {
     return (this._pluginsPage ??= new PluginsPage(this.page));
   }
+
+    get configurePipelinePage() {
+    return (this._configurePipelinePage ??= new ConfigurePipelinePage(this.page));
+  }
+
+  get configureOrganizationFolderPage() {
+	return (this._configureOrganizationFolderPage ??= new ConfigureOrganizationFolderPage(this.page));
+	}
 }
