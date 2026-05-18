@@ -69,7 +69,7 @@ export class NewItemPage extends BasePage {
     await this.itemType_OrganizationFolder().click();
     return this;
   }
-  
+
 async openNewItemPage() {
   await this.newItemLink().click();
 }
@@ -77,5 +77,6 @@ async openNewItemPage() {
   async openItem(name: string) {
   await this.page.locator(`#job_${name}`).click();
 }
+
 
 }
