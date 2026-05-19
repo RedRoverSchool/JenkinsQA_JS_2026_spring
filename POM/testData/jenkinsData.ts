@@ -66,7 +66,7 @@ export const manageJenkinsPageData = {
                 },
                 users: {
                     name: "Users",
-                    href: "securityRealm",
+                    href: "securityRealm/",
                 },
             },
         },

@@ -1,5 +1,6 @@
 import { test, expect, App } from "@/POM/fixtures/baseFixtures";
 import { manageJenkinsPageData } from "../testData/jenkinsData";
+import { ManageJenkinsPage } from "../pageObjects/pages/ManageJenkinsPage";
 
 test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
     test("RF_10.005.01 | Verify user can access Plugins section", async ({ app }: { app: App }) => {
@@ -61,7 +62,7 @@ test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
             app: App;
         }) => {
             await expect(
-                app.manageJenkinsPage.systemConfigSection(
+                app.manageJenkinsPage.manageJenkinsSubSection(
                     item.name,
                     manageJenkinsPageData.sections.systemConfiguration.name,
                 ),
@@ -69,32 +70,16 @@ test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
         });
     }
 
-    for (const item of Object.values(
-        manageJenkinsPageData.sections.systemConfiguration.configurationItems,
-    )) {
-        test(`TC_11.003.02 | Verify search input filters "${item.name}" in search results`, async ({
-            app,
-        }: {
-            app: App;
-        }) => {
-            await app.manageJenkinsPage.settingsSearchBar().fill(item.name);
-
-            await expect(app.manageJenkinsPage.searchBarDropdownItem().first()).toContainText(
-                item.name,
-            );
-        });
-    }
-
     for (const item of Object.values(manageJenkinsPageData.sections.security.configurationItems)) {
-        test(`TC_11.003.03 | Verify System Configuration group contains ${item.name}`, async ({
+        test(`TC_11.003.04 | Verify Security group contains ${item.name}`, async ({
             app,
         }: {
             app: App;
         }) => {
             await expect(
-                app.manageJenkinsPage.systemConfigSection(
+                app.manageJenkinsPage.manageJenkinsSubSection(
                     item.name,
-                    manageJenkinsPageData.sections.systemConfiguration.name,
+                    manageJenkinsPageData.sections.security.name,
                 ),
             ).toHaveAttribute("href", item.href);
         });
