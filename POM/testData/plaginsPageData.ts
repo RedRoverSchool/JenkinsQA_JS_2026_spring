@@ -1,7 +1,7 @@
 export const plaginsPageData = {
     pluginsData: [
-        'Pipeline: Groovy',
-        'Pipeline: Nodes and Processes'
+        'Apache HttpComponents Client 5.x API',
+        'Blue Ocean Core JS'
     ]
 };
 
