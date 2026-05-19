@@ -11,6 +11,6 @@ export const newItemPageData = {
     folder: "Folder",
     multibranchPipeline: "Multibranch Pipeline",
     organizationFolder: "Organization Folder",
-    }
-  
+  },
+  duplicateItemName: `duplicate-${faker.string.alphanumeric(8)}`,
 };
