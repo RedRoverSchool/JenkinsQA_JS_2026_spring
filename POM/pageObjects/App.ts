@@ -9,7 +9,7 @@ import { ManageJenkinsPage } from "./pages/ManageJenkinsPage";
 import { ToolsPage } from "./pages/ToolsPage";
 import { BuildHistoryPage } from "./pages/BuildHistoryPage";
 import { Header } from "./pages/@components/Header";
-import { PluginsPage } from "./pages/PluginsPage";
+import { PluginManagerPage } from "./pages/PluginManagerPage";
 import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
@@ -29,7 +29,7 @@ export class App {
     private _toolsPage: ToolsPage | null = null;
     private _buildHistoryPage: BuildHistoryPage | null = null;
     private _header: Header | null = null;
-    private _pluginsPage: PluginsPage | null = null;
+    private _pluginManagerPage: PluginManagerPage | null = null;
     private _configurePipelinePage: ConfigurePipelinePage | null = null;
     private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
     private _configureMultibranchPipelinePage: ConfigureMultibranchPipelinePage | null = null;
@@ -81,8 +81,8 @@ export class App {
         return (this._statusPage ??= new StatusPage(this.page));
     }
 
-    get pluginsPage() {
-        return (this._pluginsPage ??= new PluginsPage(this.page));
+    get pluginManagerPage() {
+        return (this._pluginManagerPage ??= new PluginManagerPage(this.page));
     }
 
     get configurePipelinePage() {
