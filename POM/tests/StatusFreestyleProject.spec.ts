@@ -11,7 +11,7 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
         await app.configureFreestylePage.saveChanges();
     });
 
-    test("RF_02.001.01 | ыVerify that warning message appears after disabling the project", async ({
+    test("RF_02.001.01 | Verify that warning message appears after disabling the project", async ({
         app,
     }) => {
         await expect(app.statusFreestyleProjectPage.disabledProjectWarning()).toBeVisible();
