@@ -15,7 +15,7 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
 
         // Fill out the folder configuration form
         await app.configureFolderPage.fillDisplayName(folderName);
-        await app.configureFolderPage.fillDescription(configureFolderPageData.description);
+        await app.configureFolderPage.fillDescription(description);
         await app.configureFolderPage.clickSaveButton();
 
         await app.configureFolderPage.waitForLoadState("load");
