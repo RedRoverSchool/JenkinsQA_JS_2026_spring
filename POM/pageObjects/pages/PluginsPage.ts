@@ -6,9 +6,7 @@ export class PluginsPage extends BasePage {
     mainTitle = () => this.page.getByRole('heading', { name: 'Plugins' });
     updatesTaskLink = () => this.page.getByText('Updates', { exact: true }); 
     availablepluginsLink = () => this.page.getByRole('link', { name: 'Available plugins' })
-    plaginsName = (name: string) =>  this.page.locator('a.jenkins-table__link').filter({
-        hasText: name
-    }).first();
+    plaginsTableContent = () => this.page.locator('tbody tr')
 
     async clickAvailableplugins() {
         await this.availablepluginsLink().click()

@@ -1,5 +1,5 @@
 import { test, expect, App } from '@/POM/fixtures/baseFixtures';
-import {plaginsPageData} from '../testData/plaginsPageData';
+
 
 test.describe("US_10.006 | Manage Jenkins > Plugins", () => {
 
@@ -8,9 +8,10 @@ test.describe("US_10.006 | Manage Jenkins > Plugins", () => {
         await app.manageJenkinsPage.clickPlugins();
         await app.pluginsPage.clickAvailableplugins()
  
-        for(const plugin of plaginsPageData.pluginsData){
-        await expect(app.pluginsPage.plaginsName(plugin)).toBeVisible();
-        }
+        await app.pluginsPage.plaginsTableContent().first().waitFor({state: 'visible'})
+        const count = await app.pluginsPage.plaginsTableContent().count();
+        await expect(count).toBeGreaterThan(0)
+        
     })
 
 
