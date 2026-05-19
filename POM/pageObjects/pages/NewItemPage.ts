@@ -1,3 +1,4 @@
+import { th } from '@faker-js/faker';
 import { BasePage } from './@components';
 
 export class NewItemPage extends BasePage {
@@ -18,6 +19,8 @@ export class NewItemPage extends BasePage {
 
   itemType_Pipeline = () =>
     this.page.locator("[class='org_jenkinsci_plugins_workflow_job_WorkflowJob']");
+  itemType_MultibranchPipeline = () => 
+    this.page.locator(".org_jenkinsci_plugins_workflow_multibranch_WorkflowMultiBranchProject");
 
   duplicateItemNameWarning = () =>
     this.page.getByText("A job already exists with the name");
@@ -74,6 +77,11 @@ export class NewItemPage extends BasePage {
 
   async clickOrganizationFolder() {
     await this.itemType_OrganizationFolder().click();
+    return this;
+  }
+
+  async clickMultibranchPipeline() {
+    await this.itemType_MultibranchPipeline().click();
     return this;
   }
 }

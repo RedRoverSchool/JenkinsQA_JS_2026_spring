@@ -13,6 +13,7 @@ import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
+import { ConfigureMultibranchPipelinePage } from "./pages/ConfigureMulribranchPipelinePage";
 
 export class App {
   private _homePage: HomePage | null = null;
@@ -30,6 +31,7 @@ export class App {
   private _configurePipelinePage: ConfigurePipelinePage | null = null;
   private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null =
     null;
+  private _configureMultibranchPipelinePage : ConfigureMultibranchPipelinePage | null = null;
 
   constructor(private readonly page: Page) {}
 
@@ -92,5 +94,10 @@ export class App {
   get configureOrganizationFolderPage() {
     return (this._configureOrganizationFolderPage ??=
       new ConfigureOrganizationFolderPage(this.page));
+  }
+
+  get configureMultibranchPipelinePage() {
+    return (this._configureMultibranchPipelinePage ??= 
+      new ConfigureMultibranchPipelinePage(this.page));
   }
 }
