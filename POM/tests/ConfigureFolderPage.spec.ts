@@ -29,11 +29,11 @@ test.describe("US_05.001 | Folder Configuration > Display Name and Description",
          await app.homePage.clickItemDropDownConfigureButton(folderName);
 
         // Step 3 - Verify that the folder information is displayed on the configuration page
-        expect.soft(app.configureFolderPage.displayNameInput()).toHaveValue(folderName);
-        expect.soft(app.configureFolderPage.descriptionInput()).toHaveValue(description);
-        expect.soft(app.configureFolderPage.healthMetricsButton()).toBeVisible();
-        expect.soft(app.configureFolderPage.propertiesSection()).toContainText("Properties");
-        expect.soft(app.configureFolderPage.addButton()).toBeVisible();
+        await expect.soft(app.configureFolderPage.displayNameInput()).toHaveValue(folderName);
+        await expect.soft(app.configureFolderPage.descriptionInput()).toHaveValue(description);
+        await expect.soft(app.configureFolderPage.healthMetricsButton()).toBeVisible();
+        await expect.soft(app.configureFolderPage.propertiesSection()).toContainText("Properties");
+        await expect.soft(app.configureFolderPage.addButton()).toBeVisible();
     });
   
   test("RF_05.001.04 | Verify Display Name and Description fields are available", async ({
