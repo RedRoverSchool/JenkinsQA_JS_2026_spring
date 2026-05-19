@@ -1,7 +1,8 @@
 import { faker } from "@faker-js/faker";
 
-export const newItemPageData = {
+ export const newItemPageData = {
 	itemName: faker.word.noun(),
+	invalidItemName: "Build@Test",
 	folderName: `folder-${faker.string.alphanumeric(8)}`,
 	itemTypes: {
 		pipeline: "Pipeline",
