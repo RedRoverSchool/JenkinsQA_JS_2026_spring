@@ -8,6 +8,11 @@ export class BasePage {
 
 	constructor(protected readonly page: Page) {}
 
+	async waitForLoadState(state: "load" | "domcontentloaded" | "networkidle" = "load") {
+		await this.page.waitForLoadState(state);
+		return this;
+	}
+
 	get header() {
 		return (this._header ??= new Header(this.page));
 	}

@@ -4,6 +4,9 @@ export class HomePage extends BasePage {
 	// locators
 	newItemLink = () => this.page.locator("#side-panel a[href$='newJob']");
 	itemName = () => this.page.locator("#projectstatus .jenkins-table__link");
+	itemArrowDropdownMenu = (itemName: string) =>
+        this.page.locator(`#job_${itemName} .jenkins-menu-dropdown-chevron`);
+
 	projectTableRow = (itemName: string) => this.page.locator(`tr#job_${itemName}`);
 	itemDropDownConfigureButton = (jobName: string) => this.page.locator(`a[href*='/job/${jobName}/configure']`);
 	itemDropDown = () => this.page.locator(`div.jenkins-dropdown`);

@@ -3,6 +3,39 @@ import { newItemPageData } from "../testData/newItemPageData";
 import { configureFolderPageData } from "../testData/configureFolderPageData";
 
 test.describe("US_05.001 | Folder Configuration > Display Name and Description", () => {
+    test('RF_05.001.01| Folder Configuration > Folder information displayed on configuration page', 
+      async ({ app }: { app: App }) => {
+        // Precondition: Create a folder named "TestFolder"
+        const folderName = configureFolderPageData.folderName;
+        const description = configureFolderPageData.description;
+        await app.homePage.clickNewItemLink();
+        await app.newItemPage.createFolder(folderName);
+      
+        await app.configureFolderPage.waitForLoadState("load");
+
+        // Fill out the folder configuration form
+        await app.configureFolderPage.fillDisplayName(folderName);
+        await app.configureFolderPage.fillDescription(configureFolderPageData.description);
+        await app.configureFolderPage.clickSaveButton();
+
+        await app.configureFolderPage.waitForLoadState("load");
+        // Go to Home Page
+        await app.header.clickHome();
+       
+        // Step 1 - Click on the arrow ^ next to the folder name
+        await app.homePage.itemArrowDropdownMenu(folderName).click();
+        
+        // Step 2 - Click on "Configure" option
+         await app.homePage.clickItemDropDownConfigureButton(folderName);
+
+        // Step 3 - Verify that the folder information is displayed on the configuration page
+        expect.soft(app.configureFolderPage.displayNameInput()).toHaveValue(folderName);
+        expect.soft(app.configureFolderPage.descriptionInput()).toHaveValue(description);
+        expect.soft(app.configureFolderPage.healthMetricsButton()).toBeVisible();
+        expect.soft(app.configureFolderPage.propertiesSection()).toContainText("Properties");
+        expect.soft(app.configureFolderPage.addButton()).toBeVisible();
+    });
+  
   test("RF_05.001.04 | Verify Display Name and Description fields are available", async ({
     app,
   }: {
