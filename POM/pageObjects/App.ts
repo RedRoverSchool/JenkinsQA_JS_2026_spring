@@ -13,7 +13,6 @@ import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
-import { th } from "@faker-js/faker";
 import { ConfigureMultibranchPipelinePage } from "./pages/ConfigureMulribranchPipelinePage";
 
 export class App {
