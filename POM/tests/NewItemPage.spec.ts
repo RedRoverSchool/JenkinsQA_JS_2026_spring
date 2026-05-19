@@ -38,6 +38,16 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
     await expect(app.newItemPage.duplicateItemNameWarning()).toContainText(itemName);
   });
 });
+
+test.describe('US_01.004 | New Item > Select an Item type', () => {
+test('TC_01.004.16 | New Item > Select an Item type > Verify validation message for invalid input',
+async ({ app } : {app: App}) => {
+	await app.homePage.clickNewItemLink();
+	await app.newItemPage.fillItemNameField(newItemPageData.invalidItemName);
+	await app.newItemPage.clickPipeline();
+await expect(app.newItemPage.errorMessage()).toBeVisible();
+});
+ 
 test.describe('US_01.004 | New Item | Select an Item type', () => {
   test('RF_01.004.01 | Verify all required item types are available >', async ({
     app,
@@ -51,4 +61,5 @@ test.describe('US_01.004 | New Item | Select an Item type', () => {
       Object.values(newItemPageData.itemTypes),
     );
   });
+});
 });
