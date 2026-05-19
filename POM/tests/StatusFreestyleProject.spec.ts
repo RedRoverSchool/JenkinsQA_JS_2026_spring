@@ -1,6 +1,5 @@
 import { test, expect, App } from "@/POM/fixtures/newItemPageFixtures";
 import { newItemPageData } from "../testData/newItemPageData";
-import { tr } from "@faker-js/faker";
 
 test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable the Project", async () => {
     test.beforeEach(async ({ app, createJob }) => {
@@ -12,7 +11,7 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
         await app.configureFreestylePage.saveChanges();
     });
 
-    test("RF_02.001.01 |Verify that warning message appears after disabling the project", async ({
+    test("RF_02.001.01 | ыVerify that warning message appears after disabling the project", async ({
         app,
     }) => {
         await expect(app.statusFreestyleProjectPage.disabledProjectWarning()).toBeVisible();
@@ -20,10 +19,8 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
             "This project is currently disabled",
         );
     });
-
     test("TC_02.001.09 | Verify Enable button is shown while project is disabled", async ({
         app,
-        createJob,
     }) => {
         await expect(app.statusFreestyleProjectPage.enableProjectBtn()).toBeVisible();
         await expect(app.statusFreestyleProjectPage.enableProjectBtn()).toBeEnabled();
@@ -31,7 +28,6 @@ test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable t
 
     test("TC_02.001.10  | Verify user is redirected to project's Status page after disabling the project", async ({
         app,
-        createJob,
     }) => {
         await expect(app.statusFreestyleProjectPage.activeNavLink()).toContainText("Status");
     });
