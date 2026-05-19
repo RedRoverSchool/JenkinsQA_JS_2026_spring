@@ -24,4 +24,12 @@ export class FreestyleProjectPage extends BasePage {
     await this.buildNowLink().click();
     return this;
   }
+
+  async createBuilds(count: number) {
+    for (let i = 1; i <= count; i++) {
+      await this.clickBuildNowLink();
+      await this.buildNumber(`#${i}`).waitFor();
+    }
+    return this;
+  }
 }

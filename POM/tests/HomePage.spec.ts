@@ -1,6 +1,7 @@
 import { test, expect, App } from '@/POM/fixtures/baseFixtures';
 import { newItemPageData } from '../testData/newItemPageData';
 import { footer } from '../testData/jenkinsData';
+import { newItemData } from '@/tests/testData/tl-data';
 
 test.describe('US_01.001 | New Item > Create a new item', () => {
   test('RF_01.001.01 | Verify new item creation', async ({ app }: { app: App }) => {
@@ -82,4 +83,20 @@ test.describe('US_15.001 | Footer > Jenkins version',() => {
     await expect(app.homePage.footer.jenkinsVersionDropdownAbout()).toHaveAttribute('href', footer.dropdownItems.aboutJenkins.href);  
   });
 
+  test('RF_15.001.05 | Verify Footer Dropdown Get Involved URL', async ({ app } : { app: App }) => {
+    await app.homePage.footer.clickJenkinsVersionButton();
+    await expect(app.homePage.footer.jenkinsVersionDropdownGetInvolved()).toHaveAttribute('href', footer.dropdownItems.getInvolved.href);    
+  });
 });
+
+test.describe("US_01.005 | New Item > Create Multibranch Pipeline", () => {
+    test("RF_01.005.01 | Verify Multibranch Pipeline Creation", async ( {app} : {app : App}) => {
+      await app.homePage.clickNewItemLink();
+      await app.newItemPage.fillItemNameField(newItemPageData.itemName);
+      await app.newItemPage.clickMultibranchPipeline();
+      await app.newItemPage.clickOkButton();
+
+      await app.configureMultibranchPipelinePage.header.clickHome();
+      await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName)
+    });
+  });

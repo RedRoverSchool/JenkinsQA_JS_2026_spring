@@ -3,6 +3,20 @@ import { newItemPageData } from "../testData/newItemPageData";
 import { configureFolderPageData } from "../testData/configureFolderPageData";
 
 test.describe("US_05.001 | Folder Configuration > Display Name and Description", () => {
+  test("RF_05.001.04 | Verify Display Name and Description fields are available", async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    const folderName = configureFolderPageData.folderName;
+
+    await app.homePage.clickNewItemLink();
+    await app.newItemPage.createFolder(folderName);
+
+    await expect(app.configureFolderPage.displayNameInput()).toBeVisible();
+    await expect(app.configureFolderPage.descriptionInput()).toBeVisible();
+  });
+
   test("RF_05.001.08 | Verify Apply saves changes without leaving page", async ({
     app,
   }: {
