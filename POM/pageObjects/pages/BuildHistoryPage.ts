@@ -10,6 +10,7 @@ export class BuildHistoryPage extends BasePage {
   buildValues = () => this.page.getByText(/^#\d+$/);
   sortableBuildHeader = () =>
     this.page.locator("th[initialsortdir='up'] a.sortheader");
+  firstBuildNumberLink = () => this.buildValues().first();
 
   async clickSortableBuildHeader() {
     await this.sortableBuildHeader().click();
@@ -18,5 +19,9 @@ export class BuildHistoryPage extends BasePage {
 
   async getBuildValues() {
     return this.buildValues().allTextContents();
+  }
+
+  async getFirstBuildNumber() {
+    return this.firstBuildNumberLink().textContent();
   }
 }

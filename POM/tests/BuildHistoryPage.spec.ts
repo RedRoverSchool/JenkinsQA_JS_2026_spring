@@ -21,6 +21,33 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
     ).toBeVisible();
   });
 
+  test("RF_09.001.06 | Verify build number links to Build Summary page", async ({
+    app,
+  }: {
+    app: App;
+  }) => {
+    const projectName = newItemPageData.itemName;
+
+    await app.homePage.clickNewItemLink();
+    await app.newItemPage.createFreestyleProject(projectName);
+
+    await app.configureFreestylePage.clickSaveButton();
+    await app.freeStyleProjectPage.createBuilds(1);
+
+    await app.freeStyleProjectPage.header.clickHome();
+    await app.homePage.clickBuildHistoryLink();
+
+    await expect(app.buildHistoryPage.firstBuildNumberLink()).toBeVisible();
+
+    const buildNumber = await app.buildHistoryPage.getFirstBuildNumber();
+    const buildId = buildNumber?.replace("#", "");
+
+    await expect(app.buildHistoryPage.firstBuildNumberLink()).toHaveAttribute(
+      "href",
+      new RegExp(`${buildId}/?$`),
+    );
+  });
+
   test("RF_09.001.01 | Item displays on Build History page after building", async ({
     app,
   }) => {
