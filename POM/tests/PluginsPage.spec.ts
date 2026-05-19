@@ -8,8 +8,8 @@ test.describe("US_10.006 | Manage Jenkins > Plugins", () => {
         await app.manageJenkinsPage.clickPlugins();
         await app.pluginsPage.clickAvailableplugins()
  
-        await app.pluginsPage.plaginsTableContent().first().waitFor({state: 'visible'})
-        const count = await app.pluginsPage.plaginsTableContent().count();
+        await app.pluginsPage.pluginsTableContent().first().waitFor({state: 'visible'})
+        const count = await app.pluginsPage.pluginsTableContent().count();
         await expect(count).toBeGreaterThan(0)
         
     })
