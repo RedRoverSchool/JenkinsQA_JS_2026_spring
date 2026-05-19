@@ -38,19 +38,15 @@ test.describe('US_01.001 | New Item > Create a new item', () => {
     await expect(app.newItemPage.duplicateItemNameWarning()).toContainText(itemName);
   });
 
-  test('RF_01.001.36 | Verify new item name for invalid characters', async ({ app }: { app: App }) => {
-    await app.homePage.clickNewItemLink();
-    
-    for (let specialChar of newItemPageData.specialCharArray) {
+  for (const specialChar of newItemPageData.specialCharArray) {
+    test(`RF_01.001.36 | Verify new item name for invalid character: ${specialChar}`, async ({ app }: { app: App }) => {
+      await app.homePage.clickNewItemLink();
       await app.newItemPage.fillItemNameField(specialChar);
 
       const expectedError = newItemPageData.itemNameInvalidValidationMessage.replace("‘’", `‘${specialChar}’`);
-      await expect(app.newItemPage.itemNameInvalidMessage()).toHaveText(expectedError);
-
-      await app.newItemPage.clearNewItemField();
-    }
-
+      await expect(app.newItemPage.errorMessage()).toHaveText(expectedError);
   });
+}
 
 });
 test.describe('US_01.004 | New Item | Select an Item type', () => {
