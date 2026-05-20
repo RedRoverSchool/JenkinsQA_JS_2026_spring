@@ -4,9 +4,9 @@ export class ToolsPage extends BasePage {
 
     sectionLocator = (sectionName: string) => this.page.locator(".jenkins-section__title").filter({ hasText: sectionName });
     mavenSettingsSelect = () => this.page.locator('div.jenkins-form-item').filter({ hasText: 'Default settings provider' }).locator('select');
-    mavenFilePathInput = () => this.page.locator('div.jenkins-form-item').filter({ hasText: 'File path' }).locator('input');
+    mavenFilePathInput = () => this.page.locator('div.jenkins-form-item').filter({ hasText: 'File path' }).locator('input').first();
     globalMavenSettingsSelect = () => this.page.locator('div.jenkins-form-item').filter({ hasText: 'Default global settings provider' }).locator('select');
-    globalMavenFilePathInput = () => this.page.locator('div.jenkins-form-item').filter({ hasText: 'File path' }).locator('input');
+    globalMavenFilePathInput = () => this.page.locator('div.jenkins-form-item').filter({ hasText: 'File path' }).locator('input').last();
     
     async getCurrentUrl() {
         return this.page.url();
