@@ -18,7 +18,7 @@ test.describe("US_10.005 | Manage Jenkins > Plugins > Updates", () => {
         await app.homePage.header.clickManageJenkins();
         await app.manageJenkinsPage.clickPlugins();
 
-        await expect(app.pluginsPage.updatesTaskLink()).toBeVisible();
+        await expect(app.pluginManagerPage.updatesTaskLink()).toBeVisible();
     });
 });
 
