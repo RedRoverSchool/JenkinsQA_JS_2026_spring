@@ -11,8 +11,8 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
         await app.newItemPage.createFreestyleProject(projectName);
         await app.configureFreestylePage.clickSaveButton();
 
-        await app.freeStyleProjectPage.clickBuildNowLink();
-        await app.freeStyleProjectPage.buildNumber("#1").waitFor();
+        await app.statusFreestyleProjectPage.clickBuildNowLink();
+        await app.statusFreestyleProjectPage.buildNumber("#1").waitFor();
         await app.header.clickHome();
         await app.homePage.clickBuildHistoryLink();
 
@@ -32,9 +32,9 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
         await app.newItemPage.createFreestyleProject(projectName);
 
         await app.configureFreestylePage.clickSaveButton();
-        await app.freeStyleProjectPage.createBuilds(1);
+        await app.statusFreestyleProjectPage.createBuilds(1);
 
-        await app.freeStyleProjectPage.header.clickHome();
+        await app.statusFreestyleProjectPage.header.clickHome();
         await app.homePage.clickBuildHistoryLink();
 
         await expect(app.buildHistoryPage.firstBuildNumberLink()).toBeVisible();
@@ -56,8 +56,8 @@ test.describe("US_09.001 | Build history > Core Build History Display", () => {
         await app.newItemPage.clickOkButton();
 
         await app.configureFreestylePage.saveChanges();
-        await app.freeStyleProjectPage.clickBuildNowLink();
-        await app.freeStyleProjectPage.header.clickHome();
+        await app.statusFreestyleProjectPage.clickBuildNowLink();
+        await app.statusFreestyleProjectPage.header.clickHome();
         await app.homePage.clickBuildHistoryLink();
 
         await expect(app.buildHistoryPage.newItemName()).toContainText(
@@ -78,9 +78,9 @@ test.describe("US_09.002 | Build history > Sorting", () => {
         await app.newItemPage.createFreestyleProject(projectName);
 
         await app.configureFreestylePage.clickSaveButton();
-        await app.freeStyleProjectPage.createBuilds(4);
+        await app.statusFreestyleProjectPage.createBuilds(4);
 
-        await app.freeStyleProjectPage.header.clickHome();
+        await app.statusFreestyleProjectPage.header.clickHome();
         await app.homePage.clickBuildHistoryLink();
 
         await expect(app.buildHistoryPage.buildValues().first()).toBeVisible();
