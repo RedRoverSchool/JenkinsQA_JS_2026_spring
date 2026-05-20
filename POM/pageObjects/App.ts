@@ -10,7 +10,6 @@ import { ToolsPage } from "./pages/ToolsPage";
 import { BuildHistoryPage } from "./pages/BuildHistoryPage";
 import { Header } from "./pages/@components/Header";
 import { PluginManagerPage } from "./pages/PluginManagerPage";
-import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
@@ -23,7 +22,6 @@ export class App {
     private _configureFreestylePage: ConfigureFreestylePage | null = null;
     private _statusPage: StatusPage | null = null;
     private _freestyleProjectPage: FreestyleProjectPage | null = null;
-    private _folderPage?: FolderPage;
     private _configureFolderPage?: ConfigureFolderPage;
     private _manageJenkinsPage: ManageJenkinsPage | null = null;
     private _toolsPage: ToolsPage | null = null;
@@ -31,9 +29,12 @@ export class App {
     private _header: Header | null = null;
     private _pluginManagerPage: PluginManagerPage | null = null;
     private _configurePipelinePage: ConfigurePipelinePage | null = null;
-    private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
-    private _configureMultibranchPipelinePage: ConfigureMultibranchPipelinePage | null = null;
-    private _statusFreestyleProjectPage: StatusFreestyleProjectPage | null = null;
+    private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null =
+        null;
+    private _configureMultibranchPipelinePage: ConfigureMultibranchPipelinePage | null =
+        null;
+    private _statusFreestyleProjectPage: StatusFreestyleProjectPage | null =
+        null;
 
     constructor(private readonly page: Page) {}
 
@@ -46,19 +47,21 @@ export class App {
     }
 
     get configureFreestylePage() {
-        return (this._configureFreestylePage ??= new ConfigureFreestylePage(this.page));
+        return (this._configureFreestylePage ??= new ConfigureFreestylePage(
+            this.page,
+        ));
     }
 
     get configureFolderPage() {
-        return (this._configureFolderPage ??= new ConfigureFolderPage(this.page));
-    }
-
-    get folderPage() {
-        return (this._folderPage ??= new FolderPage(this.page));
+        return (this._configureFolderPage ??= new ConfigureFolderPage(
+            this.page,
+        ));
     }
 
     get freeStyleProjectPage() {
-        return (this._freestyleProjectPage ??= new FreestyleProjectPage(this.page));
+        return (this._freestyleProjectPage ??= new FreestyleProjectPage(
+            this.page,
+        ));
     }
 
     get manageJenkinsPage() {
@@ -86,27 +89,34 @@ export class App {
     }
 
     get configurePipelinePage() {
-        return (this._configurePipelinePage ??= new ConfigurePipelinePage(this.page));
+        return (this._configurePipelinePage ??= new ConfigurePipelinePage(
+            this.page,
+        ));
     }
 
     get configureOrganizationFolderPage() {
-        return (this._configureOrganizationFolderPage ??= new ConfigureOrganizationFolderPage(
-            this.page,
-        ));
+        return (this._configureOrganizationFolderPage ??=
+            new ConfigureOrganizationFolderPage(this.page));
     }
 
     get configureMultibranchPipelinePage() {
-        return (this._configureMultibranchPipelinePage ??= new ConfigureMultibranchPipelinePage(
-            this.page,
-        ));
+        return (this._configureMultibranchPipelinePage ??=
+            new ConfigureMultibranchPipelinePage(this.page));
     }
 
     get statusFreestyleProjectPage() {
-        return (this._statusFreestyleProjectPage ??= new StatusFreestyleProjectPage(this.page));
+        return (this._statusFreestyleProjectPage ??=
+            new StatusFreestyleProjectPage(this.page));
     }
 
-    async checkAccessibility(includeSelector?: string, excludeSelector?: string) {
-        const builder = new AxeBuilder({ page: this.page }).withTags(["wcag2a", "wcag2aa"]);
+    async checkAccessibility(
+        includeSelector?: string,
+        excludeSelector?: string,
+    ) {
+        const builder = new AxeBuilder({ page: this.page }).withTags([
+            "wcag2a",
+            "wcag2aa",
+        ]);
 
         if (includeSelector) {
             builder.include(includeSelector);
