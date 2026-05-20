@@ -1,5 +1,3 @@
-import { url } from "node:inspector";
-
 export const footer = {
     jenkinsVersion: "Jenkins 2.541.3",
     dropdownItems: {
