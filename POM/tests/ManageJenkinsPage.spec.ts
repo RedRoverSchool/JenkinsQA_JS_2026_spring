@@ -9,11 +9,7 @@ test.describe("US_10 | Manage Jenkins ", () => {
         await expect(app.pluginManagerPage.mainTitle()).toBeVisible();
     });
 
-    test("RF_10.005.02 | Verify 'Updates' option is available in the left side-menu", async ({
-        app,
-    }: {
-        app: App;
-    }) => {
+    test("RF_10.005.02 | Verify 'Updates' option is available in the left side-menu", async ({ app }: { app: App }) => {
         await app.homePage.header.clickManageJenkins();
         await app.manageJenkinsPage.clickPlugins();
 
@@ -26,72 +22,37 @@ test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
         await app.homePage.header.clickManageJenkins();
     });
 
-    test("TC_11.003.01 | Verify Manage Jenkins page contains all grouped sections", async ({
-        app,
-    }: {
-        app: App;
-    }) => {
+    test("TC_11.003.01 | Verify Manage Jenkins page contains all grouped sections", async ({ app }: { app: App }) => {
         const actualSections = await app.manageJenkinsPage.jenkinsSectionTitle().allTextContents();
         const expectedSections = Object.values(manageJenkinsPageData.sections).map((s) => s.name);
         expect(actualSections).toEqual(expectedSections);
     });
 
-    for (const item of Object.values(
-        manageJenkinsPageData.sections.systemConfiguration.configurationItems,
-    )) {
-        test(`TC_11.003.02 | Verify search input filters "${item.name}" in search results`, async ({
-            app,
-        }: {
-            app: App;
-        }) => {
+    for (const item of Object.values(manageJenkinsPageData.sections.systemConfiguration.configurationItems)) {
+        test(`TC_11.003.02 | Verify search input filters "${item.name}" in search results`, async ({ app }: { app: App }) => {
             await app.manageJenkinsPage.settingsSearchBar().fill(item.name);
 
-            await expect(app.manageJenkinsPage.searchBarDropdownItem().first()).toContainText(
-                item.name,
-            );
+            await expect(app.manageJenkinsPage.searchBarDropdownItem().first()).toContainText(item.name);
         });
     }
 
-    for (const item of Object.values(
-        manageJenkinsPageData.sections.systemConfiguration.configurationItems,
-    )) {
-        test(`TC_11.003.03 | Verify System Configuration group contains ${item.name}`, async ({
-            app,
-        }: {
-            app: App;
-        }) => {
+    for (const item of Object.values(manageJenkinsPageData.sections.systemConfiguration.configurationItems)) {
+        test(`TC_11.003.03 | Verify System Configuration group contains ${item.name}`, async ({ app }: { app: App }) => {
             await expect(
-                app.manageJenkinsPage.manageJenkinsSubSection(
-                    item.name,
-                    manageJenkinsPageData.sections.systemConfiguration.name,
-                ),
+                app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.systemConfiguration.name),
             ).toBeVisible();
             await expect(
-                app.manageJenkinsPage.manageJenkinsSubSection(
-                    item.name,
-                    manageJenkinsPageData.sections.systemConfiguration.name,
-                ),
+                app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.systemConfiguration.name),
             ).toHaveAttribute("href", item.href);
         });
     }
     for (const item of Object.values(manageJenkinsPageData.sections.security.configurationItems)) {
-        test(`TC_11.003.04 | Verify Security group contains ${item.name}`, async ({
-            app,
-        }: {
-            app: App;
-        }) => {
-            await expect(
-                app.manageJenkinsPage.manageJenkinsSubSection(
-                    item.name,
-                    manageJenkinsPageData.sections.security.name,
-                ),
-            ).toBeVisible();
-            await expect(
-                app.manageJenkinsPage.manageJenkinsSubSection(
-                    item.name,
-                    manageJenkinsPageData.sections.security.name,
-                ),
-            ).toHaveAttribute("href", item.href);
+        test(`TC_11.003.04 | Verify Security group contains ${item.name}`, async ({ app }: { app: App }) => {
+            await expect(app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.security.name)).toBeVisible();
+            await expect(app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.security.name)).toHaveAttribute(
+                "href",
+                item.href,
+            );
         });
     }
 });
