@@ -9,7 +9,6 @@ import { ToolsPage } from "./pages/ToolsPage";
 import { BuildHistoryPage } from "./pages/BuildHistoryPage";
 import { Header } from "./pages/@components/Header";
 import { PluginManagerPage } from "./pages/PluginManagerPage";
-import { FolderPage } from "./pages/FolderPage";
 import { ConfigureFolderPage } from "./pages/ConfigureFolderPage";
 import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
@@ -21,7 +20,6 @@ export class App {
     private _newItemPage: NewItemPage | null = null;
     private _configureFreestylePage: ConfigureFreestylePage | null = null;
     private _freestyleProjectPage: FreestyleProjectPage | null = null;
-    private _folderPage?: FolderPage;
     private _configureFolderPage?: ConfigureFolderPage;
     private _manageJenkinsPage: ManageJenkinsPage | null = null;
     private _toolsPage: ToolsPage | null = null;
@@ -56,10 +54,6 @@ export class App {
         return (this._configureFolderPage ??= new ConfigureFolderPage(
             this.page,
         ));
-    }
-
-    get folderPage() {
-        return (this._folderPage ??= new FolderPage(this.page));
     }
 
     get freeStyleProjectPage() {
