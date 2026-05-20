@@ -46,6 +46,7 @@ test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
             ).toHaveAttribute("href", item.href);
         });
     }
+
     for (const item of Object.values(manageJenkinsPageData.sections.security.configurationItems)) {
         test(`TC_11.003.04 | Verify Security group contains ${item.name}`, async ({ app }: { app: App }) => {
             await expect(app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.security.name)).toBeVisible();
