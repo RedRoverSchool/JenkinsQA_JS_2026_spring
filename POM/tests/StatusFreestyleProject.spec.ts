@@ -1,6 +1,6 @@
 import { test, expect, App } from "@/POM/fixtures/newItemPageFixtures";
 import { newItemPageData } from "../testData/newItemPageData";
-import { freestyleProjectPageData } from "@/POM/testData/freestyleProjectPageData";
+import { statusFreestyleProjectPageData } from "@/POM/testData/statusFreestyleProjectPageData";
 import { faker } from "@faker-js/faker";
 
 test.describe("US_02.001 | Freestyle Project Configuration > Enable or Disable the Project", async () => {
@@ -56,22 +56,21 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         app: App;
     }) => {
         const itemName = newItemPageData.itemName;
-        const description = freestyleProjectPageData.description;
-        const updatedDescription = freestyleProjectPageData.updatedDescription;
+        const description = statusFreestyleProjectPageData.description;
+        const updatedDescription =
+            statusFreestyleProjectPageData.updatedDescription;
 
         await app.homePage.clickNewItemLink();
         await app.newItemPage.createFreestyleProject(itemName);
         await app.configureFreestylePage.clickSaveButton();
 
         await app.statusFreestyleProjectPage.clickAddDescriptionBtn();
-        await app.statusFreestyleProjectPage.fillDescription(description);
-        await app.statusFreestyleProjectPage.clickSaveButton();
+        await app.configureFreestylePage.fillDescription(description);
+        await app.configureFreestylePage.clickSaveButton();
 
         await app.statusFreestyleProjectPage.clickAddDescriptionBtn();
-        await app.statusFreestyleProjectPage.fillDescription(
-            updatedDescription,
-        );
-        await app.statusFreestyleProjectPage.clickSaveButton();
+        await app.configureFreestylePage.fillDescription(updatedDescription);
+        await app.configureFreestylePage.clickSaveButton();
 
         await expect(
             app.statusFreestyleProjectPage.descriptionContent(),
@@ -93,10 +92,10 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
 
         await app.homePage.clickJobName(itemName);
         await app.statusFreestyleProjectPage.clickAddDescriptionBtn();
-        await app.statusFreestyleProjectPage.clickPreviewLink();
+        await app.configureFreestylePage.clickPreviewLink();
 
         await expect(
-            app.statusFreestyleProjectPage.previewTextArea(),
+            app.configureFreestylePage.previewTextArea(),
         ).toBeVisible();
     });
 
@@ -116,8 +115,8 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
 
         await app.homePage.clickJobName(itemName);
         await app.statusFreestyleProjectPage.clickAddDescriptionBtn();
-        await app.statusFreestyleProjectPage.fillDescription(descriptionText);
-        await app.statusFreestyleProjectPage.clickSaveButton();
+        await app.configureFreestylePage.fillDescription(descriptionText);
+        await app.configureFreestylePage.clickSaveButton();
 
         await expect(
             app.statusFreestyleProjectPage.descriptionContent(),
