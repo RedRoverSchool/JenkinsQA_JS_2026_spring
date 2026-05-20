@@ -26,4 +26,11 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         await expect(app.toolsPage.mavenFilePathInput()).toBeVisible();
     });
 
+    test("RF_10.004.04 | Verify Global Maven settings provider can be changed to custom", async ({ app }: { app: App }) => {
+        await app.toolsPage.clickGlobalMavenSettingsSelect();
+        await app.toolsPage.selectGlobalSettingsFileInFilesystem();
+
+        await expect(app.toolsPage.globalMavenFilePathInput()).toBeVisible();
+    });
+
 });
