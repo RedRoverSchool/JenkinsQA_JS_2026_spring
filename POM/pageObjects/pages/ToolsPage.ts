@@ -12,16 +12,8 @@ export class ToolsPage extends BasePage {
         return this.page.url();
     }
 
-    async clickMavenSettingsSelect() {
-        await this.mavenSettingsSelect().click();
-    }
-
     async selectSettingsFileInFilesystem() {
         await this.mavenSettingsSelect().selectOption("Settings file in filesystem");
-    }
-
-    async clickGlobalMavenSettingsSelect() {
-        await this.globalMavenSettingsSelect().click();
     }
 
     async selectGlobalSettingsFileInFilesystem() {
