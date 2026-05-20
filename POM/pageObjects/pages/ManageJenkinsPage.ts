@@ -6,8 +6,7 @@ export class ManageJenkinsPage extends BasePage {
     pluginsLink = () => this.page.getByRole("link", { name: "Plugins Add, remove, disable" });
     jenkinsSectionTitle = () => this.page.locator("h2.jenkins-section__title");
     settingsSearchBar = () => this.page.locator("#settings-search-bar");
-    searchBarDropdownItem = () =>
-        this.page.locator(".jenkins-search__results-container .jenkins-dropdown__item");
+    searchBarDropdownItem = () => this.page.locator(".jenkins-search__results-container .jenkins-dropdown__item");
     manageJenkinsSection = (header: string) =>
         this.page.locator(".jenkins-section").filter({
             has: this.page.locator("h2", { hasText: header }),
