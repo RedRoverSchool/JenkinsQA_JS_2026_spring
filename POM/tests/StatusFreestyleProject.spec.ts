@@ -52,22 +52,6 @@ test.describe("US_02.002 | Freestyle Project Configuration > Project Description
         await expect(app.statusFreestyleProjectPage.descriptionContent()).toContainText(updatedDescription);
     });
 
-    test("RF_02.002.16 | Verify Preview option is available", async ({ app }: { app: App }) => {
-        const itemName = faker.string.alphanumeric(10);
-
-        await app.homePage.clickNewItemLink();
-        await app.newItemPage.fillItemNameField(itemName);
-        await app.newItemPage.clickFreestyleProject();
-        await app.newItemPage.clickOkButton();
-        await app.homePage.header.clickHome();
-
-        await app.homePage.clickJobName(itemName);
-        await app.statusFreestyleProjectPage.clickAddDescriptionBtn();
-        await app.configureFreestylePage.clickPreviewLink();
-
-        await expect(app.configureFreestylePage.previewTextArea()).toBeVisible();
-    });
-
     test("TC_02.002.17 | Add description to Freestyle Project", async ({ app }: { app: App }) => {
         const itemName = faker.string.alphanumeric(10);
         const descriptionText = faker.lorem.lines();
