@@ -12,6 +12,8 @@ export class ConfigureFolderPage extends BasePage {
     this.page.locator('input[name="_.displayNameOrNull"]');
   descriptionInput = () => this.page.locator(".setting-main textarea");
   applyButton = () => this.page.locator('button[name="Apply"]');
+  healthMetricsButton = () => this.page.locator('#main-panel').getByRole('button', { name: 'Health metrics' });
+  propertiesSection = () => this.page.locator("#properties");
 
   async clickPropertiesButton() {
     await this.propertiesButton().click();
