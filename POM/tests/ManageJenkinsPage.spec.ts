@@ -51,4 +51,14 @@ test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
         });
     }
 
+    for (const item of Object.values(manageJenkinsPageData.sections.troubleshooting.configurationItems)) {
+        test(`TC_11.003.06 | Verify Troubleshooting group contains ${item.name}`, async ({ app }: { app: App }) => {
+            await expect(app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.troubleshooting.name)).toBeVisible();
+            await expect(app.manageJenkinsPage.manageJenkinsSubSection(item.name, manageJenkinsPageData.sections.troubleshooting.name)).toHaveAttribute(
+                "href",
+                item.href,
+            );
+        });
+    }
+
 });
