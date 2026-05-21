@@ -41,10 +41,8 @@ test.describe("Home Page Tests", () => {
 
         await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
     });
-});
 
-test.describe("US_15.001 | Footer > Jenkins version", () => {
-    test(`RF_15.001.01 | Verify Footer Version`, async ({ app }: { app: App }) => {
+        test(`RF_15.001.01 | Verify Footer Version`, async ({ app }: { app: App }) => {
         await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(
             footer.jenkinsVersion,
         );
@@ -88,6 +86,7 @@ test.describe("US_15.001 | Footer > Jenkins version", () => {
         await expect(app.homePage.footer.jenkinsVersionDropdownWebsite()).toHaveAttribute('href', footer.dropdownItems.website.href);    
   });
 });
+
 
 test.describe("US_01.005 | New Item > Create Multibranch Pipeline", () => {
     test("RF_01.005.01 | Verify Multibranch Pipeline Creation", async ({ app }: { app: App }) => {
