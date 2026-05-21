@@ -18,4 +18,18 @@ test.describe("US_02.003 | Freestyle Project > SCM Options" , () => {
         const gitOption = page.getByRole("radio", { name: scmData.git });
         await expect(gitOption).toBeVisible();
     });
+
+    test("TC_02.003.08 | Verify Git fields are displayed when Git is selected", async ({ page }: { page: Page }) => {
+        await page.locator("#source-code-management").click();
+        await page.locator("label[for='radio-block-1']").click();
+
+        const repoUrl = page.getByLabel(scmData.repoUrl);
+        await expect(repoUrl).toBeVisible();
+
+        const credentials = page.getByLabel(scmData.credentials);
+        await expect(credentials).toBeVisible();
+
+        const branches = page.getByLabel(scmData.branches);
+        await expect(branches).toBeVisible();
+    });     
 });
