@@ -16,7 +16,7 @@ test.describe("US_10 | Manage Jenkins > Plugins", () => {
         await expect(app.pluginManagerPage.updatesTaskLink()).toBeVisible();
     });
 
-    test("RF_10.005.03 | TC_10.005.03 | Verify 'Updates' Button is available", async ({ app }: { app: App }) => {
+    test("RF_10.005.03 | Verify 'Updates' Button is available", async ({ app }: { app: App }) => {
         await app.homePage.header.clickManageJenkins();
         await app.manageJenkinsPage.clickPlugins();
 
