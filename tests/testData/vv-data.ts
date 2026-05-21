@@ -1,5 +1,3 @@
-import { test, expect, Page } from "@/base";
-
 export const vvData = {
     jobName: "Test Job",
     displayNameFolder: "Changed folder name",

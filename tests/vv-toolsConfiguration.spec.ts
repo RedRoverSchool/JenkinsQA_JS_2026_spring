@@ -1,6 +1,6 @@
 import { test, expect, Page } from "@/base";
 import { vvData } from "./testData/vv-data";
-import { faker, fi } from "@faker-js/faker";
+
 
 test.describe("US_10.004 | Manage Jenkins > Tools", () => {
 
