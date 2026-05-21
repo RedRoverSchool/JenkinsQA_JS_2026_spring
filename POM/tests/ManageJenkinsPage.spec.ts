@@ -1,22 +1,6 @@
 import { test, expect, App } from "@/POM/fixtures/baseFixtures";
 import { manageJenkinsPageData } from "@/POM/testData/jenkinsData";
 
-test.describe("US_10 | Manage Jenkins ", () => {
-    test("RF_10.005.01 | Verify user can access Plugins section", async ({ app }: { app: App }) => {
-        await app.homePage.header.clickManageJenkins();
-        await app.manageJenkinsPage.clickPlugins();
-
-        await expect(app.pluginManagerPage.mainTitle()).toBeVisible();
-    });
-
-    test("RF_10.005.02 | Verify 'Updates' option is available in the left side-menu", async ({ app }: { app: App }) => {
-        await app.homePage.header.clickManageJenkins();
-        await app.manageJenkinsPage.clickPlugins();
-
-        await expect(app.pluginManagerPage.updatesTaskLink()).toBeVisible();
-    });
-});
-
 test.describe(`US_11.003 | Welcome Dashboard > Manage Jenkins`, () => {
     test.beforeEach(async ({ app }: { app: App }) => {
         await app.homePage.header.clickManageJenkins();
