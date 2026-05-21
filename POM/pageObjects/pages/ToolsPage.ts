@@ -39,7 +39,8 @@ export class ToolsPage extends BasePage {
 
     async clickAddJdkWithFallback() {
         const addJdk = this.addJdkButton();
-        if (await addJdk.isVisible({ timeout: 10000 }).catch(() => false)) {
+        await this.page.waitForLoadState('domcontentloaded');
+        if (await addJdk.isVisible().catch(() => false)) {
             await addJdk.click();
         } else {
             await this.jdkInstallationsButton().click();
