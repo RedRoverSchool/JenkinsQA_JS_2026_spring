@@ -13,6 +13,7 @@ import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
 import { ConfigureMultibranchPipelinePage } from "./pages/ConfigureMulribranchPipelinePage";
 import { StatusFreestyleProjectPage } from "@/POM/pageObjects/pages/StatusFreestyleProjectPage";
+import { UserProfilePage } from "./pages/UserProfilePage";
 
 export class App {
     private _homePage: HomePage | null = null;
@@ -31,6 +32,7 @@ export class App {
         null;
     private _statusFreestyleProjectPage: StatusFreestyleProjectPage | null =
         null;
+    private _userProfilePage: UserProfilePage | null = null;    
 
     constructor(private readonly page: Page) {}
 
@@ -115,5 +117,8 @@ export class App {
         const results = await builder.analyze();
 
         return results.violations;
+    }
+    get userPofilePage() {
+        return (this._userProfilePage ??= new UserProfilePage(this.page));
     }
 }

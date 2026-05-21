@@ -15,6 +15,7 @@ export class HomePage extends BasePage {
 	jobName = (itemName: string) => this.page.locator(`a[href='job/${itemName}/'] span`);
 	arrowButton = () => this.page.locator("button.jenkins-menu-dropdown-chevron");
 	dropdownMenu = () => this.page.locator("div[id^='tippy-'] .jenkins-dropdown");
+	profileIcon = () => this.page.locator(".jenkins-avatar");
 
 	// actions
 	async clickNewItemLink() {
@@ -69,5 +70,9 @@ export class HomePage extends BasePage {
 	async clickArrowButton() {
 		await this.arrowButton().click();
 		return this;
+	}
+
+	async clickProfileIcon() {
+		await this.profileIcon().click();
 	}
 }
