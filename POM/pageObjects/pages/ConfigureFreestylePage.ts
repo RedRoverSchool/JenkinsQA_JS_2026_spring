@@ -1,4 +1,4 @@
-import { BasePage } from "./@components";
+import { BasePage } from "@/POM/pageObjects/pages/@components";
 
 export class ConfigureFreestylePage extends BasePage {
     saveButton = () => this.page.locator('button[name="Submit"]');
@@ -18,6 +18,7 @@ export class ConfigureFreestylePage extends BasePage {
     previewLink = () => this.page.locator("a[previewendpoint='/markupFormatter/previewDescription']");
     previewTextArea = () => this.page.locator(".textarea-preview");
     descriptionField = () => this.page.locator('textarea[name="description"]');
+    noProjectSpecifiedMessage = () => this.page.locator('.error').filter({ hasText: 'No project specified' })
 
     async clickSaveButton() {
         await this.saveButton().click();
