@@ -41,10 +41,8 @@ test.describe("Home Page Tests", () => {
 
         await expect(app.homePage.projectTableRow(newItemPageData.itemName)).toHaveCount(0);
     });
-});
 
-test.describe("US_15.001 | Footer > Jenkins version", () => {
-    test(`RF_15.001.01 | Verify Footer Version`, async ({ app }: { app: App }) => {
+        test(`RF_15.001.01 | Verify Footer Version`, async ({ app }: { app: App }) => {
         await expect(app.homePage.footer.jenkinsVersionButton()).toContainText(
             footer.jenkinsVersion,
         );
@@ -83,7 +81,12 @@ test.describe("US_15.001 | Footer > Jenkins version", () => {
             footer.dropdownItems.getInvolved.href,
         );
     });
+    test('RF_15.001.06 | Verify Footer Dropdown Get Website URL', async ({ app } : { app: App }) => {
+        await app.homePage.footer.clickJenkinsVersionButton();
+        await expect(app.homePage.footer.jenkinsVersionDropdownWebsite()).toHaveAttribute('href', footer.dropdownItems.website.href);    
+  });
 });
+
 
 test.describe("US_01.005 | New Item > Create Multibranch Pipeline", () => {
     test("RF_01.005.01 | Verify Multibranch Pipeline Creation", async ({ app }: { app: App }) => {
@@ -98,6 +101,7 @@ test.describe("US_01.005 | New Item > Create Multibranch Pipeline", () => {
         await app.newItemPage.clickMultibranchPipeline();
         await app.newItemPage.clickOkButton();
 
+  
         await app.configureMultibranchPipelinePage.header.clickHome();
 
         await expect(app.homePage.itemName()).toHaveText(newItemPageData.itemName);
