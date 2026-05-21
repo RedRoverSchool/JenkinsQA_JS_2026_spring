@@ -1,6 +1,7 @@
 import { test, expect, App } from '@/POM/fixtures/baseFixtures';
 import { newItemPageData } from "@/POM/testData/newItemPageData";
-import { UserProfilePage } from '../pageObjects/pages/UserProfilePage';
+
+
 
 test.describe("US_13.001 | Header > Navigate to Dashboard", () => {
     test("RF_13.001.01 | Verify header is visible from tools page", async ({ app }: { app: App }) => {
@@ -44,7 +45,7 @@ test.describe("US_13.004 | Header > Access to User Profile", () => {
     test("TC__13.004.01 | Verify profile icon opens Profile Page POM", async ({ app } : { app: App}) => {
         await app.homePage.clickProfileIcon();
         
-        expect(app.userPofilePage.jenkinsUserId()).toBeVisible;
+        expect(app.userPofilePage.jenkinsUserId()).toBeVisible();
     
 
     })

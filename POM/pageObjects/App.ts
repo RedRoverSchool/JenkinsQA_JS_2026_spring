@@ -118,6 +118,7 @@ export class App {
 
         return results.violations;
     }
+    
     get userPofilePage() {
         return (this._userProfilePage ??= new UserProfilePage(this.page));
     }
