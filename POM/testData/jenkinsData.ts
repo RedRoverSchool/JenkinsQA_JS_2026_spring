@@ -93,7 +93,7 @@ export const manageJenkinsPageData = {
             name: "Troubleshooting",
             configurationItems: {
                 manageOldData: {
-                    name: " Manage Old Data",
+                    name: "Manage Old Data",
                     href: "administrativeMonitor/OldData/manage"
                 }
             }
