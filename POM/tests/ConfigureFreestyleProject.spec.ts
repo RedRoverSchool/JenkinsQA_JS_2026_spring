@@ -50,9 +50,6 @@ test.describe("US_02.004 | Freestyle Project Configuration > Build Triggers", ()
             await app.configureFreestylePage.clickBuildPeriodicallyCheckbox();
 
             await expect(app.configureFreestylePage.scheduleField()).toBeHidden();
-
-
-
         });
 
 });
