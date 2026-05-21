@@ -107,7 +107,7 @@ jobs:
                   sleep 15
 
             - name: Run Playwright tests
-              run: npm test
+              run: npm run test:ci
               env:
                   LOCAL_USERNAME: ${{ secrets.LOCAL_USERNAME}}
                   LOCAL_PASSWORD: ${{ secrets.LOCAL_PASSWORD}}
