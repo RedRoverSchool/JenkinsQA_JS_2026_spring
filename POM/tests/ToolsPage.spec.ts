@@ -31,4 +31,19 @@ test.describe("US_10.004 | Manage Jenkins > Tools", () => {
         await expect(app.toolsPage.globalMavenFilePathInput()).toBeVisible();
     });
 
+    test("TC_10.004.05 | Verify JDK installation can be added", async ({ app }: { app: App }) => {
+        await app.toolsPage.clickAddJdkWithFallback();
+
+        const jdkName = toolsPageData.generateJdkName();
+        const nameInput = app.toolsPage.getJdkNameInput();
+
+        await nameInput.fill(jdkName);
+        await app.toolsPage.clickSave();
+        await app.manageJenkinsPage.clickTools();
+        await app.toolsPage.clickJdkInstallationsButton();
+
+        await expect(app.toolsPage.newJdkNameInput(jdkName)).toBeVisible();
+        await expect(app.toolsPage.newJdkNameInput(jdkName)).toHaveValue(jdkName);
+    });
+
 });
