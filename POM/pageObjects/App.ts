@@ -13,6 +13,7 @@ import { ConfigurePipelinePage } from "./pages/ConfigurePipelinePage";
 import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/ConfigureOrganizationFolderPage";
 import { ConfigureMultibranchPipelinePage } from "./pages/ConfigureMulribranchPipelinePage";
 import { StatusFreestyleProjectPage } from "@/POM/pageObjects/pages/StatusFreestyleProjectPage";
+import { StatusFolderPage } from "./pages/StatusFolderPage";
 import { UserProfilePage } from "./pages/UserProfilePage";
 
 export class App {
@@ -32,7 +33,8 @@ export class App {
         null;
     private _statusFreestyleProjectPage: StatusFreestyleProjectPage | null =
         null;
-    private _userProfilePage: UserProfilePage | null = null;    
+    private _statusFolderPage: StatusFolderPage | null = null;
+    private _userProfilePage: UserProfilePage | null = null;
 
     constructor(private readonly page: Page) {}
 
@@ -118,7 +120,11 @@ export class App {
 
         return results.violations;
     }
-    
+
+    get statusFolderPage() {
+        return (this._statusFolderPage ??= new StatusFolderPage(this.page));
+    }
+
     get userPofilePage() {
         return (this._userProfilePage ??= new UserProfilePage(this.page));
     }
