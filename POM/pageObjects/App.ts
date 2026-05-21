@@ -14,6 +14,7 @@ import { ConfigureOrganizationFolderPage } from "@/POM/pageObjects/pages/Configu
 import { ConfigureMultibranchPipelinePage } from "./pages/ConfigureMulribranchPipelinePage";
 import { StatusFreestyleProjectPage } from "@/POM/pageObjects/pages/StatusFreestyleProjectPage";
 import { StatusFolderPage } from "./pages/StatusFolderPage";
+import { UserProfilePage } from "./pages/UserProfilePage";
 
 export class App {
     private _homePage: HomePage | null = null;
@@ -33,6 +34,7 @@ export class App {
     private _statusFreestyleProjectPage: StatusFreestyleProjectPage | null =
         null;
     private _statusFolderPage: StatusFolderPage | null = null;
+    private _userProfilePage: UserProfilePage | null = null;
 
     constructor(private readonly page: Page) {}
 
@@ -121,5 +123,9 @@ export class App {
 
     get statusFolderPage() {
         return (this._statusFolderPage ??= new StatusFolderPage(this.page));
+    }
+
+    get userPofilePage() {
+        return (this._userProfilePage ??= new UserProfilePage(this.page));
     }
 }
