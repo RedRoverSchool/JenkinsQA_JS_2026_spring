@@ -1,5 +1,5 @@
 import { BasePage } from "./@components";
-import { expect } from "@playwright/test";
+import { expect } from "@/POM/fixtures/baseFixtures";
 
 export class ToolsPage extends BasePage {
 
