@@ -44,12 +44,12 @@ export class ConfigureFreestylePage extends BasePage {
         return this;
     }
 
-    async enableTriggerBuildsRemotely() {
+    async clickTriggerBuildsRemotely() {
         await this.triggerBuildsRemotelyCheckbox().click();
         return this;
     }
 
-    async enableBuildAfterOtherProjectsCheckBox() {
+    async clickBuildAfterOtherProjectsCheckBox() {
         await this.buildAfterOtherProjectsCheckBox().click();
         return this;
     }
@@ -64,7 +64,7 @@ export class ConfigureFreestylePage extends BasePage {
         return this;
     }
 
-    async enableBuildPeriodicallyCheckbox() {
+    async clickBuildPeriodicallyCheckbox() {
         await this.buildPeriodicallyCheckbox().click()
         return this;
     }
