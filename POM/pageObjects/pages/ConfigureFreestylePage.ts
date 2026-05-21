@@ -14,11 +14,15 @@ export class ConfigureFreestylePage extends BasePage {
     buildAfterOtherProjectsCheckBox = () =>
         this.page.locator("label.attach-previous").filter({ hasText: "Build after other projects are built" });
 
+    buildPeriodicallyCheckbox = () =>
+        this.page.locator("label.attach-previous").filter({ hasText: "Build periodically" });
+
     projectsToWatchInput = () => this.page.locator('input[name="_.upstreamProjects"]');
     previewLink = () => this.page.locator("a[previewendpoint='/markupFormatter/previewDescription']");
     previewTextArea = () => this.page.locator(".textarea-preview");
     descriptionField = () => this.page.locator('textarea[name="description"]');
     noProjectSpecifiedMessage = () => this.page.locator('.error').filter({ hasText: 'No project specified' })
+    scheduleField = () => this.page.locator('textarea[name="_.spec"]');
 
     async clickSaveButton() {
         await this.saveButton().click();
@@ -57,6 +61,11 @@ export class ConfigureFreestylePage extends BasePage {
 
     async fillDescription(descriptionText: string) {
         await this.descriptionField().fill(descriptionText);
+        return this;
+    }
+
+    async enableBuildPeriodicallyCheckbox() {
+        await this.buildPeriodicallyCheckbox().click()
         return this;
     }
 }

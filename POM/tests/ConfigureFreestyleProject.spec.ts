@@ -39,4 +39,20 @@ test.describe("US_02.004 | Freestyle Project Configuration > Build Triggers", ()
 
             await expect(app.configureFreestylePage.noProjectSpecifiedMessage()).toBeVisible();
         });
+
+    test(`TC_02.004.05 | Verify Schedule field is displayed and enabled when Build periodically is selected`,
+        async ({ app }: { app: App }) => {
+            await app.configureFreestylePage.enableBuildPeriodicallyCheckbox();
+
+            await expect(app.configureFreestylePage.scheduleField()).toBeVisible();
+            await expect(app.configureFreestylePage.scheduleField()).toBeEnabled();
+
+            await app.configureFreestylePage.enableBuildPeriodicallyCheckbox();
+
+            await expect(app.configureFreestylePage.scheduleField()).toBeHidden();
+
+
+
+        });
+
 });
