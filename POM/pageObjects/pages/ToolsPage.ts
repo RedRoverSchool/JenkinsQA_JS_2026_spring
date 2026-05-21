@@ -12,6 +12,7 @@ export class ToolsPage extends BasePage {
     jdkInstallationsButton = () => this.page.getByRole('button', { name: 'JDK installations' });
     saveButton = () => this.page.locator("button[name='Submit']");
     newJdkChunk = () => this.page.locator('div.repeated-chunk').first();
+    nameInput = () => this.newJdkChunk().locator('input[name="_.name"]');
     newJdkNameInput = (name: string) => this.page.locator(`input[name="_.name"][value="${name}"]`);
 
     async getCurrentUrl() {
@@ -48,17 +49,8 @@ export class ToolsPage extends BasePage {
         return this;
     }
 
-    getJdkNameInput() {
-        return this.newJdkChunk().locator('input[name="_.name"]');
-    }
-
     async clickJdkInstallationsButton() {
         await this.jdkInstallationsButton().click();
         return this;
     }
-
-    getSavedJdkRow() {
-        return this.newJdkChunk();
-    }
-    
 }
