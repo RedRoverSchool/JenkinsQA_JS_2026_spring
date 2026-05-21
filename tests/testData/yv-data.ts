@@ -1,9 +1,10 @@
 
-import { faker, Faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import {Page, Locator} from "@playwright/test"
 
 export const dataYV ={
     jobName: "Job",
+    folderName: "Folder1",
     itemName: faker.color.human(),
     nestedFolder: faker.animal.cat(),
     descriptionText: faker.lorem.lines(),
@@ -54,4 +55,4 @@ export class NewItemWhithDescription {
         await this.okBtn.click();
         await this.logo.click();
     };
-};
+}
