@@ -70,6 +70,24 @@ export const manageJenkinsPageData = {
         },
         statusInfo: {
             name: "Status Information",
+            configurationItems: {
+                systemInfo: {
+                    name: "System Information",
+                    href: "systemInfo",
+                },
+                systemLog: {
+                    name: "System Log",
+                    href: "log",
+                },
+                loadStatistics: {
+                    name: "Load Statistics",
+                    href: "load-statistics",
+                },
+                aboutJenkins: {
+                    name: "About Jenkins",
+                    href: "about"
+                }
+            }
         },
         troubleshooting: {
             name: "Troubleshooting",
