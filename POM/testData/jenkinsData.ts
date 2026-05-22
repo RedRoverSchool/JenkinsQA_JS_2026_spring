@@ -91,6 +91,13 @@ export const manageJenkinsPageData = {
         },
         troubleshooting: {
             name: "Troubleshooting",
+            configurationItems: {
+                manageOldData: {
+                    name: "Manage Old Data",
+                    href: "administrativeMonitor/OldData/manage"
+                }
+            }
+
         },
         toolsAndActions: {
             name: "Tools and Actions",
